@@ -1,0 +1,51 @@
+
+// content_box
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    height: 1em;
+    line-height: 1.25em;
+    vertical-align: middle;
+    font-size: 0.7em;
+    margin: 1em 0.3em;
+    padding: 0.2em 0.5em;
+    border: 1px solid burlywood;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.left,
+.right{
+    display: flex;
+    gap:0.6em;
+}
+
+// .index,
+// .title{
+    
+// }
+
+
+.views,.likes{
+    width: 3em;
+    display: flex;
+    gap:0.3em;
+}
+
+.author,
+.update_date{
+    width: 5em;
+}
+
+.icon{
+    position: relative;
+    width: 0.9em;
+    height: 0.9em ;
+    overflow: hidden;
+    border-radius: 15px;
+}
+.count{
+    width: 2em;
+    font-size: 0.7em;
+    text-align: right;
+}
+// 

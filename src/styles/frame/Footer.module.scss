@@ -1,0 +1,7 @@
+@use "@src/styles/vars.scss" as vars;
+.wrapper{
+    width: 100%;
+    height: vars.$footerHeight;
+    background-color: aquamarine;
+    
+}

@@ -1,0 +1,35 @@
+@use "@src/styles/vars.scss" as var;
+.wrapper{
+    position: relative;
+    width: calc(100% - 2rem);
+    height: var.$headerHeight;
+    font-size: var.$headerHeight;
+    background-color: darkgreen;
+    padding:  var.$headerPaddingHeight 1rem;
+    overflow: hidden;    
+}
+
+.item{
+    cursor: pointer;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.box{
+    display: flex;
+    gap: 0.8rem;
+}
+.box:nth-child(2) {
+    line-height:  var.$headerHeight * 1.25;
+    vertical-align: middle;
+    font-size: 1.2rem;
+}
+.logo{
+    position: relative;
+    width: var.$headerHeight * 1.1;
+    height: var.$headerHeight * 1.1;
+    overflow: hidden;
+    border-radius: 15px;
+}

@@ -1,0 +1,15 @@
+import { HeaderMiddleMenuType } from "@src/static/types/menuType";
+export const HeaderMiddleMenu: HeaderMiddleMenuType[] = [
+  "만남의 광장",
+  "방송인 모임",
+  "합방 계획 및 참가",
+  "합방 결과 공유",
+];
+
+export const HeaderRightMenu = {
+  alert: "alert",
+  login: "Login",
+  logout: "Logout",
+};
+
+export const OneToTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

@@ -1,0 +1,30 @@
+.wrapper {
+    // border: 1px solid yellow;
+    position: relative;
+    // height: 1em;
+    margin-bottom: 1em;
+    padding:0.1em 0.2em;
+    padding-left: 2em;
+    display: flex;
+}
+
+
+.content{
+    width: 100%;
+    height: 1em;
+    padding: 0.1em 0.2em;
+    font-size: 1.6em;
+    border-radius: 6px;
+    background-color: #3c3c3c;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.content:hover {
+    background-color: #3c3c25;
+}
+.content:focus {
+    outline: none;
+}
+.invisible {
+    display: none;
+}

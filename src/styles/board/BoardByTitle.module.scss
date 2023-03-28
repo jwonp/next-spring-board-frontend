@@ -1,0 +1,52 @@
+.wrapper{
+    display: block;
+    font-size: 2em;
+    height: 100%;
+}
+
+.header {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid lightblue;
+}
+.header div {
+    height: 1.2em;
+    margin-right: 0.2em;
+    line-height: 1.5em;
+    vertical-align:middle;
+}
+.title{
+    width: 28%;
+}
+.search{
+    display: flex;
+}
+.search_icon{
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.03em;
+    margin-left: 0.1em;
+    overflow: hidden;
+    border-radius: 15px;
+}
+.search input {
+    width: 21em;
+    border: 1px solid oldlace;
+    border-radius: 12px;
+    padding-left: 2.5em;
+    padding-right: 2.2em;
+    font-size: 0.52em;
+    background-color: grey;
+}
+.search input:focus {
+    border: 1px solid royalblue;
+    outline: none;
+}
+.list{
+    margin-top:0.5em;
+    border: 1px solid lightblue;
+}
+

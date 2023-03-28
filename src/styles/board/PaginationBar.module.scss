@@ -1,0 +1,32 @@
+.wrapper{width: 100%;}
+.container{
+    width: calc(24.2em + 28px);
+    margin: 0 auto;
+    margin-top: 0.3em;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0.4em;
+    // 5.2 13 6 28px
+}
+.container div {
+    cursor: pointer;
+}
+.item{    
+    height: 1.1em;
+    line-height: 1.3em;
+    vertical-align: middle;
+    border: 1px solid lightcyan;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.8em;
+}
+.indicator{
+    width: 1.5em;
+}
+.number_panel_box{
+    display: flex;
+    gap: 0.4em;
+}
+.number_panel{
+    width: 1.3em;
+}

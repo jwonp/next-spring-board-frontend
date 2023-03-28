@@ -1,0 +1,11 @@
+@use "@src/styles/vars.scss" as vars;
+.wrapper{
+    width:calc(100% - 2rem);
+    background-color: grey;
+    padding: vars.$mainWrapperPadding;
+    
+    max-height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    
+}
