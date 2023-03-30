@@ -10,6 +10,8 @@ import React from "react";
 import Image from "next/image";
 
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
+import { debounce } from "lodash";
+import { VariationFlag } from "@src/static/types/VariationFlagType";
 
 const ContentEdit = () => {
   const router = useRouter();
@@ -21,7 +23,7 @@ const ContentEdit = () => {
     width: 0,
     height: 0,
   });
-  const $addInitEditBarBtn = useRef<HTMLDivElement>(null);
+
   const $title = useRef<HTMLInputElement>(null);
   const $draggedTarget = useRef<HTMLDivElement>(null);
   const $control = useRef<HTMLDivElement>(null);
@@ -33,6 +35,9 @@ const ContentEdit = () => {
   const $mouseOnTarget = useRef<number>(-1);
   const $focusTarget = useRef<number>(-1);
   const $isOnDrag = useRef<boolean>(false);
+  const $targetDivBefore = useRef<HTMLDivElement>(null);
+  const $caretLocation = useRef<number>(0);
+  const $variationFlag = useRef<number>(VariationFlag.default);
   const $mouseLocation = useRef<{
     x: number;
     y: number;
@@ -41,7 +46,9 @@ const ContentEdit = () => {
     x: number;
     y: number;
   }>({ x: 0, y: 0 });
-  const [contents, setContents] = useState<ContentDataType[]>([]);
+  const [contents, setContents] = useState<ContentDataType[]>([
+    { content: "" },
+  ]);
 
   const ContentEditBarList = useMemo(() => {
     return contents.map((value, index) => (
@@ -53,10 +60,12 @@ const ContentEdit = () => {
         // $isDragging
       />
     ));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contents.length]);
 
   const title = useMemo(() => {
     return router.query.title;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
 
   useEffect(() => {
@@ -73,23 +82,54 @@ const ContentEdit = () => {
     $selection.current = document.getSelection();
     $range.current = document.createRange();
   }, [router.isReady]);
+
   useEffect(() => {
-    const isLengthOverZero = contents.length > 0 ? true : false;
-    $addInitEditBarBtn.current.classList.toggle(
-      styles.invisible,
-      isLengthOverZero
+    if ($variationFlag.current === VariationFlag.default) {
+      return;
+    }
+    let _focusTarget = $focusTarget.current + $variationFlag.current;
+    if (_focusTarget >= contents.length) {
+      _focusTarget = contents.length - 1;
+    }
+    if (_focusTarget < 0) {
+      _focusTarget = 0;
+    }
+    const targetDiv = getTargetDivByIndex(_focusTarget);
+    targetDiv.click();
+    if ($variationFlag.current === VariationFlag.decrease) {
+      $range.current.setStart(
+        $targetDivBefore.current.firstChild,
+        $caretLocation.current
+      );
+      $range.current.collapse(true);
+      $selection.current.removeAllRanges();
+      $selection.current.addRange($range.current);
+    }
+    $variationFlag.current = VariationFlag.default;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ContentEditBarList.length]);
+  const isCaretOnFront = () => {
+    return (
+      $selection.current.anchorOffset === $selection.current.focusOffset &&
+      $selection.current.focusOffset === 0
     );
-    $contentContainer.current.classList.toggle(
-      styles.invisible,
-      !isLengthOverZero
-    );
-  }, [contents.length]);
+  };
+  const isFocusOnFirstEditBar = () => {
+    return $focusTarget.current === 0;
+  };
+  const isContentEmpty = () => {
+    return contents.length === 1 && contents[0].content === "";
+  };
   const setControlInvisible = (bool: boolean) => {
     $control.current.classList.toggle(styles.fadein, !bool);
     $control.current.classList.toggle(styles.fadeout, bool);
     setTimeout(() => {
       $control.current.classList.toggle(styles.invisible, bool);
     }, 100);
+  };
+  const getTargetDivByIndex = (index: number) => {
+    return $contentContainer.current.children[index]
+      .firstChild as HTMLDivElement;
   };
   const getEditBarByLocation = (x: number, y: number): number => {
     const sizes = $contentContainerSize.current;
@@ -112,9 +152,7 @@ const ContentEdit = () => {
 
   const relocateControl = () => {
     if ($isOnDrag.current === true) return;
-    const targetDiv = $contentContainer.current.children[
-      $mouseOnTarget.current
-    ] as HTMLDivElement;
+    const targetDiv = getTargetDivByIndex($mouseOnTarget.current);
 
     $targetLocation.current = {
       x: targetDiv.offsetLeft,
@@ -139,10 +177,10 @@ const ContentEdit = () => {
       return;
     }
 
-    const refsClone = Object.assign([], contents) as ContentDataType[];
-    refsClone.splice(target + 1, 0, newContent);
+    const contentsClone = Object.assign([], contents) as ContentDataType[];
+    contentsClone.splice(target + 1, 0, newContent);
 
-    setContents(refsClone);
+    setContents(contentsClone);
   };
 
   const handleWrapperScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
@@ -196,14 +234,15 @@ const ContentEdit = () => {
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
     if (e.key === "ArrowUp") {
-      if ($focusTarget.current <= 0) return;
+      if ($focusTarget.current <= 0) {
+        return;
+      }
       let _focusTarget = $focusTarget.current - 1;
-      const targetDiv = $contentContainer.current.children[_focusTarget]
-        .firstChild as HTMLDivElement;
+      const targetDiv = getTargetDivByIndex(_focusTarget);
+
       const len = targetDiv.innerText.length;
       const offset = len > 0 ? 1 : 0;
 
-      // targetDiv.click();
       $selection.current.collapse(targetDiv, offset);
       return;
     }
@@ -212,22 +251,21 @@ const ContentEdit = () => {
         return;
       }
       let _focusTarget = $focusTarget.current + 1;
-      const targetDiv = $contentContainer.current.children[_focusTarget]
-        .firstChild as HTMLDivElement;
+      const targetDiv = getTargetDivByIndex(_focusTarget);
+
       const len = targetDiv.innerText.length;
       const offset = len > 0 ? 1 : 0;
 
-      // targetDiv.click();
       $selection.current.collapse(targetDiv, offset);
       return;
     }
     if (e.key === "Enter") {
-      const targetDiv = $contentContainer.current.children[$focusTarget.current]
-        .firstChild as HTMLDivElement;
+      const targetDiv = getTargetDivByIndex($focusTarget.current);
+
       const anchorOffset = $selection.current.anchorOffset;
       const focusOffset = $selection.current.focusOffset;
       let sub: string = "";
-      if (anchorOffset === focusOffset) {
+      if ($selection.current.isCollapsed) {
         sub = targetDiv.innerText.substring(anchorOffset);
       }
       contents[$focusTarget.current].content = targetDiv.innerText.substring(
@@ -235,33 +273,53 @@ const ContentEdit = () => {
         anchorOffset
       );
       addContent($focusTarget.current, sub);
-      let _focusTarget = $focusTarget.current + 1;
-      if (_focusTarget >= contents.length) {
-        _focusTarget = contents.length - 1;
-      }
-      (
-        $contentContainer.current.children[_focusTarget] as HTMLDivElement
-      ).click();
+      $variationFlag.current = VariationFlag.increase;
+
       setControlInvisible(true);
-      return;
     }
   };
 
   const handleContentContainerKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
-    if (e.key === "ArrowUp") {
+    const anchorOffset = $selection.current.anchorOffset;
+    const focusOffset = $selection.current.focusOffset;
+    if (
+      ((isCaretOnFront() && isFocusOnFirstEditBar()) || isContentEmpty()) &&
+      e.key === "Backspace"
+    ) {
+      e.preventDefault();
+      return;
+    }
+    if (e.key === "ArrowUp" || e.key === "Enter") {
       e.preventDefault();
     }
-    if (e.key === "Backspace") {
-      let _focusTarget = $focusTarget.current;
-      const innerTextLength = (
-        $contentContainer.current.children[_focusTarget]
-          .firstChild as HTMLDivElement
-      ).innerText.length;
-      if (innerTextLength === 0) {
-        setContents(contents.filter((value, index) => index !== _focusTarget));
+
+    if (e.key === "Backspace" && isCaretOnFront()) {
+      e.preventDefault();
+      $targetDivBefore.current = getTargetDivByIndex($focusTarget.current - 1);
+      $caretLocation.current = $targetDivBefore.current.innerText.length;
+
+      const targetDiv = getTargetDivByIndex($focusTarget.current);
+
+      if ($selection.current.isCollapsed && focusOffset === 0) {
+        const contentToMerged = targetDiv.innerText;
+        const originContent = contents[$focusTarget.current - 1].content;
+        contents.map((value, index) => {
+          if (index === $focusTarget.current - 1) {
+            value.content = `${originContent}${contentToMerged}`;
+          }
+          if (index !== $focusTarget.current) {
+            return value;
+          }
+        });
+        setContents(
+          contents.filter((value, index) => index !== $focusTarget.current)
+        );
+
+        $variationFlag.current = VariationFlag.decrease;
       }
+
       setControlInvisible(true);
     }
   };
@@ -280,11 +338,6 @@ const ContentEdit = () => {
 
     console.log(stringifyContents);
     console.log(parseContents);
-  };
-
-  const handleAddInitEditBarBtn = () => {
-    const newContent = { content: "" };
-    setContents([newContent]);
   };
 
   return (
@@ -307,18 +360,12 @@ const ContentEdit = () => {
         onMouseMove={handleContentContainerMouseMove}>
         <div
           ref={$contentContainer}
-          className={`${styles.invisible}`}
           onKeyUp={handleContentContainerKeyUp}
           onKeyDown={handleContentContainerKeyDown}>
           {ContentEditBarList}
         </div>
       </div>
-      <div
-        ref={$addInitEditBarBtn}
-        className={`${styles.add_content_edit_bar_btn} `}
-        onClick={handleAddInitEditBarBtn}>
-        add new content edit bar
-      </div>
+
       <div ref={$control} className={`${styles.control} ${styles.invisible}`}>
         <div ref={$addBtn} className={`${styles.add}`} onClick={handleAddBtn}>
           <div>
