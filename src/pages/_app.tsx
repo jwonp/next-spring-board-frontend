@@ -7,7 +7,8 @@ import useSWR, { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { Session } from "next-auth";
-
+import { Provider } from "react-redux";
+import store from "../redux/store";
 const App = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -21,14 +22,19 @@ const App = ({
       refetchInterval={5 * 60}
       refetchOnWindowFocus={true}>
       <SWRConfig value={{ provider: () => new Map() }}>
-        <Head>
-          <title>Collabo Board</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={store}>
+          <Head>
+            <title>Collabo Board</title>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </SWRConfig>
     </SessionProvider>
   );

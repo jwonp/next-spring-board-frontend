@@ -2,10 +2,11 @@
     // border: 1px solid yellow;
     position: relative;
     // height: 1em;
-    margin-bottom: 1em;
-    padding:0.1em 0.2em;
-    padding-left: 2em;
+    
+    padding:0 0.2em;
+    margin-left: 3em;
     display: flex;
+    
 }
 
 
@@ -14,13 +15,18 @@
     height: 1em;
     padding: 0.1em 0.2em;
     font-size: 1.6em;
-    border-radius: 6px;
-    background-color: #3c3c3c;
+    border: 2px solid rgb(50,50,50);
+    background-color: darkolivegreen;
     white-space: pre-wrap;
     word-break: break-word;
 }
-.content:hover {
-    background-color: #3c3c25;
+.content:empty:before{
+    content:attr(placeholder);
+    opacity: 0.5;
+}
+.content_hover {
+
+  border: 2px solid rgb(170,170,170,0.5);
 }
 .content:focus {
     outline: none;
