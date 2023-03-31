@@ -10,6 +10,13 @@ export const HeaderRightMenu = {
   alert: "alert",
   login: "Login",
   logout: "Logout",
-};
+} as const;
+
+export const KeySet = {
+  ArrowUp: "ArrowUp",
+  ArrowDown: "ArrowDown",
+  Enter: "Enter",
+  Backspace: "Backspace",
+} as const;
 
 export const OneToTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
