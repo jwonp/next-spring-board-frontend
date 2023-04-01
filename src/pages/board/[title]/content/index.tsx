@@ -22,8 +22,6 @@ import {
   isCaretOnFront,
   isContentEmpty,
   isFocusOnFirstEditBar,
-  isLoactionXOnTarget,
-  isLoactionYOnTarget,
   isOutOfContendEditBars,
   isVariationFlagDecrease,
   pointEndOfBeforeTheTarget,
@@ -53,15 +51,16 @@ const ContentEdit = () => {
   const $scrollLocation = useRef<number>(0);
   const $mouseOnTarget = useRef<number>(-1);
   const $focusTarget = useRef<number>(-1);
-  const $isOnDrag = useRef<boolean>(false);
+  const $onDragIndex = useRef<number>(-1);
   const $targetDivBefore = useRef<HTMLDivElement>(null);
   const $caretLocation = useRef<number>(0);
   const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
   const $mouseLocation = useRef<LocationType>({ x: 0, y: 0 });
-  const $targetLocation = useRef<LocationType>({ x: 0, y: 0 });
+  const $lastIndex = useRef<number>(0);
   const [contents, setContents] = useState<ContentDataType[]>([
     { type: "text", content: "", image: "" },
-    // { type: "image", content: "", image: "/favicon.png" },
+    { type: "image", content: "", image: "/favicon.png" },
+    { type: "text", content: "", image: "" },
   ]);
   const ContentBar = (value: ContentDataType, index: number) => {
     switch (value.type) {
@@ -76,7 +75,8 @@ const ContentEdit = () => {
             mouseLocation={$mouseLocation}
             scroll={$scrollLocation}
             control={$control}
-            isOnDrag={$isOnDrag}
+            onDragIndex={$onDragIndex}
+            lastIndex={$lastIndex}
           />
         );
       case "image":
@@ -85,13 +85,17 @@ const ContentEdit = () => {
             key={index}
             data={value}
             index={index}
-            focus={$focusTarget}
-            // mouse={$mouseOnTarget}
+            mouseOnTarget={$mouseOnTarget}
+            mouseLocation={$mouseLocation}
+            scroll={$scrollLocation}
+            control={$control}
+            onDragIndex={$onDragIndex}
           />
         );
     }
   };
   const ContentEditBarList = useMemo(() => {
+    $lastIndex.current = contents.length - 1;
     return contents.map((value, index) => ContentBar(value, index));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contents.length]);
@@ -141,24 +145,6 @@ const ContentEdit = () => {
     return $contentContainer.current.children[index]
       .firstChild as HTMLDivElement;
   };
-  const getEditBarByLocation = (x: number, y: number): number => {
-    const sizes = $contentContainerSize.current;
-    const scroll = $scrollLocation.current;
-    if (!isLoactionXOnTarget(x, sizes.left, sizes.width)) {
-      return -1;
-    }
-    if (!isLoactionYOnTarget(y, sizes.top, sizes.height, scroll)) {
-      return -1;
-    }
-
-    const ContentEditBarHeight = sizes.height / contents.length;
-    const target = Math.floor((y + scroll - sizes.top) / ContentEditBarHeight);
-
-    if (target >= contents.length) {
-      return contents.length - 1;
-    }
-    return target;
-  };
 
   const addContent = (target: number, content: string = "") => {
     const newContent: ContentDataType = {
@@ -191,13 +177,13 @@ const ContentEdit = () => {
   };
 
   const handleHandleBtnMouseDown = () => {
-    $isOnDrag.current = true;
-    $draggedTarget.current.innerText = contents[$mouseOnTarget.current].content;
+    $onDragIndex.current = $mouseOnTarget.current;
+    $draggedTarget.current.innerHTML = contents[$mouseOnTarget.current].content;
     $draggedTarget.current.classList.toggle(styles.invisible, false);
   };
 
   const handleHandleBtnMouseUp = () => {
-    $isOnDrag.current = false;
+    $onDragIndex.current = -1;
     $draggedTarget.current.innerText = "";
     $draggedTarget.current.classList.toggle(styles.invisible, true);
   };

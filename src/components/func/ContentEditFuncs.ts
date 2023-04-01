@@ -43,7 +43,6 @@ export const isCaretOnFront = (anchorOffset: number, focusOffset: number) => {
 };
 
 export const isLoactionXOnTarget = (x: number, left: number, width: number) => {
-  //   console.log(`${left} < ${x} < ${left + width}`);
   return left < x && x < left + width;
 };
 export const isLoactionYOnTarget = (
@@ -52,12 +51,24 @@ export const isLoactionYOnTarget = (
   height: number,
   scroll: number
 ) => {
-  //   console.log(
-  //     `${top} - ${scroll} = ${top - scroll} < ${y} < ${
-  //       top + height - scroll
-  //     } = ${top} + ${height} - ${scroll}`
-  //   );
   return top - scroll < y && y < top + height - scroll;
+};
+
+export const isLoactionYOnBottomOfTarget = (
+  y: number,
+  top: number,
+  height: number,
+  scroll: number
+) => {
+  return top + height - scroll - 3 < y && y < top + height - scroll;
+};
+
+export const isLoactionYOnTopOfTarget = (
+  y: number,
+  top: number,
+  scroll: number
+) => {
+  return top - scroll < y && y < top + -scroll + 3;
 };
 
 export const isOutOfContendEditBars = (
@@ -104,10 +115,10 @@ export const setControlInvisible = (
 export const relocateControl = (
   targetDiv: HTMLDivElement,
   controlDiv: HTMLDivElement,
-  isOnDrag: boolean,
+  onDragIndex: number,
   scroll: number
 ) => {
-  if (isOnDrag === true) return;
+  if (onDragIndex > -1) return;
 
   const targetLocation: LocationType = {
     x: targetDiv.offsetLeft,
