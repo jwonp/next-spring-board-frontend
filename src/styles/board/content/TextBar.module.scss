@@ -5,28 +5,33 @@
     display: flex;
 }
 
-
 .content{
     width: 100%;
     height: 1em;
     padding: 0.1em 0.2em;
     font-size: 1.6em;
     border: 2px solid rgb(50,50,50);
-    background-color: darkolivegreen;
     white-space: pre-wrap;
     word-break: break-word;
+    &:empty::before{
+        content:attr(placeholder);
+        opacity: 0.5;
+    }
+    &:focus {
+        outline: none;
+    }
 }
-.content:empty:before{
-    content:attr(placeholder);
-    opacity: 0.5;
-}
-.content_hover {
 
+.content_hover {
   border: 2px solid rgb(170,170,170,0.5);
 }
-.content:focus {
-    outline: none;
+.border_bottom{
+    border-bottom: 2px solid rgb(170,170,170,0.5);
 }
+.border_top{
+    border-top: 2px solid rgb(170,170,170,0.5);
+}
+
 .invisible {
     display: none;
 }

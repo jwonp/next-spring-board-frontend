@@ -1,9 +1,10 @@
-import { ContentDataType } from "@src/static/types/ContentDataType";
+import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import styles from "@src/styles/board/content/TextBar.module.scss";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LocationType } from "@src/static/types/LocationType";
 import {
+  getBeforeIndex,
   isLoactionXOnTarget,
   isLoactionYOnBottomOfTarget,
   isLoactionYOnTarget,
@@ -15,22 +16,24 @@ const TextBar = ({
   data,
   index,
   focus,
-  mouseOnTarget,
+  mouseOnIndex,
   mouseLocation,
   scroll,
   control,
   onDragIndex,
   lastIndex,
+  moveToIndex,
 }: {
-  data: ContentDataType;
+  data: ContentBarDataType;
   index: number;
   focus: React.MutableRefObject<number>;
-  mouseOnTarget: React.MutableRefObject<number>;
+  mouseOnIndex: React.MutableRefObject<number>;
   mouseLocation: React.MutableRefObject<LocationType>;
   scroll: React.MutableRefObject<number>;
   control: React.MutableRefObject<HTMLDivElement>;
   onDragIndex: React.MutableRefObject<number>;
   lastIndex: React.MutableRefObject<number>;
+  moveToIndex: React.MutableRefObject<number>;
 }) => {
   const $content = useRef<HTMLDivElement>(null);
   const $wrapper = useRef<HTMLDivElement>(null);
@@ -62,6 +65,11 @@ const TextBar = ({
   const handleClickWrapper = () => {
     $content.current.focus();
   };
+  const handleMouseUpWrapper = () => {
+    if (onDragIndex.current < 0) return;
+    $content.current.classList.toggle(styles.border_bottom, false);
+    $content.current.classList.toggle(styles.border_top, false);
+  };
   const handleMouseEnterOnContent = () => {
     // only when nothing dragged
     $content.current.classList.toggle(
@@ -71,6 +79,8 @@ const TextBar = ({
   };
   const handleMouseLeaveOnContent = () => {
     $content.current.classList.toggle(styles.content_hover, false);
+    $content.current.classList.toggle(styles.border_bottom, false);
+    $content.current.classList.toggle(styles.border_top, false);
   };
   const handleMouseMoveWrapper = () => {
     if (
@@ -86,7 +96,7 @@ const TextBar = ({
         scroll.current
       )
     ) {
-      mouseOnTarget.current = index;
+      mouseOnIndex.current = index;
 
       relocateControl(
         $wrapper.current,
@@ -97,6 +107,36 @@ const TextBar = ({
     }
   };
   const handleMouseMoveContent = () => {
+    console.log(focus.current);
+    if (onDragIndex.current >= index) {
+      if (
+        isLoactionYOnTopOfTarget(
+          mouseLocation.current.y,
+          $wrapperSizes.current.top,
+          $wrapperSizes.current.height,
+          scroll.current
+        )
+      ) {
+        moveToIndex.current = getBeforeIndex(index);
+        console.log(`${onDragIndex.current} to ${moveToIndex.current}`);
+
+        $content.current.classList.toggle(styles.border_top, true);
+      }
+    }
+    if (onDragIndex.current < index) {
+      if (
+        isLoactionYOnBottomOfTarget(
+          mouseLocation.current.y,
+          $wrapperSizes.current.top,
+          $wrapperSizes.current.height,
+          scroll.current
+        )
+      ) {
+        moveToIndex.current = index;
+        console.log(`${onDragIndex.current} to ${moveToIndex.current}`);
+        $content.current.classList.toggle(styles.border_bottom, true);
+      }
+    }
     // if (onDragIndex.current === index) {
     //       console.log("is me");
     //     }
@@ -106,34 +146,14 @@ const TextBar = ({
     //     if (onDragIndex.current === lastIndex.current) {
     //       console.log("is last");
     //     }
-    if (
-      isLoactionYOnTopOfTarget(
-        mouseLocation.current.y,
-        $wrapperSizes.current.top,
-        scroll.current
-      )
-    ) {
-      console.log(`is ${mouseOnTarget.current} on top`);
-    }
-    if (
-      isLoactionYOnBottomOfTarget(
-        mouseLocation.current.y,
-        $wrapperSizes.current.top,
-        $wrapperSizes.current.height,
-        scroll.current
-      ) &&
-      onDragIndex.current !== index
-    ) {
-      $content.current.classList.toggle(styles.border_bottom, true);
-      console.log(`is ${mouseOnTarget.current} on bottom`);
-    }
   };
   return (
     <div
       ref={$wrapper}
       className={`${styles.wrapper}`}
       onClick={handleClickWrapper}
-      onMouseMove={handleMouseMoveWrapper}>
+      onMouseMove={handleMouseMoveWrapper}
+      onMouseUp={handleMouseUpWrapper}>
       <div
         ref={$content}
         className={`${styles.content}`}

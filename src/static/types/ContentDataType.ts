@@ -1,4 +1,4 @@
-export interface ContentDataType {
+export interface ContentBarDataType {
   type: contentTypeType;
   content: string;
   image: string;

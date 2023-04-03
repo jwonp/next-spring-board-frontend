@@ -1,6 +1,6 @@
 import styles from "@src/styles/board/content/ContentEdit.module.scss";
 import TextBar from "@src/components/module/board/content/TextBar";
-import { ContentDataType } from "@src/static/types/ContentDataType";
+import { ContentBarDataType } from "@src/static/types/ContentDataType";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import qs from "qs";
@@ -33,13 +33,6 @@ const ContentEdit = () => {
   const router = useRouter();
   const $wrapper = useRef<HTMLDivElement>(null);
   const $contentContainer = useRef<HTMLDivElement>(null);
-  const $contentContainerSize = useRef<ContainerSizeType>({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
-  });
-
   const $title = useRef<HTMLInputElement>(null);
   const $contentWrapper = useRef<HTMLDivElement>(null);
   const $draggedTarget = useRef<HTMLDivElement>(null);
@@ -49,20 +42,21 @@ const ContentEdit = () => {
   const $selection = useRef<Selection>(null);
   const $range = useRef<Range>(null);
   const $scrollLocation = useRef<number>(0);
-  const $mouseOnTarget = useRef<number>(-1);
-  const $focusTarget = useRef<number>(-1);
+  const $mouseOnIndex = useRef<number>(-1);
+  const $focusIndex = useRef<number>(-1);
+  const $moveToIndex = useRef<number>(-1);
   const $onDragIndex = useRef<number>(-1);
   const $targetDivBefore = useRef<HTMLDivElement>(null);
   const $caretLocation = useRef<number>(0);
   const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
   const $mouseLocation = useRef<LocationType>({ x: 0, y: 0 });
   const $lastIndex = useRef<number>(0);
-  const [contents, setContents] = useState<ContentDataType[]>([
+  const [contents, setContents] = useState<ContentBarDataType[]>([
     { type: "text", content: "", image: "" },
     { type: "image", content: "", image: "/favicon.png" },
     { type: "text", content: "", image: "" },
   ]);
-  const ContentBar = (value: ContentDataType, index: number) => {
+  const ContentBar = (value: ContentBarDataType, index: number) => {
     switch (value.type) {
       case "text":
         return (
@@ -70,13 +64,14 @@ const ContentEdit = () => {
             key={index}
             data={value}
             index={index}
-            focus={$focusTarget}
-            mouseOnTarget={$mouseOnTarget}
+            focus={$focusIndex}
+            mouseOnIndex={$mouseOnIndex}
             mouseLocation={$mouseLocation}
             scroll={$scrollLocation}
             control={$control}
             onDragIndex={$onDragIndex}
             lastIndex={$lastIndex}
+            moveToIndex={$moveToIndex}
           />
         );
       case "image":
@@ -85,7 +80,7 @@ const ContentEdit = () => {
             key={index}
             data={value}
             index={index}
-            mouseOnTarget={$mouseOnTarget}
+            mouseOnIndex={$mouseOnIndex}
             mouseLocation={$mouseLocation}
             scroll={$scrollLocation}
             control={$control}
@@ -123,7 +118,7 @@ const ContentEdit = () => {
       return;
     }
     let _focusTarget = getFocusTarget(
-      $focusTarget.current,
+      $focusIndex.current,
       $variationFlag.current,
       contents.length
     );
@@ -141,13 +136,17 @@ const ContentEdit = () => {
     $variationFlag.current = VariationFlag.default;
   };
 
+  const getTargetDivByIndex = (index: number) => {
+    return $contentContainer.current.children[index] as HTMLDivElement;
+  };
+
   const getTargetFirstChildDivByIndex = (index: number) => {
     return $contentContainer.current.children[index]
       .firstChild as HTMLDivElement;
   };
 
   const addContent = (target: number, content: string = "") => {
-    const newContent: ContentDataType = {
+    const newContent: ContentBarDataType = {
       type: "text",
       content: content,
       image: "",
@@ -161,7 +160,7 @@ const ContentEdit = () => {
       return;
     }
 
-    const contentsClone = Object.assign([], contents) as ContentDataType[];
+    const contentsClone = Object.assign([], contents) as ContentBarDataType[];
     contentsClone.splice(target + 1, 0, newContent);
 
     setContents(contentsClone);
@@ -173,12 +172,12 @@ const ContentEdit = () => {
   };
 
   const handleAddBtn = () => {
-    addContent($mouseOnTarget.current);
+    addContent($mouseOnIndex.current);
   };
 
   const handleHandleBtnMouseDown = () => {
-    $onDragIndex.current = $mouseOnTarget.current;
-    $draggedTarget.current.innerHTML = contents[$mouseOnTarget.current].content;
+    $onDragIndex.current = $mouseOnIndex.current;
+    $draggedTarget.current.innerHTML = contents[$mouseOnIndex.current].content;
     $draggedTarget.current.classList.toggle(styles.invisible, false);
   };
 
@@ -186,6 +185,7 @@ const ContentEdit = () => {
     $onDragIndex.current = -1;
     $draggedTarget.current.innerText = "";
     $draggedTarget.current.classList.toggle(styles.invisible, true);
+    console.log(`mouse up ${$onDragIndex.current}`);
   };
 
   const handleContentContainerMouseMove = (
@@ -211,10 +211,10 @@ const ContentEdit = () => {
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
     if (e.key === KeySet.ArrowUp) {
-      if ($focusTarget.current <= 0) {
+      if ($focusIndex.current <= 0) {
         return;
       }
-      let _focusTarget = $focusTarget.current - 1;
+      let _focusTarget = $focusIndex.current - 1;
       const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
 
       const len = targetDiv.innerText.length;
@@ -224,10 +224,10 @@ const ContentEdit = () => {
       return;
     }
     if (e.key === KeySet.ArrowDown) {
-      if ($focusTarget.current >= contents.length - 1) {
+      if ($focusIndex.current >= contents.length - 1) {
         return;
       }
-      let _focusTarget = $focusTarget.current + 1;
+      let _focusTarget = $focusIndex.current + 1;
       const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
 
       const len = targetDiv.innerText.length;
@@ -237,7 +237,7 @@ const ContentEdit = () => {
       return;
     }
     if (e.key === KeySet.Enter) {
-      const targetDiv = getTargetFirstChildDivByIndex($focusTarget.current);
+      const targetDiv = getTargetFirstChildDivByIndex($focusIndex.current);
 
       const anchorOffset = $selection.current.anchorOffset;
       const focusOffset = $selection.current.focusOffset;
@@ -245,11 +245,11 @@ const ContentEdit = () => {
       if ($selection.current.isCollapsed) {
         sub = targetDiv.innerText.substring(anchorOffset);
       }
-      contents[$focusTarget.current].content = targetDiv.innerText.substring(
+      contents[$focusIndex.current].content = targetDiv.innerText.substring(
         0,
         anchorOffset
       );
-      addContent($focusTarget.current, sub);
+      addContent($focusIndex.current, sub);
       $variationFlag.current = VariationFlag.increase;
 
       setControlInvisible($control.current, true);
@@ -263,7 +263,7 @@ const ContentEdit = () => {
     const focusOffset = $selection.current.focusOffset;
     if (
       ((isCaretOnFront(anchorOffset, focusOffset) &&
-        isFocusOnFirstEditBar($focusTarget.current)) ||
+        isFocusOnFirstEditBar($focusIndex.current)) ||
         isContentEmpty(contents.length, contents[0].content)) &&
       e.key === KeySet.Backspace
     ) {
@@ -280,18 +280,18 @@ const ContentEdit = () => {
     ) {
       e.preventDefault();
       $targetDivBefore.current = getTargetFirstChildDivByIndex(
-        $focusTarget.current - 1
+        $focusIndex.current - 1
       );
       $caretLocation.current = $targetDivBefore.current.innerText.length;
 
-      const targetDiv = getTargetFirstChildDivByIndex($focusTarget.current);
+      const targetDiv = getTargetFirstChildDivByIndex($focusIndex.current);
 
       if (
         $selection.current.isCollapsed &&
         isFocusOnFirstEditBar(focusOffset)
       ) {
         const contentToMerged = targetDiv.innerText;
-        const originIndex = $focusTarget.current - 1;
+        const originIndex = $focusIndex.current - 1;
         setContents(getMergedContents(contents, originIndex, contentToMerged));
 
         $variationFlag.current = VariationFlag.decrease;
@@ -301,7 +301,7 @@ const ContentEdit = () => {
     }
   };
   const getMergedContents = (
-    contents: ContentDataType[],
+    contents: ContentBarDataType[],
     originIndex: number,
     contentToMerged: string
   ) => {

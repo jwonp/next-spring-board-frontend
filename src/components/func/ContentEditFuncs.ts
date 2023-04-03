@@ -5,6 +5,7 @@ import {
 } from "@src/static/types/VariationFlagType";
 import { LocationType } from "@src/static/types/LocationType";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
+import { ContentBarDataType } from "@src/static/types/ContentDataType";
 export const pointEndOfBeforeTheTarget = (
   beforeTheTarget: Node,
   range: Range,
@@ -60,15 +61,16 @@ export const isLoactionYOnBottomOfTarget = (
   height: number,
   scroll: number
 ) => {
-  return top + height - scroll - 3 < y && y < top + height - scroll;
+  return top + height / 2 - scroll < y && y < top + height - scroll;
 };
 
 export const isLoactionYOnTopOfTarget = (
   y: number,
   top: number,
+  height: number,
   scroll: number
 ) => {
-  return top - scroll < y && y < top + -scroll + 3;
+  return top - scroll < y && y < top + height / 2 - scroll;
 };
 
 export const isOutOfContendEditBars = (
@@ -129,4 +131,16 @@ export const relocateControl = (
   controlDiv.style.top = `${targetLocation.y - scroll}px`;
 
   setControlInvisible(controlDiv, false);
+};
+
+export const getBeforeIndex = (index: number) => {
+  return index - 1 < 0 ? 0 : index - 1;
+};
+
+export const swapElementsSequenceInContents = (
+  target: number,
+  moveTo: number,
+  contents: ContentBarDataType[]
+) => {
+  [contents[target], contents[moveTo]] = [contents[moveTo], contents[target]];
 };

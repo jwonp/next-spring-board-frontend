@@ -4,7 +4,7 @@ import {
   relocateControl,
 } from "@src/components/func/ContentEditFuncs";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import { ContentDataType } from "@src/static/types/ContentDataType";
+import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ImageSizeType } from "@src/static/types/ImageSizeType";
 import { LocationType } from "@src/static/types/LocationType";
 import styles from "@src/styles/board/content/ImageBar.module.scss";
@@ -13,17 +13,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const ImageBar = ({
   data,
   index,
-
-  mouseOnTarget,
+  mouseOnIndex,
   mouseLocation,
   scroll,
   control,
   onDragIndex,
 }: {
-  data: ContentDataType;
+  data: ContentBarDataType;
   index: number;
-
-  mouseOnTarget: React.MutableRefObject<number>;
+  mouseOnIndex: React.MutableRefObject<number>;
   mouseLocation: React.MutableRefObject<LocationType>;
   scroll: React.MutableRefObject<number>;
   control: React.MutableRefObject<HTMLDivElement>;
@@ -64,7 +62,7 @@ const ImageBar = ({
   }, []);
 
   const handleMouseMove = () => {
-    console.log(mouseOnTarget.current);
+    console.log(mouseOnIndex.current);
     if (
       isLoactionXOnTarget(
         mouseLocation.current.x,
@@ -78,7 +76,7 @@ const ImageBar = ({
         scroll.current
       )
     ) {
-      mouseOnTarget.current = index;
+      mouseOnIndex.current = index;
 
       relocateControl(
         $wrapper.current,
