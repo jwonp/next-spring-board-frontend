@@ -1,16 +1,11 @@
 import styles from "@src/styles/board/content/ContentEdit.module.scss";
 import TextBar from "@src/components/module/board/content/TextBar";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
-
 import { useEffect, useMemo, useRef, useState } from "react";
 import qs from "qs";
 import { useRouter } from "next/router";
-
 import React from "react";
 import Image from "next/image";
-
-import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import { debounce } from "lodash";
 import {
   VariationFlag,
   VariationFlagType,
@@ -26,6 +21,7 @@ import {
   isVariationFlagDecrease,
   pointEndOfBeforeTheTarget,
   setControlInvisible,
+  swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
 import { KeySet } from "@src/static/data/stringSet";
 
@@ -51,6 +47,7 @@ const ContentEdit = () => {
   const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
   const $mouseLocation = useRef<LocationType>({ x: 0, y: 0 });
   const $lastIndex = useRef<number>(0);
+
   const [contents, setContents] = useState<ContentBarDataType[]>([
     { type: "text", content: "", image: "" },
     { type: "image", content: "", image: "/favicon.png" },
@@ -62,7 +59,6 @@ const ContentEdit = () => {
         return (
           <TextBar
             key={index}
-            data={value}
             index={index}
             focus={$focusIndex}
             mouseOnIndex={$mouseOnIndex}
@@ -70,8 +66,9 @@ const ContentEdit = () => {
             scroll={$scrollLocation}
             control={$control}
             onDragIndex={$onDragIndex}
-            lastIndex={$lastIndex}
             moveToIndex={$moveToIndex}
+            contents={contents}
+            setContents={setContents}
           />
         );
       case "image":
@@ -93,7 +90,7 @@ const ContentEdit = () => {
     $lastIndex.current = contents.length - 1;
     return contents.map((value, index) => ContentBar(value, index));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contents.length]);
+  }, [contents]);
 
   const title = useMemo(() => {
     return router.query.title;
@@ -182,10 +179,20 @@ const ContentEdit = () => {
   };
 
   const handleHandleBtnMouseUp = () => {
-    $onDragIndex.current = -1;
     $draggedTarget.current.innerText = "";
     $draggedTarget.current.classList.toggle(styles.invisible, true);
-    console.log(`mouse up ${$onDragIndex.current}`);
+    console.log(`${$onDragIndex.current} to ${$moveToIndex.current}`);
+
+    const tempContents = swapElementsSequenceInContents(
+      $onDragIndex.current,
+      $moveToIndex.current,
+      [...contents]
+    );
+
+    setContents(tempContents);
+    console.log(contents);
+
+    $onDragIndex.current = -1;
   };
 
   const handleContentContainerMouseMove = (

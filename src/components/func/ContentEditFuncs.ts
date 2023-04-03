@@ -133,14 +133,15 @@ export const relocateControl = (
   setControlInvisible(controlDiv, false);
 };
 
-export const getBeforeIndex = (index: number) => {
-  return index - 1 < 0 ? 0 : index - 1;
-};
-
 export const swapElementsSequenceInContents = (
   target: number,
   moveTo: number,
   contents: ContentBarDataType[]
 ) => {
-  [contents[target], contents[moveTo]] = [contents[moveTo], contents[target]];
+  if (target < 0 || moveTo < 0 || target === moveTo) return contents;
+  const tempContents = [...contents];
+  const tempContent = tempContents.splice(target, 1)[0];
+  tempContents.splice(moveTo, 0, tempContent);
+
+  return tempContents;
 };

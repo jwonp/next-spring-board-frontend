@@ -1,19 +1,17 @@
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import styles from "@src/styles/board/content/TextBar.module.scss";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { LocationType } from "@src/static/types/LocationType";
+
 import {
-  getBeforeIndex,
   isLoactionXOnTarget,
   isLoactionYOnBottomOfTarget,
   isLoactionYOnTarget,
   isLoactionYOnTopOfTarget,
   relocateControl,
 } from "@src/components/func/ContentEditFuncs";
-import { debounce } from "lodash";
 const TextBar = ({
-  data,
   index,
   focus,
   mouseOnIndex,
@@ -21,10 +19,10 @@ const TextBar = ({
   scroll,
   control,
   onDragIndex,
-  lastIndex,
   moveToIndex,
+  contents,
+  setContents,
 }: {
-  data: ContentBarDataType;
   index: number;
   focus: React.MutableRefObject<number>;
   mouseOnIndex: React.MutableRefObject<number>;
@@ -32,8 +30,9 @@ const TextBar = ({
   scroll: React.MutableRefObject<number>;
   control: React.MutableRefObject<HTMLDivElement>;
   onDragIndex: React.MutableRefObject<number>;
-  lastIndex: React.MutableRefObject<number>;
   moveToIndex: React.MutableRefObject<number>;
+  contents: ContentBarDataType[];
+  setContents: React.Dispatch<React.SetStateAction<ContentBarDataType[]>>;
 }) => {
   const $content = useRef<HTMLDivElement>(null);
   const $wrapper = useRef<HTMLDivElement>(null);
@@ -52,8 +51,8 @@ const TextBar = ({
   }, []);
 
   useEffect(() => {
-    $content.current.innerText = data.content;
-  }, [data.content]);
+    $content.current.innerText = contents[index].content;
+  }, [contents, index]);
   const handleFocus = () => {
     focus.current = index;
     setPlaceholder("내용을 입력해주세요.");
@@ -71,7 +70,7 @@ const TextBar = ({
     $content.current.classList.toggle(styles.border_top, false);
   };
   const handleMouseEnterOnContent = () => {
-    // only when nothing dragged
+    // only when nothing dragged content hover will visible
     $content.current.classList.toggle(
       styles.content_hover,
       onDragIndex.current < 0
@@ -107,7 +106,7 @@ const TextBar = ({
     }
   };
   const handleMouseMoveContent = () => {
-    console.log(focus.current);
+    moveToIndex.current = index;
     if (onDragIndex.current >= index) {
       if (
         isLoactionYOnTopOfTarget(
@@ -117,9 +116,6 @@ const TextBar = ({
           scroll.current
         )
       ) {
-        moveToIndex.current = getBeforeIndex(index);
-        console.log(`${onDragIndex.current} to ${moveToIndex.current}`);
-
         $content.current.classList.toggle(styles.border_top, true);
       }
     }
@@ -132,20 +128,16 @@ const TextBar = ({
           scroll.current
         )
       ) {
-        moveToIndex.current = index;
-        console.log(`${onDragIndex.current} to ${moveToIndex.current}`);
+        // moveToIndex.current = index;
+        //  getNextIndex(index, contents.length);
         $content.current.classList.toggle(styles.border_bottom, true);
       }
     }
-    // if (onDragIndex.current === index) {
-    //       console.log("is me");
-    //     }
-    //     if (onDragIndex.current === 0) {
-    //       console.log("is first");
-    //     }
-    //     if (onDragIndex.current === lastIndex.current) {
-    //       console.log("is last");
-    //     }
+  };
+  const handleInput = (e: FormEvent<HTMLDivElement>) => {
+    const tempContents = [...contents];
+    tempContents[index].content = e.currentTarget.innerText;
+    setContents(tempContents);
   };
   return (
     <div
@@ -165,9 +157,7 @@ const TextBar = ({
         onMouseMove={handleMouseMoveContent}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onInput={(e) => {
-          data.content = e.currentTarget.innerText;
-        }}></div>
+        onInput={handleInput}></div>
     </div>
   );
 };
