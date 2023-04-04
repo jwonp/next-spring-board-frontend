@@ -1,0 +1,25 @@
+.wrapper{
+    position: absolute;
+    top: 340px;
+    left: 440px;
+    width: 12em;
+    
+    border: 2px solid gold;
+    
+    z-index: 999;
+}
+
+.item{
+    cursor: pointer;
+    display: flex;
+    height: 2em;
+    
+    padding:0.3em 0.5em;
+    font-size: 1.2em;
+    vertical-align: middle;
+    line-height: 2em;
+    gap:0.6em;
+    &:hover{
+        background-color: darkolivegreen;
+    }
+}

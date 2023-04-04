@@ -24,6 +24,7 @@ import {
   swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
 import { KeySet } from "@src/static/data/stringSet";
+import AddTypeModel from "@src/components/module/board/content/AddTypeModal";
 
 const ContentEdit = () => {
   const router = useRouter();
@@ -181,16 +182,13 @@ const ContentEdit = () => {
   const handleHandleBtnMouseUp = () => {
     $draggedTarget.current.innerText = "";
     $draggedTarget.current.classList.toggle(styles.invisible, true);
-    console.log(`${$onDragIndex.current} to ${$moveToIndex.current}`);
 
     const tempContents = swapElementsSequenceInContents(
       $onDragIndex.current,
       $moveToIndex.current,
       [...contents]
     );
-
     setContents(tempContents);
-    console.log(contents);
 
     $onDragIndex.current = -1;
   };
@@ -356,6 +354,7 @@ const ContentEdit = () => {
           <input type="submit" value={"저장"} onClick={handleClickSubmit} />
         </div>
       </div>
+      <AddTypeModel />
       <div
         ref={$contentWrapper}
         className={`${styles.content_container} `}
