@@ -1,9 +1,3 @@
-.wrapper {
-    position: relative;
-    padding:0 0.2em;
-    padding-left: 3em;
-    display: flex;
-}
 
 .content{
     width: 100%;
@@ -25,12 +19,7 @@
 .content_hover {
   border: 2px solid rgb(170,170,170,0.5);
 }
-.border_bottom{
-    border-bottom: 2px solid rgb(170,170,170,0.5);
-}
-.border_top{
-    border-top: 2px solid rgb(170,170,170,0.5);
-}
+
 
 .invisible {
     display: none;

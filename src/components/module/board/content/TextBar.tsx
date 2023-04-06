@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { LocationType } from "@src/static/types/LocationType";
 
 import {
+  invisibleBorder,
   isLoactionXOnTarget,
   isLoactionYOnBottomOfTarget,
   isLoactionYOnTarget,
@@ -14,45 +15,28 @@ import {
 const TextBar = ({
   index,
   focus,
-  mouseOnIndex,
-  mouseLocation,
-  scroll,
-  control,
-  onDragIndex,
   moveToIndex,
   contents,
+  onDragIndex,
   setContents,
 }: {
   index: number;
   focus: React.MutableRefObject<number>;
-  mouseOnIndex: React.MutableRefObject<number>;
-  mouseLocation: React.MutableRefObject<LocationType>;
-  scroll: React.MutableRefObject<number>;
-  control: React.MutableRefObject<HTMLDivElement>;
-  onDragIndex: React.MutableRefObject<number>;
   moveToIndex: React.MutableRefObject<number>;
   contents: ContentBarDataType[];
+  onDragIndex: React.MutableRefObject<number>;
   setContents: React.Dispatch<React.SetStateAction<ContentBarDataType[]>>;
 }) => {
   const $content = useRef<HTMLDivElement>(null);
-  const $wrapper = useRef<HTMLDivElement>(null);
-  const $wrapperSizes = useRef<ContainerSizeType>(null);
-
   const [placeholder, setPlaceholder] = useState<string>("");
 
-  useEffect(() => {
-    const sizes: ContainerSizeType = {
-      left: $wrapper.current.offsetLeft,
-      top: $wrapper.current.offsetTop,
-      width: $wrapper.current.offsetWidth,
-      height: $wrapper.current.offsetHeight,
-    };
-    $wrapperSizes.current = sizes;
-  }, []);
-
+  /**
+   * ContentEditBar의 위치(index)가 바뀔 떄마다 재랜더링
+   */
   useEffect(() => {
     $content.current.innerText = contents[index].content;
   }, [contents, index]);
+
   const handleFocus = () => {
     focus.current = index;
     setPlaceholder("내용을 입력해주세요.");
@@ -61,79 +45,18 @@ const TextBar = ({
     focus.current = -1;
     setPlaceholder("");
   };
-  const handleClickWrapper = () => {
-    $content.current.focus();
-  };
-  const handleMouseUpWrapper = () => {
-    if (onDragIndex.current < 0) return;
-    $content.current.classList.toggle(styles.border_bottom, false);
-    $content.current.classList.toggle(styles.border_top, false);
-  };
+
   const handleMouseEnterOnContent = () => {
-    // only when nothing dragged content hover will visible
+    // 아무 것도 드래그하지 않을 때만 css: cotent_hover를 적용함
     $content.current.classList.toggle(
       styles.content_hover,
       onDragIndex.current < 0
     );
   };
   const handleMouseLeaveOnContent = () => {
-    $content.current.classList.toggle(styles.content_hover, false);
-    $content.current.classList.toggle(styles.border_bottom, false);
-    $content.current.classList.toggle(styles.border_top, false);
+    invisibleBorder($content.current);
   };
-  const handleMouseMoveWrapper = () => {
-    if (
-      isLoactionXOnTarget(
-        mouseLocation.current?.x,
-        $wrapperSizes.current?.left,
-        $wrapperSizes.current?.width
-      ) &&
-      isLoactionYOnTarget(
-        mouseLocation.current?.y,
-        $wrapperSizes.current?.top,
-        $wrapperSizes.current?.height,
-        scroll.current
-      )
-    ) {
-      mouseOnIndex.current = index;
 
-      relocateControl(
-        $wrapper.current,
-        control.current,
-        onDragIndex.current,
-        scroll.current
-      );
-    }
-  };
-  const handleMouseMoveContent = () => {
-    moveToIndex.current = index;
-    if (onDragIndex.current >= index) {
-      if (
-        isLoactionYOnTopOfTarget(
-          mouseLocation.current.y,
-          $wrapperSizes.current.top,
-          $wrapperSizes.current.height,
-          scroll.current
-        )
-      ) {
-        $content.current.classList.toggle(styles.border_top, true);
-      }
-    }
-    if (onDragIndex.current < index) {
-      if (
-        isLoactionYOnBottomOfTarget(
-          mouseLocation.current.y,
-          $wrapperSizes.current.top,
-          $wrapperSizes.current.height,
-          scroll.current
-        )
-      ) {
-        // moveToIndex.current = index;
-        //  getNextIndex(index, contents.length);
-        $content.current.classList.toggle(styles.border_bottom, true);
-      }
-    }
-  };
   const handleInput = (e: FormEvent<HTMLDivElement>) => {
     const tempContents = [...contents];
     tempContents[index].content = e.currentTarget.innerText;
@@ -141,24 +64,16 @@ const TextBar = ({
   };
   return (
     <div
-      ref={$wrapper}
-      className={`${styles.wrapper}`}
-      onClick={handleClickWrapper}
-      onMouseMove={handleMouseMoveWrapper}
-      onMouseUp={handleMouseUpWrapper}>
-      <div
-        ref={$content}
-        className={`${styles.content}`}
-        contentEditable={true}
-        suppressContentEditableWarning={true}
-        placeholder={placeholder}
-        onMouseEnter={handleMouseEnterOnContent}
-        onMouseLeave={handleMouseLeaveOnContent}
-        onMouseMove={handleMouseMoveContent}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onInput={handleInput}></div>
-    </div>
+      ref={$content}
+      className={`${styles.content}`}
+      contentEditable={true}
+      suppressContentEditableWarning={true}
+      placeholder={placeholder}
+      onMouseEnter={handleMouseEnterOnContent}
+      onMouseLeave={handleMouseLeaveOnContent}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onInput={handleInput}></div>
   );
 };
 

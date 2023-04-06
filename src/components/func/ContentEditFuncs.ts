@@ -1,4 +1,6 @@
-import styles from "@src/styles/board/content/ContentEdit.module.scss";
+import ContentEditStyles from "@src/styles/board/content/ContentEdit.module.scss";
+import TextBarStyles from "@src/styles/board/content/TextBar.module.scss";
+import ContentEditBarStyles from "@src/styles/board/content/ContentEditBar.module.scss";
 import {
   VariationFlag,
   VariationFlagType,
@@ -54,7 +56,29 @@ export const isLoactionYOnTarget = (
 ) => {
   return top - scroll < y && y < top + height - scroll;
 };
+export const isMouseOnTarget = (
+  mouseLocation: LocationType,
+  containerSizes: ContainerSizeType,
+  scroll: number
+) => {
+  if (!mouseLocation || !containerSizes) {
+    return false;
+  }
 
+  return (
+    isLoactionXOnTarget(
+      mouseLocation.x,
+      containerSizes.left,
+      containerSizes.width
+    ) &&
+    isLoactionYOnTarget(
+      mouseLocation.y,
+      containerSizes.top,
+      containerSizes.height,
+      scroll
+    )
+  );
+};
 export const isLoactionYOnBottomOfTarget = (
   y: number,
   top: number,
@@ -107,28 +131,22 @@ export const setControlInvisible = (
   controlDiv: HTMLDivElement,
   bool: boolean
 ) => {
-  controlDiv.classList.toggle(styles.fadein, !bool);
-  controlDiv.classList.toggle(styles.fadeout, bool);
+  controlDiv.classList.toggle(ContentEditStyles.fadein, !bool);
+  controlDiv.classList.toggle(ContentEditStyles.fadeout, bool);
   setTimeout(() => {
-    controlDiv.classList.toggle(styles.invisible, bool);
+    controlDiv.classList.toggle(ContentEditStyles.invisible, bool);
   }, 100);
 };
 
 export const relocateControl = (
-  targetDiv: HTMLDivElement,
+  targetLocation: LocationType,
   controlDiv: HTMLDivElement,
-  onDragIndex: number,
-  scroll: number
+  onDragIndex: number
 ) => {
   if (onDragIndex > -1) return;
 
-  const targetLocation: LocationType = {
-    x: targetDiv.offsetLeft,
-    y: targetDiv.offsetTop,
-  };
-
   controlDiv.style.left = `${targetLocation.x}px`;
-  controlDiv.style.top = `${targetLocation.y - scroll}px`;
+  controlDiv.style.top = `${targetLocation.y}px`;
 
   setControlInvisible(controlDiv, false);
 };
@@ -144,4 +162,10 @@ export const swapElementsSequenceInContents = (
   tempContents.splice(moveTo, 0, tempContent);
 
   return tempContents;
+};
+
+export const invisibleBorder = (target: HTMLDivElement) => {
+  target.classList.toggle(TextBarStyles.content_hover, false);
+  target.classList.toggle(ContentEditBarStyles.border_bottom, false);
+  target.classList.toggle(ContentEditBarStyles.border_top, false);
 };
