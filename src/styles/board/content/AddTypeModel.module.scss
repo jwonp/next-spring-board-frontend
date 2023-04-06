@@ -1,12 +1,20 @@
+.background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    // background-color: azure;
+    z-index: 999;
+    background-color: rgba(0,0,0,0.5);
+}
 .wrapper{
     position: absolute;
-    top: 340px;
-    left: 440px;
+
     width: 12em;
     
     border: 2px solid gold;
-    
-    z-index: 999;
+    background-color: antiquewhite;
 }
 
 .item{
@@ -22,4 +30,7 @@
     &:hover{
         background-color: darkolivegreen;
     }
+}
+.invisible {
+    display: none;
 }

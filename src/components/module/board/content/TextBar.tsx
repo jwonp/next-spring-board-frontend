@@ -84,14 +84,14 @@ const TextBar = ({
   const handleMouseMoveWrapper = () => {
     if (
       isLoactionXOnTarget(
-        mouseLocation.current.x,
-        $wrapperSizes.current.left,
-        $wrapperSizes.current.width
+        mouseLocation.current?.x,
+        $wrapperSizes.current?.left,
+        $wrapperSizes.current?.width
       ) &&
       isLoactionYOnTarget(
-        mouseLocation.current.y,
-        $wrapperSizes.current.top,
-        $wrapperSizes.current.height,
+        mouseLocation.current?.y,
+        $wrapperSizes.current?.top,
+        $wrapperSizes.current?.height,
         scroll.current
       )
     ) {

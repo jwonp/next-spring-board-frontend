@@ -66,7 +66,7 @@ const ImageBar = ({
     if (
       isLoactionXOnTarget(
         mouseLocation.current.x,
-        $wrapperSizes.current.left,
+        $wrapperSizes.current?.left,
         $wrapperSizes.current.width
       ) &&
       isLoactionYOnTarget(

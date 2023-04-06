@@ -1,6 +1,9 @@
 import styles from "@src/styles/board/content/ContentEdit.module.scss";
 import TextBar from "@src/components/module/board/content/TextBar";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
+import {
+  ContentBarDataType,
+  ContentTypeType,
+} from "@src/static/types/ContentDataType";
 import { useEffect, useMemo, useRef, useState } from "react";
 import qs from "qs";
 import { useRouter } from "next/router";
@@ -25,6 +28,7 @@ import {
 } from "@src/components/func/ContentEditFuncs";
 import { KeySet } from "@src/static/data/stringSet";
 import AddTypeModel from "@src/components/module/board/content/AddTypeModal";
+import { AddContentType } from "@src/static/types/addContentsType";
 
 const ContentEdit = () => {
   const router = useRouter();
@@ -48,7 +52,10 @@ const ContentEdit = () => {
   const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
   const $mouseLocation = useRef<LocationType>({ x: 0, y: 0 });
   const $lastIndex = useRef<number>(0);
-
+  const [addType, setAddType] = useState<string>("text");
+  const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState<boolean>(false);
+  const [AddTypeModalLocation, setAddTypeModalLocation] =
+    useState<LocationType>({ x: 0, y: 0 });
   const [contents, setContents] = useState<ContentBarDataType[]>([
     { type: "text", content: "", image: "" },
     { type: "image", content: "", image: "/favicon.png" },
@@ -143,9 +150,13 @@ const ContentEdit = () => {
       .firstChild as HTMLDivElement;
   };
 
-  const addContent = (target: number, content: string = "") => {
+  const addContent: AddContentType = (
+    target: number,
+    content: string = "",
+    type: ContentTypeType = "text"
+  ) => {
     const newContent: ContentBarDataType = {
-      type: "text",
+      type: type,
       content: content,
       image: "",
     };
@@ -170,7 +181,15 @@ const ContentEdit = () => {
   };
 
   const handleAddBtn = () => {
-    addContent($mouseOnIndex.current);
+    const _targetWrapper = getTargetDivByIndex($mouseOnIndex.current);
+    const _targetChild = getTargetFirstChildDivByIndex($mouseOnIndex.current);
+
+    const _top = _targetWrapper.offsetTop + _targetWrapper.offsetHeight;
+    const _left = _targetWrapper.offsetLeft + _targetChild.offsetLeft;
+    const _location: LocationType = { x: _left, y: _top };
+
+    setAddTypeModalLocation(_location);
+    setIsOpenAddTypeModal(true);
   };
 
   const handleHandleBtnMouseDown = () => {
@@ -245,7 +264,7 @@ const ContentEdit = () => {
       const targetDiv = getTargetFirstChildDivByIndex($focusIndex.current);
 
       const anchorOffset = $selection.current.anchorOffset;
-      const focusOffset = $selection.current.focusOffset;
+
       let sub: string = "";
       if ($selection.current.isCollapsed) {
         sub = targetDiv.innerText.substring(anchorOffset);
@@ -354,7 +373,7 @@ const ContentEdit = () => {
           <input type="submit" value={"저장"} onClick={handleClickSubmit} />
         </div>
       </div>
-      <AddTypeModel />
+
       <div
         ref={$contentWrapper}
         className={`${styles.content_container} `}
@@ -398,6 +417,14 @@ const ContentEdit = () => {
           </div>
         </div>
       </div>
+      <AddTypeModel
+        isOpen={isOpenAddTypeModal}
+        mouseOnIndex={$mouseOnIndex.current}
+        location={AddTypeModalLocation}
+        setIsOpen={setIsOpenAddTypeModal}
+        setAddType={setAddType}
+        addContent={addContent}
+      />
       <div
         ref={$draggedTarget}
         className={`${styles.mouse} ${styles.invisible}`}></div>
