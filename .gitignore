@@ -37,3 +37,4 @@ next-env.d.ts
 /deprecated
 todo.txt
 
+.vscode/launch.json
