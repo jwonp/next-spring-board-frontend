@@ -7,7 +7,10 @@ import {
 } from "@src/static/types/VariationFlagType";
 import { LocationType } from "@src/static/types/LocationType";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
+import {
+  ContentBarDataType,
+  ContentTypeType,
+} from "@src/static/types/ContentDataType";
 export const pointEndOfBeforeTheTarget = (
   beforeTheTarget: Node,
   range: Range,
@@ -15,6 +18,7 @@ export const pointEndOfBeforeTheTarget = (
   caretLocation: number
 ) => {
   if (!beforeTheTarget) return;
+
   range.setStart(beforeTheTarget, caretLocation);
   range.collapse(true);
   selection.removeAllRanges();
@@ -168,4 +172,23 @@ export const invisibleBorder = (target: HTMLDivElement) => {
   target.classList.toggle(TextBarStyles.content_hover, false);
   target.classList.toggle(ContentEditBarStyles.border_bottom, false);
   target.classList.toggle(ContentEditBarStyles.border_top, false);
+};
+
+export const createNewContent = (
+  content: string = "",
+  type: ContentTypeType = "text"
+) => {
+  const newContent: ContentBarDataType = {
+    type: type,
+    content: "",
+    image: "",
+  };
+  if (newContent.type === ("text" as ContentTypeType)) {
+    newContent.content = content;
+  }
+
+  if (newContent.type === ("image" as ContentTypeType)) {
+    newContent.image = content;
+  }
+  return newContent;
 };

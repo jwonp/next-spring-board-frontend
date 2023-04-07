@@ -16,6 +16,7 @@ import {
 import ImageBar from "@src/components/module/board/content/ImageBar";
 import { LocationType } from "@src/static/types/LocationType";
 import {
+  createNewContent,
   getFocusTarget,
   isCaretOnFront,
   isContentEmpty,
@@ -135,16 +136,19 @@ const ContentEdit = () => {
       .firstChild as HTMLDivElement;
   };
 
+  /**
+   *
+   * @param target target 다음에 EditBar를 추가함
+   * @param content EditBar에 들어갈 내용, image의 경우 src
+   * @param type "text" | "image"
+   * @returns
+   */
   const addContent: AddContentType = (
     target: number,
     content: string = "",
     type: ContentTypeType = "text"
   ) => {
-    const newContent: ContentBarDataType = {
-      type: type,
-      content: content,
-      image: "",
-    };
+    const newContent = createNewContent(content, type);
     if (contents.length === 0) {
       setContents([newContent]);
       return;
