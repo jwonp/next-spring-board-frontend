@@ -65,7 +65,7 @@ const ContentEditBar = ({
     content.classList.toggle(styles.border_top, false);
   };
   const handleMouseMoveWrapper = () => {
-    // if (!$wrapper.current || !$wrapperSizes.current) return;
+    if (!$wrapper.current || !$wrapperSizes.current) return;
     const _isMouseOnTarget = isMouseOnTarget(
       mouseLocation.current,
       $wrapperSizes.current,
@@ -124,7 +124,7 @@ const ContentEditBar = ({
       );
     }
     if (type === "image") {
-      <ImageBar content={contents[index]} index={index} />;
+      return <ImageBar content={contents[index]} index={index} />;
     }
   };
   return (

@@ -28,7 +28,7 @@ const ImageBar = ({
   return (
     <div ref={$image} className={`${styles.image_box}`}>
       <Image
-        src={content.image}
+        src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${content.image}`}
         alt={"No Image"}
         width={imageSize.width}
         height={imageSize.height}
