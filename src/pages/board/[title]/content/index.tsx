@@ -148,6 +148,7 @@ const ContentEdit = () => {
     content: string = "",
     type: ContentTypeType = "text"
   ) => {
+    console.log(target, content, type);
     const newContent = createNewContent(content, type);
     if (contents.length === 0) {
       setContents([newContent]);
@@ -190,6 +191,8 @@ const ContentEdit = () => {
   const handleHandleBtnMouseUp = () => {
     $draggedTarget.current.innerText = "";
     $draggedTarget.current.classList.toggle(styles.invisible, true);
+
+    if ($onDragIndex.current < 0) return;
 
     const tempContents = swapElementsSequenceInContents(
       $onDragIndex.current,

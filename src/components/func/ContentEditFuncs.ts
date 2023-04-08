@@ -18,7 +18,6 @@ export const pointEndOfBeforeTheTarget = (
   caretLocation: number
 ) => {
   if (!beforeTheTarget) return;
-
   range.setStart(beforeTheTarget, caretLocation);
   range.collapse(true);
   selection.removeAllRanges();
@@ -29,6 +28,15 @@ export const isVariationFlagDecrease = (variationFlag: VariationFlagType) => {
   return variationFlag === VariationFlag.decrease;
 };
 
+/**
+ * contents의 길이가 바뀌면서 증가/감소 했는지
+ * variationFlag로 확인해서 그에 맞게 focusTarget을 변경하는데,
+ * contentsLength를 벗어나지 않게 변경한 focusTargetIndex를 반환
+ * @param focusTargetIndex 변경 전 focusTargetIndex
+ * @param variationFlag contents의 요소가 증가했으면 +1, 감소했으면 -1, 그대로면 0
+ * @param contentsLength 현재 contents 배열의 길이
+ * @returns 0 < focusTarget < contentsLength 임을 보장하는 focusTarget 값을 반환
+ */
 export const getFocusTarget = (
   focusTargetIndex: number,
   variationFlag: VariationFlagType,
@@ -190,5 +198,6 @@ export const createNewContent = (
   if (newContent.type === ("image" as ContentTypeType)) {
     newContent.image = content;
   }
+  console.log(newContent);
   return newContent;
 };

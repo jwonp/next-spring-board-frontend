@@ -1,31 +1,18 @@
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import styles from "@src/styles/board/content/TextBar.module.scss";
-import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { LocationType } from "@src/static/types/LocationType";
 
-import {
-  invisibleBorder,
-  isLoactionXOnTarget,
-  isLoactionYOnBottomOfTarget,
-  isLoactionYOnTarget,
-  isLoactionYOnTopOfTarget,
-  relocateControl,
-} from "@src/components/func/ContentEditFuncs";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
 const TextBar = ({
   index,
   focus,
-  moveToIndex,
-  contents,
+  content,
   onDragIndex,
-  setContents,
 }: {
   index: number;
   focus: React.MutableRefObject<number>;
-  moveToIndex: React.MutableRefObject<number>;
-  contents: ContentBarDataType[];
+  content: ContentBarDataType;
   onDragIndex: React.MutableRefObject<number>;
-  setContents: React.Dispatch<React.SetStateAction<ContentBarDataType[]>>;
 }) => {
   const $content = useRef<HTMLDivElement>(null);
   const [placeholder, setPlaceholder] = useState<string>("");
@@ -34,8 +21,8 @@ const TextBar = ({
    * ContentEditBar의 위치(index)가 바뀔 떄마다 재랜더링
    */
   useEffect(() => {
-    $content.current.innerText = contents[index].content;
-  }, [contents, index]);
+    $content.current.innerText = content.content;
+  }, [content, index]);
 
   const handleFocus = () => {
     focus.current = index;
@@ -53,14 +40,9 @@ const TextBar = ({
       onDragIndex.current < 0
     );
   };
-  const handleMouseLeaveOnContent = () => {
-    invisibleBorder($content.current);
-  };
 
   const handleInput = (e: FormEvent<HTMLDivElement>) => {
-    const tempContents = [...contents];
-    tempContents[index].content = e.currentTarget.innerText;
-    setContents(tempContents);
+    content.content = e.currentTarget.innerText;
   };
   return (
     <div
@@ -70,7 +52,6 @@ const TextBar = ({
       suppressContentEditableWarning={true}
       placeholder={placeholder}
       onMouseEnter={handleMouseEnterOnContent}
-      onMouseLeave={handleMouseLeaveOnContent}
       onFocus={handleFocus}
       onBlur={handleBlur}
       onInput={handleInput}></div>

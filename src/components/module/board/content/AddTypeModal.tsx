@@ -6,6 +6,7 @@ import { AddContentType } from "@src/static/types/addContentsType";
 import { ContentTypeType } from "@src/static/types/ContentDataType";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { uploadResponseType } from "@src/static/types/uploadResponseType";
 const AddTypeModel = ({
   isOpen,
   mouseOnIndex,
@@ -23,6 +24,7 @@ const AddTypeModel = ({
 }) => {
   const $wrapper = useRef<HTMLDivElement>(null);
   const $fileInput = useRef<HTMLInputElement>(null);
+  const $mouseOnIndex = useRef<number>(null);
   const iconSize = { width: 32, height: 32 };
   const IMAGE_ACCEPT = "image/*";
   const { data: session } = useSession();
@@ -36,6 +38,7 @@ const AddTypeModel = ({
   };
   const handleClickText = (e: React.MouseEvent<HTMLDivElement>) => {
     // setAddType();
+
     addContent(
       mouseOnIndex,
       "",
@@ -43,20 +46,25 @@ const AddTypeModel = ({
     );
   };
   const handleClickImage = (e: React.MouseEvent<HTMLDivElement>) => {
+    $mouseOnIndex.current = mouseOnIndex;
     $fileInput.current.click();
   };
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = $fileInput.current.files[0];
-    console.log(file);
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("username", session.user.name);
-    sendFile(formData);
+    sendFile(formData).then((res) => {
+      addContent(
+        $mouseOnIndex.current,
+        res.data.imageLocation,
+        "image" as ContentTypeType
+      );
+    });
   };
   const sendFile = async (formData: FormData) => {
-    await axios("/api/board/file", {
-      method: "POST",
-      data: formData,
+    return await axios.post("/api/board/file", formData, {
       headers: { "Content-Type": "multipart/form-data;charset=utf-8" },
     });
   };

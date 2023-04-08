@@ -3,6 +3,7 @@ import {
   isLoactionYOnBottomOfTarget,
   isLoactionYOnTopOfTarget,
   relocateControl,
+  invisibleBorder,
 } from "@src/components/func/ContentEditFuncs";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
@@ -10,6 +11,7 @@ import { LocationType } from "@src/static/types/LocationType";
 import styles from "@src/styles/board/content/ContentEditBar.module.scss";
 import { useRef, useEffect, SetStateAction, useMemo } from "react";
 import TextBar from "./TextBar";
+import ImageBar from "./ImageBar";
 const ContentEditBar = ({
   index,
   type,
@@ -51,6 +53,9 @@ const ContentEditBar = ({
   const handleClickWrapper = () => {
     ($wrapper.current.firstChild as HTMLDivElement).focus();
   };
+  const handleMouseLeaveOnContent = () => {
+    invisibleBorder($wrapper.current.firstChild as HTMLDivElement);
+  };
   const handleMouseUpWrapper = () => {
     if (onDragIndex.current < 0) return;
 
@@ -60,6 +65,7 @@ const ContentEditBar = ({
     content.classList.toggle(styles.border_top, false);
   };
   const handleMouseMoveWrapper = () => {
+    // if (!$wrapper.current || !$wrapperSizes.current) return;
     const _isMouseOnTarget = isMouseOnTarget(
       mouseLocation.current,
       $wrapperSizes.current,
@@ -106,22 +112,30 @@ const ContentEditBar = ({
       );
     }
   };
-
+  const getBarByType = (type: string) => {
+    if (type === "text") {
+      return (
+        <TextBar
+          index={index}
+          focus={focus}
+          content={contents[index]}
+          onDragIndex={onDragIndex}
+        />
+      );
+    }
+    if (type === "image") {
+      <ImageBar content={contents[index]} index={index} />;
+    }
+  };
   return (
     <div
       ref={$wrapper}
       className={`${styles.wrapper}`}
       onClick={handleClickWrapper}
       onMouseMove={handleMouseMoveWrapper}
+      onMouseLeave={handleMouseLeaveOnContent}
       onMouseUp={handleMouseUpWrapper}>
-      <TextBar
-        index={index}
-        focus={focus}
-        moveToIndex={moveToIndex}
-        contents={contents}
-        onDragIndex={onDragIndex}
-        setContents={setContents}
-      />
+      {getBarByType(type)}
     </div>
   );
 };
