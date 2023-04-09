@@ -39,21 +39,11 @@ const ContentEditBar = ({
   setContents: React.Dispatch<React.SetStateAction<ContentBarDataType[]>>;
 }) => {
   const $wrapper = useRef<HTMLDivElement>(null);
-  const $wrapperSizes = useRef<ContainerSizeType>(null);
 
-  useEffect(() => {
-    const sizes: ContainerSizeType = {
-      left: $wrapper.current.offsetLeft,
-      top: $wrapper.current.offsetTop,
-      width: $wrapper.current.offsetWidth,
-      height: $wrapper.current.offsetHeight,
-    };
-    $wrapperSizes.current = sizes;
-  }, []);
   const handleClickWrapper = () => {
     ($wrapper.current.firstChild as HTMLDivElement).focus();
   };
-  const handleMouseLeaveOnContent = () => {
+  const handleMouseLeave = () => {
     invisibleBorder($wrapper.current.firstChild as HTMLDivElement);
   };
   const handleMouseUpWrapper = () => {
@@ -65,26 +55,33 @@ const ContentEditBar = ({
     content.classList.toggle(styles.border_top, false);
   };
   const handleMouseMoveWrapper = () => {
-    if (!$wrapper.current || !$wrapperSizes.current) return;
+    const _wrapperSizes: ContainerSizeType = {
+      left: $wrapper.current.offsetLeft,
+      top: $wrapper.current.offsetTop,
+      width: $wrapper.current.offsetWidth,
+      height: $wrapper.current.offsetHeight,
+    };
+    if (!$wrapper.current) return;
     const _isMouseOnTarget = isMouseOnTarget(
       mouseLocation.current,
-      $wrapperSizes.current,
+      _wrapperSizes,
       scroll.current
     );
     const isMouseOnTargetBefore =
       onDragIndex.current >= index &&
       isLoactionYOnTopOfTarget(
         mouseLocation.current.y,
-        $wrapperSizes.current.top,
-        $wrapperSizes.current.height,
+        _wrapperSizes.top,
+        _wrapperSizes.height,
         scroll.current
       );
     const isMouseOnTargetAfter =
+      onDragIndex.current >= 0 &&
       onDragIndex.current < index &&
       isLoactionYOnBottomOfTarget(
         mouseLocation.current.y,
-        $wrapperSizes.current.top,
-        $wrapperSizes.current.height,
+        _wrapperSizes.top,
+        _wrapperSizes.height,
         scroll.current
       );
 
@@ -92,20 +89,22 @@ const ContentEditBar = ({
       mouseOnIndex.current = index;
 
       const _targetLocation: LocationType = {
-        x: $wrapperSizes.current.left,
-        y: $wrapperSizes.current.top - scroll.current,
+        x: _wrapperSizes.left,
+        y: _wrapperSizes.top - scroll.current,
       };
       relocateControl(_targetLocation, control.current, onDragIndex.current);
     }
 
     moveToIndex.current = index;
     if (isMouseOnTargetBefore) {
+      console.log("before");
       $wrapper.current.firstElementChild.classList.toggle(
         styles.border_top,
         true
       );
     }
     if (isMouseOnTargetAfter) {
+      console.log("after");
       $wrapper.current.firstElementChild.classList.toggle(
         styles.border_bottom,
         true
@@ -133,7 +132,7 @@ const ContentEditBar = ({
       className={`${styles.wrapper}`}
       onClick={handleClickWrapper}
       onMouseMove={handleMouseMoveWrapper}
-      onMouseLeave={handleMouseLeaveOnContent}
+      onMouseLeave={handleMouseLeave}
       onMouseUp={handleMouseUpWrapper}>
       {getBarByType(type)}
     </div>

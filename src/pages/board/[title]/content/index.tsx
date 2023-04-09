@@ -148,7 +148,6 @@ const ContentEdit = () => {
     content: string = "",
     type: ContentTypeType = "text"
   ) => {
-    console.log(target, content, type);
     const newContent = createNewContent(content, type);
     if (contents.length === 0) {
       setContents([newContent]);
@@ -219,6 +218,7 @@ const ContentEdit = () => {
       setControlInvisible($control.current, true);
     }
 
+    if ($draggedTarget.current.classList.contains(styles.invisible)) return;
     $draggedTarget.current.style.left = $mouseLocation.current.x + 60 + "px";
     $draggedTarget.current.style.top = $mouseLocation.current.y + "px";
   };

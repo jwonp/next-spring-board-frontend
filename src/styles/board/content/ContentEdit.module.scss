@@ -60,7 +60,7 @@ background-color: black;
    
 }
 .fadein{
- animation: $fadein;
+    animation: $fadein;
     -moz-animation: $fadein; /* Firefox */
     -webkit-animation: $fadein; /* Safari and Chrome */
     -o-animation: $fadein; /* Opera */
@@ -99,12 +99,11 @@ background-color: black;
     height: calc(2em + 4px);
     overflow: hidden;
     border-radius: 15px;
+    & :hover{
+        cursor: pointer;
+    }
 }
-.add:hover,
-.handle:hover{
-    
-    background-color:burlywood;
-}
+
 
 .invisible{
     display: none;

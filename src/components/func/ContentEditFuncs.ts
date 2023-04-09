@@ -198,6 +198,6 @@ export const createNewContent = (
   if (newContent.type === ("image" as ContentTypeType)) {
     newContent.image = content;
   }
-  console.log(newContent);
+
   return newContent;
 };

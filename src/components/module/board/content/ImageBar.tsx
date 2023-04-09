@@ -14,26 +14,20 @@ const ImageBar = ({
 }) => {
   const $image = useRef<HTMLDivElement>(null);
 
-  const [imageSize, setImageSize] = useState<ImageSizeType>({
-    width: 100,
-    height: 100,
-  });
-
-  // const DynamicImage = useMemo(() => {
-  //   return (
-
-  //   );
-  // }, [content.image, imageSize.height, imageSize.width]);
+  const [width, setWidth] = useState<number>(320);
+  const [height, setHeight] = useState<number>(10);
 
   return (
     <div ref={$image} className={`${styles.image_box}`}>
       <Image
         src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${content.image}`}
         alt={"No Image"}
-        width={imageSize.width}
-        height={imageSize.height}
-        //   fill
-        //   sizes="(max-width: 768px) 100vw,
+        width={width}
+        height={height}
+        placeholder="blur"
+        blurDataURL="/image.svg"
+        // fill
+        // sizes="(max-width: 768px) 100vw,
         //         (max-width: 1200px) 50vw,
         //         33vw"
         priority={true}

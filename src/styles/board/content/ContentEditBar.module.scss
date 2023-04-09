@@ -3,10 +3,11 @@
     padding:0 0.2em;
     padding-left: 3em;
     display: flex;
+    overflow: visible;
 }
 .border_bottom{
-    border-bottom: 2px solid rgb(170,170,170,0.5);
+    border-bottom: 2px solid rgb(170,170,170,0.5) !important;
 }
 .border_top{
-    border-top: 2px solid rgb(170,170,170,0.5);
+    border-top: 2px solid rgb(170,170,170,0.5) !important;
 }
