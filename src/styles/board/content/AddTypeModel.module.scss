@@ -6,15 +6,15 @@
     left: 0;
     // background-color: azure;
     z-index: 999;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.45);
 }
 .wrapper{
     position: absolute;
 
     width: 12em;
     
-    border: 2px solid gold;
-    background-color: antiquewhite;
+    border: 2px solid rgb(50,50,50);
+    background-color: rgb(50,50,50);
 }
 
 .item{
@@ -27,9 +27,7 @@
     vertical-align: middle;
     line-height: 2em;
     gap:0.6em;
-    &:hover{
-        background-color: darkolivegreen;
-    }
+
 }
 .invisible {
     display: none;

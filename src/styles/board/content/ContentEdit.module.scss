@@ -9,35 +9,53 @@ $fadeout: fadeout 0.3s;
 }
 .header_container{
 width: calc(100% - 5em);
-height: 2.5em;
-display: flex;
-gap:1em;
-margin-bottom: 1em;
+
+display: block;
+
 padding: 1em 2em;
-border: 1px solid gold;
-// position: fixed;
-background-color: black;
+
+
 
 }
 .board_name{
-    font-size:2.5em;
-    // border: 1px solid gold;
-}
-.content_title input{
     font-size:2em;
+    padding-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid rgb(170,170,170,0.5);
+}
+.title_box{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid rgb(170,170,170,0.5);
+}
+.content_title {
+    & input{
+        width: 27em;
+        background-color: rgb(50,50,50);
+        border: none;
+        font-size:2em;
+
+        &:focus{
+            outline: none;
+        }
+    }
 }
 
 .submit_btn input{
     width: 3em;
     height: 1.8em;
     font-size:1.5em;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(50,50,50);
 }
 
 .content_container{
     width: calc(100% - 6em);
-    padding: 3em 0;
-    padding-left: 3em;
-    padding-right: 2em;
+    padding: 1.5em 2em;
+
     // border: 1px solid floralwhite;
 }
 
@@ -49,7 +67,7 @@ background-color: black;
 
 .mouse{
     position: absolute;
-    color: aqua;
+    
     border-radius: 50%;
     opacity: 60%;
     
