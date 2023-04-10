@@ -1,4 +1,8 @@
-import { HeaderMiddleMenu, HeaderRightMenu } from "@src/static/data/stringSet";
+import {
+  HeaderMiddleMenu,
+  HeaderRightMenu,
+  sizes,
+} from "@src/static/data/stringSet";
 import { useSession, signIn, signOut } from "next-auth/react";
 import styles from "@src/styles/frame/Header.module.scss";
 import Image from "next/image";
@@ -21,17 +25,10 @@ const Header = () => {
       <div className={`${styles.container}`}>
         <div className={`${styles.box}`}>
           <div className={`${styles.logo}`}>
-            <Image
-              src={"/favicon.png"}
-              alt={"No Logo"}
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-            />
+            <Image src={"/favicon.png"} alt={"No Logo"} fill sizes={sizes} />
           </div>
           <div>
-            <Link href={`/`}>logo</Link>
+            <Link href={`/`}>{session?.user?.name}</Link>
           </div>
         </div>
         <div className={`${styles.box}`}>

@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import axios from "axios";
+import { sizes } from "@src/static/data/stringSet";
 const BoardByTitle = () => {
   const router = useRouter();
   const $searchInput = useRef<HTMLInputElement>(null);
@@ -25,6 +26,7 @@ const BoardByTitle = () => {
     }, 700)
   ).current;
   const [pageIndex] = useState<number>(0);
+
   const title = useMemo(() => {
     return router.query.title as string;
   }, [router.query.title]);
@@ -40,14 +42,7 @@ const BoardByTitle = () => {
 
         <div className={`${styles.search}`}>
           <div className={`${styles.search_icon}`}>
-            <Image
-              src={"/search.svg"}
-              alt={""}
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-            />
+            <Image src={"/search.svg"} alt={""} fill sizes={sizes} />
           </div>
           <input
             ref={$searchInput}

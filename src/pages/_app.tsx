@@ -1,5 +1,5 @@
 import "@src/styles/globals.css";
-import { csrfTokenGetFetcher } from "@src/components/fetcher/LoginFetcher";
+
 import Layout from "@src/components/module/frame/Layout";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -14,7 +14,7 @@ const App = ({
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) => {
   const router = useRouter();
-  const { data } = useSWR("/api/csrf-token", csrfTokenGetFetcher);
+  // const { data } = useSWR("/api/csrf-token", csrfTokenGetFetcher);
 
   return (
     <SessionProvider

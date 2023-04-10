@@ -1,11 +1,11 @@
 import styles from "@src/styles/board/content/ContentEdit.module.scss";
-import TextBar from "@src/components/module/board/content/TextBar";
+
 import {
   ContentBarDataType,
   ContentTypeType,
 } from "@src/static/types/ContentDataType";
 import { useEffect, useMemo, useRef, useState } from "react";
-import qs from "qs";
+
 import { useRouter } from "next/router";
 import React from "react";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import {
   VariationFlag,
   VariationFlagType,
 } from "@src/static/types/VariationFlagType";
-import ImageBar from "@src/components/module/board/content/ImageBar";
+
 import { LocationType } from "@src/static/types/LocationType";
 import {
   createNewContent,
@@ -24,13 +24,15 @@ import {
   isOutOfContendEditBars,
   isVariationFlagDecrease,
   pointEndOfBeforeTheTarget,
+  saveContents,
   setControlInvisible,
   swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
-import { KeySet } from "@src/static/data/stringSet";
+import { KeySet, sizes } from "@src/static/data/stringSet";
 import AddTypeModel from "@src/components/module/board/content/AddTypeModal";
-import { AddContentType } from "@src/static/types/addContentsType";
+import { AddContentType } from "@src/static/types/AddContentsType";
 import ContentEditBar from "@src/components/module/board/content/ContentEditBar";
+import { SaveContentType } from "@src/static/types/SaveContentType";
 
 const ContentEdit = () => {
   const router = useRouter();
@@ -339,15 +341,11 @@ const ContentEdit = () => {
   ) => {
     e.preventDefault();
 
-    const data = {
+    const data: SaveContentType = {
       title: $title.current.value,
       contents: contents,
     };
-    const stringifyContents = qs.stringify(data);
-    const parseContents = qs.parse(stringifyContents);
-
-    console.log(stringifyContents);
-    console.log(parseContents);
+    saveContents(data);
   };
 
   return (
@@ -358,11 +356,17 @@ const ContentEdit = () => {
       onMouseUp={handleHandleBtnMouseUp}>
       <div className={`${styles.header_container}`}>
         <div className={`${styles.board_name}`}>{title}</div>
-        <div className={`${styles.content_title}`}>
-          <input ref={$title} type="text" />
-        </div>
-        <div className={`${styles.submit_btn}`}>
-          <input type="submit" value={"저장"} onClick={handleClickSubmit} />
+        <div className={`${styles.title_box}`}>
+          <div className={`${styles.content_title}`}>
+            <input
+              ref={$title}
+              type="text"
+              placeholder="제목을 입력해주세요."
+            />
+          </div>
+          <div className={`${styles.submit_btn}`}>
+            <input type="submit" value={"저장"} onClick={handleClickSubmit} />
+          </div>
         </div>
       </div>
 
@@ -385,9 +389,7 @@ const ContentEdit = () => {
               src={"/plus.svg"}
               alt={"No plus"}
               fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
+              sizes={sizes}
               draggable={false}
             />
           </div>
@@ -401,9 +403,7 @@ const ContentEdit = () => {
               src={"/dots.svg"}
               alt={"No dots"}
               fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
+              sizes={sizes}
               draggable={false}
             />
           </div>

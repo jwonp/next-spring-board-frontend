@@ -2,7 +2,7 @@ import styles from "@src/styles/board/content/AddTypeModel.module.scss";
 import Image from "next/image";
 import { LocationType } from "@src/static/types/LocationType";
 import { useEffect, useRef, useState } from "react";
-import { AddContentType } from "@src/static/types/addContentsType";
+import { AddContentType } from "@src/static/types/AddContentsType";
 import { ContentTypeType } from "@src/static/types/ContentDataType";
 import axios from "axios";
 import { useSession } from "next-auth/react";

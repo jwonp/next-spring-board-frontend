@@ -1,4 +1,5 @@
 import { convertNumberToUnitK } from "@src/components/func/stringTools";
+import { sizes } from "@src/static/data/stringSet";
 import { contentType } from "@src/static/types/contentType";
 import styles from "@src/styles/board/content/ContentBar.module.scss";
 import Image from "next/image";
@@ -14,14 +15,7 @@ const ContentBar = ({ data, title }: { data: contentType; title: string }) => {
         <div className={`${styles.right}`}>
           <div className={`${styles.views}`}>
             <div className={`${styles.icon}`}>
-              <Image
-                src={"/view.svg"}
-                alt={"No icon"}
-                fill
-                sizes="(max-width: 768px) 100vw,
-      (max-width: 1200px) 50vw,
-      33vw"
-              />
+              <Image src={"/view.svg"} alt={"No icon"} fill sizes={sizes} />
             </div>
             <div className={`${styles.count}`}>
               {convertNumberToUnitK(data.views)}
@@ -29,14 +23,7 @@ const ContentBar = ({ data, title }: { data: contentType; title: string }) => {
           </div>
           <div className={`${styles.likes}`}>
             <div className={`${styles.icon}`}>
-              <Image
-                src={"/like.svg"}
-                alt={"No icon"}
-                fill
-                sizes="(max-width: 768px) 100vw,
-      (max-width: 1200px) 50vw,
-      33vw"
-              />
+              <Image src={"/like.svg"} alt={"No icon"} fill sizes={sizes} />
             </div>
             <div className={`${styles.count}`}>
               {convertNumberToUnitK(data.likes)}
