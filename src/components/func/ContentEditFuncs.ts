@@ -11,6 +11,9 @@ import {
   ContentBarDataType,
   ContentTypeType,
 } from "@src/static/types/ContentDataType";
+import { SaveContentType } from "@src/static/types/SaveContentType";
+
+import axios from "axios";
 export const pointEndOfBeforeTheTarget = (
   beforeTheTarget: Node,
   range: Range,
@@ -200,4 +203,15 @@ export const createNewContent = (
   }
 
   return newContent;
+};
+
+export const saveContents = async (data: SaveContentType) => {
+  await axios
+    .post(`/api/board/edit`, data)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

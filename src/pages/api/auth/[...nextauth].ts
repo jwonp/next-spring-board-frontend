@@ -15,6 +15,7 @@ export const authOptions: AuthOptions = {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
+          image: profile.picture,
         };
       },
     }),
@@ -24,8 +25,9 @@ export const authOptions: AuthOptions = {
       profile(profile) {
         return {
           id: profile.sub,
-          name: profile.name,
+          name: profile.preferred_username,
           email: profile.email,
+          image: profile.picture,
         };
       },
     }),
@@ -52,6 +54,9 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       const provider = account?.provider as ProviderType;
+
+      console.log("gggggggg");
+      console.log({ ...user, provider: provider });
 
       // switch (Provider[provider]) {
       //   case Provider.google:
