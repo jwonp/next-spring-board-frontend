@@ -7,10 +7,16 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import styles from "@src/styles/frame/Header.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { IdentifyType } from "@src/static/types/UserType";
+import { isUserRegisted } from "@src/components/func/sendRequest";
 
 const Header = () => {
   const { data: session } = useSession();
+  useEffect(() => {
+    // isUserRegisted(id, provider);
+  }, []);
 
   const { signFunc, signStr } = useMemo(() => {
     if (session) {

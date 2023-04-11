@@ -33,8 +33,10 @@ import AddTypeModel from "@src/components/module/board/content/AddTypeModal";
 import { AddContentType } from "@src/static/types/AddContentsType";
 import ContentEditBar from "@src/components/module/board/content/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
+import { useSession } from "next-auth/react";
 
 const ContentEdit = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const $wrapper = useRef<HTMLDivElement>(null);
   const $contentContainer = useRef<HTMLDivElement>(null);
@@ -340,7 +342,7 @@ const ContentEdit = () => {
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
-
+    console.log(session.user);
     const data: SaveContentType = {
       title: $title.current.value,
       contents: contents,

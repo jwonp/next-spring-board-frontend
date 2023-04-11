@@ -14,7 +14,7 @@ const sendContent = async (title: string, content: string) => {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { title, contents }: SaveContentType = req.body;
-  console.log(req.headers.cookie);
+
   sendContent(title, qs.stringify(contents));
   res.status(200).send("good");
 }
