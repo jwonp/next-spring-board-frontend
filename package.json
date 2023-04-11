@@ -25,6 +25,7 @@
     "next": "13.2.4",
     "next-auth": "^4.20.1",
     "next-http-proxy-middleware": "^1.2.5",
+    "next-redux-wrapper": "^8.1.0",
     "qs": "^6.11.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
