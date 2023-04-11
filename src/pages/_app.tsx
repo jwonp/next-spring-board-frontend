@@ -3,19 +3,16 @@ import "@src/styles/globals.css";
 import Layout from "@src/components/module/frame/Layout";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { Session } from "next-auth";
-// import { Provider } from "react-redux";
-// import store from "../redux/store";
+
 const App = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) => {
   const router = useRouter();
-  // const { data } = useSWR("/api/csrf-token", csrfTokenGetFetcher);
-
   return (
     <SessionProvider
       session={session}

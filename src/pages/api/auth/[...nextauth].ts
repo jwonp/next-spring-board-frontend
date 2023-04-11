@@ -1,9 +1,10 @@
 import NextAuth, { AuthOptions } from "next-auth";
-import { setGoogle, setTwitch } from "@src/components/func/setDataByProvider";
+
 import TwitchProvider from "next-auth/providers/twitch";
 import GoogleProvider from "next-auth/providers/google";
-import { Provider, ProviderType } from "@src/static/types/dataTypes";
-import { addUserProfile } from "@src/components/func/sendRequest";
+
+import { addUser } from "@src/components/func/sendRequest";
+import { UserType } from "@src/static/types/UserType";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -53,37 +54,25 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const provider = account?.provider as ProviderType;
+      const provider = account?.provider;
 
-      console.log("gggggggg");
-      console.log({ ...user, provider: provider });
+      const userData: UserType = { ...user, provider: provider };
 
-      // switch (Provider[provider]) {
-      //   case Provider.google:
-      //     addUserProfile(
-      //       setGoogle(
-      //         profile?.email as string,
-      //         user.id,
-      //         profile?.name as string
-      //       )
-      //     );
-      //     break;
-      //   case Provider.twitch:
-      //     addUserProfile(setTwitch(profile?.email as string, user.id));
-      //     break;
-      // }
+      addUser(userData);
 
-      // isLoggedInBefore(ac)
       return true;
     },
     // async redirect({ url, baseUrl }) { return baseUrl },
-    // async session({ session, token, user }) { return session },
+    async session({ session, token, user }) {
+      // session.user.id = user.id;
+      return session;
+    },
     // async jwt({ token, user, account, profile, isNewUser }) { return token }
   },
 
   events: {},
 
-  debug: true,
+  debug: false,
 };
 
 export default NextAuth(authOptions);

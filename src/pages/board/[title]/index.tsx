@@ -44,12 +44,7 @@ const BoardByTitle = () => {
           <div className={`${styles.search_icon}`}>
             <Image src={"/search.svg"} alt={""} fill sizes={sizes} />
           </div>
-          <input
-            ref={$searchInput}
-            type={"text"}
-            onChange={searchCall}
-            // value={searchStr}
-          />
+          <input ref={$searchInput} type={"text"} onChange={searchCall} />
         </div>
         <div>
           <Link href={`/board/${title}/content`}>write</Link>
