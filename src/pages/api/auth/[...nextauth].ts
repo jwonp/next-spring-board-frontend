@@ -5,6 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { addUser } from "@src/components/func/sendRequest";
 import { UserType } from "@src/static/types/UserType";
+import { getProviders } from "next-auth/react";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -17,6 +18,7 @@ export const authOptions: AuthOptions = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
+          // provider: "google",
         };
       },
     }),
@@ -29,6 +31,7 @@ export const authOptions: AuthOptions = {
           name: profile.preferred_username,
           email: profile.email,
           image: profile.picture,
+          // provider: "twitch",
         };
       },
     }),
@@ -55,7 +58,6 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       const provider = account?.provider;
-
       const userData: UserType = { ...user, provider: provider };
 
       addUser(userData);
@@ -64,13 +66,25 @@ export const authOptions: AuthOptions = {
     },
     // async redirect({ url, baseUrl }) { return baseUrl },
     async session({ session, token, user }) {
-      // session.user.id = user.id;
+      session.user.id = token.sub;
+      if (token.picture.includes("lh3.googleusercontent.com"))
+        session.user.provider = "google";
+      if (token.picture.includes("static-cdn.jtvnw.net"))
+        session.user.provider = "twitch";
+
       return session;
     },
     // async jwt({ token, user, account, profile, isNewUser }) { return token }
   },
 
-  events: {},
+  events: {
+    //   async signIn(message) { /* on successful sign in */ },
+    //   async signOut(message) { /* on signout */ },
+    //   async createUser(message) { /* user created */ },
+    //   async updateUser(message) { /* user updated - e.g. their email was verified */ },
+    //   async linkAccount(message) { /* account (e.g. Twitter) linked to a user */ },
+    // async session(message: any) {},
+  },
 
   debug: false,
 };

@@ -11,12 +11,17 @@ import { useEffect, useMemo } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { IdentifyType } from "@src/static/types/UserType";
 import { isUserRegisted } from "@src/components/func/sendRequest";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@src/pages/api/auth/[...nextauth]";
+import { Session } from "next-auth";
 
 const Header = () => {
   const { data: session } = useSession();
   useEffect(() => {
-    // isUserRegisted(id, provider);
-  }, []);
+    if (session) {
+      isUserRegisted(session?.user?.id, session?.user?.provider);
+    }
+  }, [session]);
 
   const { signFunc, signStr } = useMemo(() => {
     if (session) {
