@@ -24,7 +24,6 @@ import {
   isOutOfContendEditBars,
   isVariationFlagDecrease,
   pointEndOfBeforeTheTarget,
-  saveContents,
   setControlInvisible,
   swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
@@ -34,6 +33,7 @@ import { AddContentType } from "@src/static/types/AddContentsType";
 import ContentEditBar from "@src/components/module/board/content/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
+import { saveContents } from "@src/components/func/sendRequest";
 
 const ContentEdit = () => {
   const { data: session } = useSession();
@@ -346,6 +346,7 @@ const ContentEdit = () => {
     const data: SaveContentType = {
       title: $title.current.value,
       contents: contents,
+      writer: session.user.id,
     };
     saveContents(data);
   };

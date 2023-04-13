@@ -4,5 +4,6 @@ export interface contentType {
   views: number;
   likes: number;
   author: string;
+  board: string;
   update_date: string;
 }

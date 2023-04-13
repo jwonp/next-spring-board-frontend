@@ -31,7 +31,7 @@ const BoardByTitle = () => {
     return router.query.title as string;
   }, [router.query.title]);
   const contentData = useSWR(
-    `/api/board/list?page=${pageIndex}&title=${title}`,
+    `/api/board/list?index=${pageIndex}&board=${title}`,
     boardListFetcher
   );
 

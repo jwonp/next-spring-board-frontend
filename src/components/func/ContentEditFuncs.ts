@@ -204,14 +204,3 @@ export const createNewContent = (
 
   return newContent;
 };
-
-export const saveContents = async (data: SaveContentType) => {
-  await axios
-    .post(`/api/board/edit`, data)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
