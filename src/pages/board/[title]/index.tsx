@@ -25,11 +25,13 @@ const BoardByTitle = () => {
         });
     }, 700)
   ).current;
+
   const [pageIndex] = useState<number>(0);
 
   const title = useMemo(() => {
     return router.query.title as string;
   }, [router.query.title]);
+
   const contentData = useSWR(
     `/api/board/list?index=${pageIndex}&board=${title}`,
     boardListFetcher

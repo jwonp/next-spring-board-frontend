@@ -7,7 +7,9 @@ const getContentListByBoardAndIndex = async (
   board: HeaderMiddleMenuType,
   index: number
 ) => {
-  await axios.get(`api/board/list?index=${index}&board=${board}`);
+  return await axios.get(
+    `${process.env.BACKEND_URL}/board/list?index=${index}&board=${board}`
+  );
 };
 
 export default function handler(
@@ -17,9 +19,11 @@ export default function handler(
   const { index, board } = req.query;
 
   try {
-    getContentListByBoardAndIndex(board as HeaderMiddleMenuType, Number(index));
+    getContentListByBoardAndIndex(
+      board as HeaderMiddleMenuType,
+      Number(index)
+    ).then((_res) => res.status(200).send(_res.data));
   } catch (error) {
-    res.status(400).send(null);
+    res.status(201).send(null);
   }
-  res.status(200).send([]);
 }

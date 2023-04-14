@@ -34,6 +34,7 @@ import ContentEditBar from "@src/components/module/board/content/ContentEditBar"
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
 import { saveContents } from "@src/components/func/sendRequest";
+import { HeaderMiddleMenuType } from "@src/static/types/menuType";
 
 const ContentEdit = () => {
   const { data: session } = useSession();
@@ -347,8 +348,10 @@ const ContentEdit = () => {
       title: $title.current.value,
       contents: contents,
       writer: session.user.id,
+      board: title as HeaderMiddleMenuType,
     };
     saveContents(data);
+    router.push(`/board/${title}`);
   };
 
   return (
