@@ -40,3 +40,4 @@ todo.txt
 .vscode/launch.json
 src/public/favicon.png
 .gitignore
+.vscode/settings.json
