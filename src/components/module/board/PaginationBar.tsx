@@ -1,5 +1,10 @@
-import { PageSizeFetcher } from "@src/components/fetcher/PageSizeFetcher";
-import { APIBoardSizeURI } from "@src/static/data/requestURI";
+import {
+  PageSizeFetcher,
+  PageSizeURIByBoard,
+} from "@src/components/fetcher/PageSizeFetcher";
+import { setIndex } from "@src/redux/features/pageIndex";
+import { useAppDispatch } from "@src/redux/hooks";
+
 import { OneToTen } from "@src/static/data/stringSet";
 import styles from "@src/styles/board/PaginationBar.module.scss";
 import { useRouter } from "next/router";
@@ -8,18 +13,24 @@ import useSWR, { useSWRConfig } from "swr";
 const PaginationBar = ({ boardTitle }: { boardTitle: string }) => {
   const router = useRouter();
   const { cache, mutate, ...extraConfig } = useSWRConfig();
-
-  const pageSize = useSWR(APIBoardSizeURI(boardTitle), PageSizeFetcher);
+  const dispatch = useAppDispatch();
+  const pageSize = useSWR(PageSizeURIByBoard(boardTitle), PageSizeFetcher);
   const NavigatorNumberPanel = useMemo(() => {
     if (pageSize.isLoading) return;
     const maxSize = pageSize?.data
       ? pageSize?.data
-      : cache.get(APIBoardSizeURI(boardTitle))?.data;
+      : cache.get(PageSizeURIByBoard(boardTitle))?.data;
 
     return OneToTen.map((val, idx) => {
-      if (idx < maxSize) {
+      if (idx < Math.ceil(maxSize / 10)) {
         return (
-          <div key={idx} className={`${styles.item}  ${styles.number_panel}`}>
+          <div
+            key={idx}
+            className={`${styles.item}  ${styles.number_panel}`}
+            onClick={() => {
+              console.log(idx);
+              dispatch(setIndex(idx));
+            }}>
             {val}
           </div>
         );

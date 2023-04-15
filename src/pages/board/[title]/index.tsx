@@ -12,6 +12,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import { sizes } from "@src/static/data/stringSet";
+import { useAppSelector } from "@src/redux/hooks";
+import { getIndex } from "@src/redux/features/pageIndex";
 const BoardByTitle = () => {
   const router = useRouter();
   const $searchInput = useRef<HTMLInputElement>(null);
@@ -19,14 +21,16 @@ const BoardByTitle = () => {
     debounce(async () => {
       if ($searchInput.current.value.length === 0) return;
       await axios
-        .get(`/api/board/search/${$searchInput.current.value}`)
+        .get(
+          `/api/board/search?search=${$searchInput.current.value}&board=${title}`
+        )
         .then((res) => {
           console.log(res.data);
         });
     }, 700)
   ).current;
 
-  const [pageIndex] = useState<number>(0);
+  const pageIndex = useAppSelector(getIndex);
 
   const title = useMemo(() => {
     return router.query.title as string;
@@ -53,8 +57,10 @@ const BoardByTitle = () => {
         </div>
       </div>
       <div className={`${styles.list}`}>
-        {contentData.data?.map((item: contentType) => (
-          <ContentBar key={item.index} data={item} title={title} />
+        {contentData.data?.map((item: contentType, index) => (
+          <div key={index}>
+            <ContentBar data={item} title={title} />
+          </div>
         ))}
       </div>
       <PaginationBar boardTitle={title} />
