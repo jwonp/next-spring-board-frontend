@@ -17,12 +17,19 @@ import { getIndex } from "@src/redux/features/pageIndex";
 const BoardByTitle = () => {
   const router = useRouter();
   const $searchInput = useRef<HTMLInputElement>(null);
+  const title = useMemo(() => {
+    return router.query.title as string;
+  }, [router.query.title]);
   const searchCall = useRef(
     debounce(async () => {
       if ($searchInput.current.value.length === 0) return;
+      const _title = (
+        document.getElementsByClassName(styles.title)[0] as HTMLDivElement
+      ).innerText;
+
       await axios
         .get(
-          `/api/board/search?search=${$searchInput.current.value}&board=${title}`
+          `/api/board/search?board=${_title}&query=${$searchInput.current.value}`
         )
         .then((res) => {
           console.log(res.data);
@@ -31,10 +38,6 @@ const BoardByTitle = () => {
   ).current;
 
   const pageIndex = useAppSelector(getIndex);
-
-  const title = useMemo(() => {
-    return router.query.title as string;
-  }, [router.query.title]);
 
   const contentData = useSWR(
     `/api/board/list?index=${pageIndex}&board=${title}`,
