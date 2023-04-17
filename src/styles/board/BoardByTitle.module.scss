@@ -10,41 +10,53 @@
     justify-content: space-between;
     padding-bottom: 0.2em;
     border-bottom: 1px solid lightblue;
+
 }
-.header div {
+
+.title{
+    width: 25%;  
     height: 1.2em;
     margin-right: 0.2em;
     line-height: 1.5em;
     vertical-align:middle;
 }
-.title{
-    width: 28%;
-}
 .search{
     display: flex;
+    width: 65%;
 }
 .search_icon{
-    position: absolute;
-    width: 1em;
-    height: 1em;
-    margin-top: 0.03em;
-    margin-left: 0.1em;
-    overflow: hidden;
-    border-radius: 15px;
-}
-.search input {
-    width: 21em;
-    border: 1px solid oldlace;
-    border-radius: 12px;
-    padding-left: 2.5em;
-    padding-right: 2.2em;
-    font-size: 0.52em;
+    position: relative;
+    width: 3em;
     background-color: grey;
+    margin-top: 0.14em;
+    margin-left: 0.14em;
+    
+    overflow: hidden;
+    border: none;
+    border-radius: 0 6px 6px 0;
 }
-.search input:focus {
-    border: 1px solid royalblue;
-    outline: none;
+.search_input_box{
+    & input{
+        height: 90%;
+        line-height: 90%;
+        vertical-align: middle;
+        padding-left: 0.5em;
+        padding-right: 0.2em;
+        border-radius: 6px 0 0 6px;
+        border: none; 
+        font-size: 24px;
+        background-color: grey;
+        &:focus{
+            outline: none;
+        }
+        
+    }
+
 }
+.edit_btn{
+    width: 10%;
+}
+
 .list{
     margin-top:0.5em;
     border: 1px solid lightblue;

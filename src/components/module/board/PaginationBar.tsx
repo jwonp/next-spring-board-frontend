@@ -1,6 +1,6 @@
 import {
   PageSizeFetcher,
-  PageSizeURIByBoard,
+  PageSizeURIByBoardAndSearch,
 } from "@src/components/fetcher/PageSizeFetcher";
 import { setIndex } from "@src/redux/features/pageIndex";
 import { useAppDispatch } from "@src/redux/hooks";
@@ -10,16 +10,25 @@ import styles from "@src/styles/board/PaginationBar.module.scss";
 import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
-const PaginationBar = ({ boardTitle }: { boardTitle: string }) => {
-  const router = useRouter();
+const PaginationBar = ({
+  boardTitle,
+  search,
+}: {
+  boardTitle: string;
+  search: string | undefined;
+}) => {
   const { cache, mutate, ...extraConfig } = useSWRConfig();
   const dispatch = useAppDispatch();
-  const pageSize = useSWR(PageSizeURIByBoard(boardTitle), PageSizeFetcher);
+  const pageSize = useSWR(
+    PageSizeURIByBoardAndSearch(boardTitle, search),
+    PageSizeFetcher
+  );
   const NavigatorNumberPanel = useMemo(() => {
     if (pageSize.isLoading) return;
+
     const maxSize = pageSize?.data
       ? pageSize?.data
-      : cache.get(PageSizeURIByBoard(boardTitle))?.data;
+      : cache.get(PageSizeURIByBoardAndSearch(boardTitle, search))?.data;
 
     return OneToTen.map((val, idx) => {
       if (idx < Math.ceil(maxSize / 10)) {
@@ -36,7 +45,7 @@ const PaginationBar = ({ boardTitle }: { boardTitle: string }) => {
         );
       }
     });
-  }, [boardTitle, pageSize.isLoading]);
+  }, [boardTitle, search, pageSize.isLoading]);
 
   return (
     <div className={`${styles.wrapper}`}>
