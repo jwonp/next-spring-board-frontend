@@ -1,9 +1,9 @@
-export interface contentType {
-  index: number;
+export interface ContentType {
+  id: number;
   title: string;
   views: number;
   likes: number;
   author: string;
   board: string;
-  update_date: string;
+  updateDate: string;
 }

@@ -1,7 +1,7 @@
 import { boardListFetcher } from "@src/components/fetcher/BoardListFetcher";
 import ContentBar from "@src/components/module/board/ContentBar";
 import PaginationBar from "@src/components/module/board/PaginationBar";
-import { contentType } from "@src/static/types/contentType";
+import { ContentType } from "@src/static/types/ContentType";
 import styles from "@src/styles/board/BoardByTitle.module.scss";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,7 +59,7 @@ const BoardByTitle = () => {
         </div>
       </div>
       <div className={`${styles.list}`}>
-        {contentData.data?.map((item: contentType, index) => (
+        {contentData.data?.map((item: ContentType, index) => (
           <div key={index}>
             <ContentBar data={item} title={title} />
           </div>

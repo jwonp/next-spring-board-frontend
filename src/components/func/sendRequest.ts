@@ -20,3 +20,9 @@ export const addUser = async (data: UserType) => {
 export const saveContents = async (data: SaveContentType) => {
   await axios.post(`/api/board/edit`, data);
 };
+
+export const getContentById = async (id: string) => {
+  return await axios.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/board/content?id=${id}`
+  );
+};

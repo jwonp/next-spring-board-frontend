@@ -1,15 +1,15 @@
 import { convertNumberToUnitK } from "@src/components/func/stringTools";
 import { sizes } from "@src/static/data/stringSet";
-import { contentType } from "@src/static/types/contentType";
+import { ContentType } from "@src/static/types/ContentType";
 import styles from "@src/styles/board/content/ContentBar.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-const ContentBar = ({ data, title }: { data: contentType; title: string }) => {
+const ContentBar = ({ data, title }: { data: ContentType; title: string }) => {
   return (
-    <Link href={`/board/${title}/content/${data.index}`}>
+    <Link href={`/board/${title}/content/${data.id}`}>
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.left}`}>
-          <div className={`${styles.index}`}>{data.index}</div>
+          <div className={`${styles.index}`}>{data.id}</div>
           <div className={`${styles.title}`}>{data.title}</div>
         </div>
         <div className={`${styles.right}`}>

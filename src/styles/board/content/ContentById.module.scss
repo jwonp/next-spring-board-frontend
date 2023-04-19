@@ -1,3 +1,15 @@
 .wrapper{
-    width: 1005;
+    width: 100%;
+}
+
+.header_box{
+    display: flex;
+    gap:1em;
+    margin-bottom: 2em;
+}
+.content_box{
+    display: block;
+    & .item {
+        margin-bottom: 1em;
+    }
 }
