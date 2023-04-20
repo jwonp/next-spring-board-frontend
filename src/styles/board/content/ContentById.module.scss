@@ -3,13 +3,47 @@
 }
 
 .header_box{
-    display: flex;
+    
+
     gap:1em;
     margin-bottom: 2em;
+
+    & > div {
+        margin-bottom: 1em;
+    }
+    & > div:first-child div{
+        margin-bottom: 0.3em;
+    }
+    & > div:nth-child(2) {
+        display: flex;
+        gap:1.5em;
+    }
+
+    & .title{
+        font-size: 1.7em;
+    }
+    & .board{
+        font-size: 1.8em;
+    }
+    // & .author{
+
+    // }
+    // & .updated{
+       
+    // }
+    // & .views{
+   
+    // }
+    // & .likes{
+     
+    // }
+    
 }
 .content_box{
     display: block;
+    font-size: 1.4em; 
+ 
     & .item {
-        margin-bottom: 1em;
+        margin-bottom: 0.2em;
     }
 }

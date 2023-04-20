@@ -5,8 +5,10 @@ import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import qs from "qs";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
+import { getImageMeta } from "@src/components/func/ImageHandler";
 type ParsedContentType = {
   [key: number]: ContentBarDataType;
 };
@@ -21,7 +23,8 @@ const ContentById = ({
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-
+  const $wrapper = useRef<HTMLDivElement>(null);
+  const $image = useRef<HTMLDivElement>(null);
   const parsedContent = useMemo(() => {
     const parsedData = qs.parse(content, {
       parseArrays: true,
@@ -29,40 +32,53 @@ const ContentById = ({
     return Object.values(parsedData) as ContentBarDataType[];
   }, [content]);
 
-  useEffect(() => {
-    console.log(parsedContent);
-  }, [parsedContent]);
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
 
   const createContentBar = (data: ContentBarDataType, index: number) => {
     //default data type is text
     if (data.type === "image") {
+      getImageMeta(data.image).then((img) => {
+        const _size = { width: img.naturalWidth, height: img.naturalHeight };
+        setSize(_size);
+      });
       return (
-        <div key={index} className={`${styles.item}`}>
+        <div ref={$wrapper} key={index} className={`${styles.item}`}>
           <Image
             src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${data.image}`}
             alt={"No Image"}
-            width={100}
-            height={100}
+            width={size.width}
+            height={size.height}
+            priority={true}
           />
         </div>
       );
     }
+
     return (
       <div key={index} className={`${styles.item}`}>
         {data.content}
       </div>
     );
   };
+
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.header_box}`}>
-        <div>{title}</div>
-        <div>{board}</div>
-        <div>{id}</div>
-        <div>{updated}</div>
-        <div>{author}</div>
-        <div>{views}</div>
-        <div>{likes}</div>
+        <div>
+          <div className={`${styles.board}`}>{board}</div>
+          <div className={`${styles.title}`}>{title}</div>
+        </div>
+        <div>
+          <div className={`${styles.author}`}>{`작성자 ${author}`}</div>
+          <div className={`${styles.updated}`}>
+            {`작성일 ${getDateFromRowDateAsString(updated)}`}
+          </div>
+          <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
+          <div className={`${styles.likes}`}>{`좋아요 ${likes}`}</div>
+        </div>
       </div>
       <div className={`${styles.content_box}`}>
         {parsedContent.map((value, index) => {
