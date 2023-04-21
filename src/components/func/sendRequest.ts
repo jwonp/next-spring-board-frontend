@@ -26,3 +26,15 @@ export const getContentById = async (id: string) => {
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/board/content?id=${id}`
   );
 };
+
+export const saveCommentByContentId = async (
+  comment: string,
+  contentId: number,
+  user: string
+) => {
+  await axios.post(`/api/board/comment/edit`, {
+    comment: comment,
+    contentId: contentId,
+    user: user,
+  });
+};

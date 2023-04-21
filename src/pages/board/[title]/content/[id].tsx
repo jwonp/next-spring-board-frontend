@@ -1,14 +1,22 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
-import { getContentById } from "@src/components/func/sendRequest";
+import {
+  getContentById,
+  saveCommentByContentId,
+} from "@src/components/func/sendRequest";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import qs from "qs";
-import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
+import { useMemo, useRef } from "react";
 import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
-import { getImageMeta } from "@src/components/func/ImageHandler";
+import useSWR from "swr";
+import {
+  CommentAmountFetcher,
+  CommentAmountURLByContent,
+} from "@src/components/fetcher/CommentAmountFetcher";
+import ContentViewBar from "@src/components/module/board/content/ContentViewBar";
+import { useSession } from "next-auth/react";
 type ParsedContentType = {
   [key: number]: ContentBarDataType;
 };
@@ -22,9 +30,8 @@ const ContentById = ({
   id,
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
-  const $wrapper = useRef<HTMLDivElement>(null);
-  const $image = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
+  const $textarea = useRef<HTMLTextAreaElement>(null);
   const parsedContent = useMemo(() => {
     const parsedData = qs.parse(content, {
       parseArrays: true,
@@ -32,34 +39,16 @@ const ContentById = ({
     return Object.values(parsedData) as ContentBarDataType[];
   }, [content]);
 
-  const [size, setSize] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0,
-  });
+  const { data, error } = useSWR(
+    CommentAmountURLByContent(id),
+    CommentAmountFetcher
+  );
 
   const createContentBar = (data: ContentBarDataType, index: number) => {
     //default data type is text
-    if (data.type === "image") {
-      getImageMeta(data.image).then((img) => {
-        const _size = { width: img.naturalWidth, height: img.naturalHeight };
-        setSize(_size);
-      });
-      return (
-        <div ref={$wrapper} key={index} className={`${styles.item}`}>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${data.image}`}
-            alt={"No Image"}
-            width={size.width}
-            height={size.height}
-            priority={true}
-          />
-        </div>
-      );
-    }
-
     return (
       <div key={index} className={`${styles.item}`}>
-        {data.content}
+        <ContentViewBar data={data} />
       </div>
     );
   };
@@ -84,6 +73,26 @@ const ContentById = ({
         {parsedContent.map((value, index) => {
           return createContentBar(value, index);
         })}
+      </div>
+      <div className={`${styles.comment_box}`}>
+        <div>댓글 {data}</div>
+        <div>
+          <textarea
+            ref={$textarea}
+            placeholder={"댓글을 입력하세요."}
+            maxLength={500}
+            required={true}></textarea>
+        </div>
+        <button
+          onClick={() => {
+            saveCommentByContentId(
+              $textarea.current.value,
+              id,
+              session.user.id
+            );
+          }}>
+          등록
+        </button>
       </div>
     </div>
   );
