@@ -1,6 +1,6 @@
 import {
   PageSizeFetcher,
-  PageSizeURIByBoardAndSearch,
+  PageSizeURLByBoardAndSearch,
 } from "@src/components/fetcher/PageSizeFetcher";
 import { setIndex } from "@src/redux/features/pageIndex";
 import { useAppDispatch } from "@src/redux/hooks";
@@ -20,7 +20,7 @@ const PaginationBar = ({
   const { cache, mutate, ...extraConfig } = useSWRConfig();
   const dispatch = useAppDispatch();
   const pageSize = useSWR(
-    PageSizeURIByBoardAndSearch(boardTitle, search),
+    PageSizeURLByBoardAndSearch(boardTitle, search),
     PageSizeFetcher
   );
   const NavigatorNumberPanel = useMemo(() => {
@@ -28,7 +28,7 @@ const PaginationBar = ({
 
     const maxSize = pageSize?.data
       ? pageSize?.data
-      : cache.get(PageSizeURIByBoardAndSearch(boardTitle, search))?.data;
+      : cache.get(PageSizeURLByBoardAndSearch(boardTitle, search))?.data;
 
     return OneToTen.map((val, idx) => {
       if (idx < Math.ceil(maxSize / 10)) {
