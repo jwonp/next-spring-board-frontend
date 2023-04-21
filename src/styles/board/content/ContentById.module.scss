@@ -25,19 +25,7 @@
     & .board{
         font-size: 1.8em;
     }
-    // & .author{
 
-    // }
-    // & .updated{
-       
-    // }
-    // & .views{
-   
-    // }
-    // & .likes{
-     
-    // }
-    
 }
 .content_box{
     display: block;
@@ -45,5 +33,35 @@
  
     & .item {
         margin-bottom: 0.2em;
+    }
+}
+
+.comment_box{
+    margin-top: 2em;
+    font-size: 1.3em;
+    & div:first-child {
+        padding-left: 0.2em;
+        margin-bottom: 0.3em;
+    }
+    & div:nth-child(2){
+        width: 100%;
+    }
+    & textarea {
+        width: calc(100% - 0.8em);
+        min-height: 5em;
+        resize: none;
+        border: 1px solid grey;
+        padding: 0.4em;
+        font-size: 1.1em;
+        &:focus{
+            outline: none;
+            border: 1px solid grey;
+        }
+    }
+    & button {
+        font-size: 0.8em;
+        padding: 0.1em 0.4em;
+        float: right;
+        
     }
 }
