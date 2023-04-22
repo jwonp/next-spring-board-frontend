@@ -1,7 +1,10 @@
+@use "@src/styles/vars.scss" as vars;
 .wrapper{
+    width: calc(100% - 2 * vars.$mainWrapperPadding);
+    height: 100%;
     display: block;
     font-size: 2em;
-    height: 100%;
+    padding: vars.$mainWrapperPadding;
 }
 
 .header {
@@ -55,6 +58,7 @@
 }
 .edit_btn{
     width: 10%;
+    cursor: pointer;
 }
 
 .list{
