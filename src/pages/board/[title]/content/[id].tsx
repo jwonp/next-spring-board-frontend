@@ -1,22 +1,17 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
-import {
-  getContentById,
-  saveCommentByContentId,
-} from "@src/components/func/sendRequest";
+import { getContentById } from "@src/components/func/sendRequest";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/router";
+
 import qs from "qs";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
-import useSWR from "swr";
-import {
-  CommentAmountFetcher,
-  CommentAmountURLByContent,
-} from "@src/components/fetcher/CommentAmountFetcher";
+
 import ContentViewBar from "@src/components/module/board/content/ContentViewBar";
-import { useSession } from "next-auth/react";
+
+import Comment from "@src/components/module/board/content/Comment";
+import { useRouter } from "next/router";
 type ParsedContentType = {
   [key: number]: ContentBarDataType;
 };
@@ -30,31 +25,37 @@ const ContentById = ({
   id,
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: session } = useSession();
-  const $textarea = useRef<HTMLTextAreaElement>(null);
+  const router = useRouter();
   const parsedContent = useMemo(() => {
     const parsedData = qs.parse(content, {
       parseArrays: true,
     }) as unknown as ParsedContentType;
     return Object.values(parsedData) as ContentBarDataType[];
   }, [content]);
+  const $windowWidth = useRef<number>(0);
+  useEffect(() => {
+    if (router.isReady) {
+      getWindowWidth();
+      window.addEventListener("resize", getWindowWidth);
+    }
+  }, [router.isReady]);
+  const getWindowWidth = () => {
+    if (!document) return;
+    const mainWrapper = document.getElementById("ContentById");
+    const paddingWidth =
+      Number(
+        window
+          .getComputedStyle(mainWrapper)
+          .getPropertyValue("padding")
+          .split("px")[0]
+      ) * 2;
 
-  const { data, error } = useSWR(
-    CommentAmountURLByContent(id),
-    CommentAmountFetcher
-  );
-
-  const createContentBar = (data: ContentBarDataType, index: number) => {
-    //default data type is text
-    return (
-      <div key={index} className={`${styles.item}`}>
-        <ContentViewBar data={data} />
-      </div>
-    );
+    const width = mainWrapper.offsetWidth - paddingWidth;
+    $windowWidth.current = width;
   };
 
   return (
-    <div className={`${styles.wrapper}`}>
+    <div id={"ContentById"} className={`${styles.wrapper}`}>
       <div className={`${styles.header_box}`}>
         <div>
           <div className={`${styles.board}`}>{board}</div>
@@ -71,29 +72,15 @@ const ContentById = ({
       </div>
       <div className={`${styles.content_box}`}>
         {parsedContent.map((value, index) => {
-          return createContentBar(value, index);
+          return (
+            <div key={index} className={`${styles.item}`}>
+              <ContentViewBar data={value} windowWidth={$windowWidth} />
+            </div>
+          );
         })}
       </div>
-      <div className={`${styles.comment_box}`}>
-        <div>댓글 {data}</div>
-        <div>
-          <textarea
-            ref={$textarea}
-            placeholder={"댓글을 입력하세요."}
-            maxLength={500}
-            required={true}></textarea>
-        </div>
-        <button
-          onClick={() => {
-            saveCommentByContentId(
-              $textarea.current.value,
-              id,
-              session.user.id
-            );
-          }}>
-          등록
-        </button>
-      </div>
+
+      <Comment id={id} />
     </div>
   );
 };

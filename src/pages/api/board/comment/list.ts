@@ -1,18 +1,38 @@
-import { ContentType } from "@src/static/types/ContentType";
-import { HeaderMiddleMenuType } from "@src/static/types/menuType";
+import { CommentType } from "@src/static/types/CommentType";
+
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-const getCommentListByContentId = async (id: string) => {
-  return await axios.get(`${process.env.BACKEND_URL}/board/comment?id=${id}`);
+type CommentResponseType = {
+  commentId: number;
+  comment: string;
+  contentId: number;
+  created: string;
+  updated: string;
+  writer: string;
+};
+const getCommentListByContentId = async (contentId: string) => {
+  return await axios.get(
+    `${process.env.BACKEND_URL}/board/comment?id=${contentId}`
+  );
 };
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ContentType[] | null>
+  res: NextApiResponse<CommentType[] | null>
 ) {
   const { id } = req.query;
   getCommentListByContentId(id as string).then((_res) => {
-    res.status(200).send(_res.data);
+    const commentResponseList = _res.data as CommentResponseType[];
+    const commentList: CommentType[] = commentResponseList.map((value) => {
+      return {
+        commentId: value.commentId,
+        contentId: value.contentId,
+        comment: value.comment,
+        writer: value.writer,
+        created: value.created,
+        updated: value.updated,
+      };
+    });
+    res.status(200).send(commentList);
   });
 }
