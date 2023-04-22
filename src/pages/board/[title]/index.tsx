@@ -19,7 +19,6 @@ const BoardByTitle = () => {
     return router.query.title as string;
   }, [router.query.title]);
   const searchQuery = useMemo(() => {
-    console.log(router.query.search);
     return router.query.search as string;
   }, [router.query.search]);
   const dispatch = useAppDispatch();
@@ -35,6 +34,7 @@ const BoardByTitle = () => {
     $searchInput.current.value = "";
     dispatch(setIndex(0));
   }, [title]);
+
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.header}`}>

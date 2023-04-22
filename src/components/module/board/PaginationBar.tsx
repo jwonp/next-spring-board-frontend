@@ -7,8 +7,8 @@ import { useAppDispatch } from "@src/redux/hooks";
 
 import { OneToTen } from "@src/static/data/stringSet";
 import styles from "@src/styles/board/PaginationBar.module.scss";
-import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+
+import { useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
 const PaginationBar = ({
   boardTitle,

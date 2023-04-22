@@ -32,7 +32,7 @@ export const saveCommentByContentId = async (
   contentId: number,
   user: string
 ) => {
-  await axios.post(`/api/board/comment/edit`, {
+  return await axios.post(`/api/board/comment/edit`, {
     comment: comment,
     contentId: contentId,
     user: user,

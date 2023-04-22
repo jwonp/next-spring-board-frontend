@@ -4,7 +4,7 @@ import { HeaderMiddleMenuType } from "@src/static/types/menuType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 type ListDtoType = {
-  content_meta_id: number;
+  contentMetaId: number;
   title: string;
   author: string;
   board: string;
@@ -38,7 +38,7 @@ export default function handler(
 
       const returnData: ContentType[] = responseData.map((value) => {
         return {
-          id: value.content_meta_id,
+          id: value.contentMetaId,
           title: value.title,
           views: value.views,
           likes: value.likes,

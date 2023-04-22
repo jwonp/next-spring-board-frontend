@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
-import { CommentType } from "@src/static/types/CommentType";
+import { CommentRequestType } from "@src/static/types/CommentType";
 
 type SaveCommentRequest = {
   contentId: number;
@@ -19,7 +19,7 @@ const saveComment = async (
 };
 
 const handler = (req: NextApiRequest, res: NextApiResponse<boolean>) => {
-  const { comment, contentId, user }: CommentType = req.body;
+  const { comment, contentId, user }: CommentRequestType = req.body;
 
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
   const csrf: CsrfIdentityType = {
