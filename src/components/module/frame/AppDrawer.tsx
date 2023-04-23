@@ -1,14 +1,16 @@
 import styles from "@src/styles/frame/AppDrawer.module.scss";
+import { HeaderMiddleMenu } from "@src/static/data/stringSet";
+import Link from "next/link";
 const AppDrawer = () => {
   return (
     <div className={`${styles.wrapper}`}>
-      <div className={`${styles.item}`}>App Menu 1</div>
-      <div className={`${styles.item}`}>App Menu 2</div>
-      <div className={`${styles.item}`}>App Menu 3</div>
-      <div className={`${styles.item}`}>App Menu 4</div>
-      <div className={`${styles.item}`}>App Menu 5</div>
-      <div className={`${styles.item}`}>App Menu 6</div>
-      <div className={`${styles.item}`}>App Menu 7</div>
+      <div className={`${styles.box}`}>
+        {HeaderMiddleMenu.map((value, index) => (
+          <div key={index} className={`${styles.item}`}>
+            <Link href={`/board/${value}`}>{value}</Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

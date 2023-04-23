@@ -14,8 +14,8 @@ export const HeaderMiddleMenu: HeaderMiddleMenuType[] = [
 
 export const HeaderRightMenu = {
   alert: "alert",
-  login: "Login",
-  logout: "Logout",
+  login: "login",
+  logout: "logout",
 } as const;
 
 export const KeySet = {

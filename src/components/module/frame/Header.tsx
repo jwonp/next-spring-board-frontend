@@ -8,12 +8,7 @@ import styles from "@src/styles/frame/Header.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { IdentifyType } from "@src/static/types/UserType";
 import { isUserRegisted } from "@src/components/func/sendRequest";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@src/pages/api/auth/[...nextauth]";
-import { Session } from "next-auth";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -42,13 +37,7 @@ const Header = () => {
             <Link href={`/`}>{session?.user?.name}</Link>
           </div>
         </div>
-        <div className={`${styles.box}`}>
-          {HeaderMiddleMenu.map((value, index) => (
-            <div key={index} className={`${styles.item}`}>
-              <Link href={`/board/${value}`}>{value}</Link>
-            </div>
-          ))}
-        </div>
+
         <div className={`${styles.box}`}>
           <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div>
           <div className={`${styles.item}`} onClick={signFunc}>
