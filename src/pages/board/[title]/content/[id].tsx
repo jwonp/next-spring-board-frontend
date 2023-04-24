@@ -33,6 +33,7 @@ const ContentById = ({
     return Object.values(parsedData) as ContentBarDataType[];
   }, [content]);
   const $windowWidth = useRef<number>(0);
+
   useEffect(() => {
     if (router.isReady) {
       getWindowWidth();
@@ -45,7 +46,7 @@ const ContentById = ({
     const paddingWidth =
       Number(
         window
-          .getComputedStyle(mainWrapper)
+          .getComputedStyle(mainWrapper, null)
           .getPropertyValue("padding")
           .split("px")[0]
       ) * 2;
