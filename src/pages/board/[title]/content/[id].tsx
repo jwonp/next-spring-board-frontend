@@ -1,17 +1,24 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
-import { getContentById } from "@src/components/func/sendRequest";
+import {
+  addLikeByContentAndUser,
+  getContentById,
+} from "@src/components/func/sendRequest";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-
 import qs from "qs";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
-
 import ContentViewBar from "@src/components/module/board/content/ContentViewBar";
-
+import useSWR from "swr";
 import Comment from "@src/components/module/board/content/Comment";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import {
+  LikeFetcherURLByContentId,
+  LikeFetcher,
+} from "@src/components/fetcher/LikeFetcher";
+import { useSession } from "next-auth/react";
 type ParsedContentType = {
   [key: number]: ContentBarDataType;
 };
@@ -26,6 +33,9 @@ const ContentById = ({
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
+  const { data: session } = useSession();
+  const { data, mutate } = useSWR(LikeFetcherURLByContentId(id), LikeFetcher);
+
   const parsedContent = useMemo(() => {
     const parsedData = qs.parse(content, {
       parseArrays: true,
@@ -40,6 +50,7 @@ const ContentById = ({
       window.addEventListener("resize", getWindowWidth);
     }
   }, [router.isReady]);
+
   const getWindowWidth = () => {
     if (!document) return;
     const mainWrapper = document.getElementById("ContentById");
@@ -68,7 +79,9 @@ const ContentById = ({
             {`작성일 ${getDateFromRowDateAsString(updated)}`}
           </div>
           <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
-          <div className={`${styles.likes}`}>{`좋아요 ${likes}`}</div>
+          <div className={`${styles.likes}`}>{`좋아요 ${
+            data ? data : likes
+          }`}</div>
         </div>
       </div>
       <div className={`${styles.content_box}`}>
@@ -80,7 +93,22 @@ const ContentById = ({
           );
         })}
       </div>
-
+      <div className={`${styles.like}`}>
+        <div>
+          <button
+            onClick={() => {
+              addLikeByContentAndUser(id, session.user.id).then((res) => {
+                mutate();
+                console.log(res.data);
+              });
+            }}>
+            <div>
+              <Image src={"/like.svg"} alt={"No like"} width={30} height={30} />
+              <div>{data ? data : likes}</div>
+            </div>
+          </button>
+        </div>
+      </div>
       <Comment id={id} />
     </div>
   );

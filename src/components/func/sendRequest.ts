@@ -38,3 +38,14 @@ export const saveCommentByContentId = async (
     user: user,
   });
 };
+
+export const addLikeByContentAndUser = async (
+  contentId: number,
+  user: String
+) => {
+  if (!user) return;
+  return await axios.post(`/api/board/like/add`, {
+    contentId: contentId,
+    user: user,
+  });
+};

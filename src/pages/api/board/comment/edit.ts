@@ -20,7 +20,7 @@ const saveComment = async (
 
 const handler = (req: NextApiRequest, res: NextApiResponse<boolean>) => {
   const { comment, contentId, user }: CommentRequestType = req.body;
-
+  if (!user) res.status(201).send(false);
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
   const csrf: CsrfIdentityType = {
     id: user,
