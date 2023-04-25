@@ -39,3 +39,25 @@
         margin-bottom: 0.2em;
     }
 }
+.like{
+    width: 100%;
+    display: flex;
+    & > div{
+        margin: 0 auto;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    & button {
+        cursor: pointer;
+        background-color: green;
+        border: none;
+    }
+    & button > div {
+        display: flex;
+        gap:0.4em;
+        font-size: 2em;
+        padding: 0.2em 0.3em;
+        
+        
+    }
+}
