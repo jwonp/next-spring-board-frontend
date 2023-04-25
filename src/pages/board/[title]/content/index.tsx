@@ -343,7 +343,7 @@ const ContentEdit = () => {
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log(session.user);
+
     const data: SaveContentType = {
       title: $title.current.value,
       contents: contents,
