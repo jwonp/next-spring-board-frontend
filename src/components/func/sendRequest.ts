@@ -49,3 +49,12 @@ export const addLikeByContentAndUser = async (
     user: user,
   });
 };
+export const deleteLikeByContentAndUser = async (
+  contentId: number,
+  user: String
+) => {
+  if (!user) return;
+  return await axios.get(
+    `/api/board/like/delete?content=${contentId}&user=${user}`
+  );
+};

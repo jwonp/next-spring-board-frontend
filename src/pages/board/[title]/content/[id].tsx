@@ -1,6 +1,7 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
 import {
   addLikeByContentAndUser,
+  deleteLikeByContentAndUser,
   getContentById,
 } from "@src/components/func/sendRequest";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
@@ -17,6 +18,8 @@ import Image from "next/image";
 import {
   LikeFetcherURLByContentId,
   LikeFetcher,
+  LikedFetcher,
+  isLikedURLByContentIdAndUserId,
 } from "@src/components/fetcher/LikeFetcher";
 import { useSession } from "next-auth/react";
 type ParsedContentType = {
@@ -34,7 +37,14 @@ const ContentById = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { data, mutate } = useSWR(LikeFetcherURLByContentId(id), LikeFetcher);
+  const userId = useMemo(() => {
+    return session?.user?.id;
+  }, [session]);
+  const likeSWR = useSWR(LikeFetcherURLByContentId(id), LikeFetcher);
+  const likedSWR = useSWR(
+    isLikedURLByContentIdAndUserId(id, userId),
+    LikedFetcher
+  );
 
   const parsedContent = useMemo(() => {
     const parsedData = qs.parse(content, {
@@ -80,7 +90,7 @@ const ContentById = ({
           </div>
           <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
           <div className={`${styles.likes}`}>{`좋아요 ${
-            data ? data : likes
+            likeSWR.data ? likeSWR.data : likes
           }`}</div>
         </div>
       </div>
@@ -97,14 +107,24 @@ const ContentById = ({
         <div>
           <button
             onClick={() => {
-              addLikeByContentAndUser(id, session.user.id).then((res) => {
-                mutate();
-                console.log(res.data);
-              });
+              console.log(likedSWR.data);
+              if (likedSWR.data === false) {
+                addLikeByContentAndUser(id, userId).then((res) => {
+                  likeSWR.mutate();
+                  likedSWR.mutate();
+                });
+              }
+              if (likedSWR.data === true) {
+                deleteLikeByContentAndUser(id, userId).then((res) => {
+                  likeSWR.mutate();
+                  likedSWR.mutate();
+                });
+              }
             }}>
             <div>
               <Image src={"/like.svg"} alt={"No like"} width={30} height={30} />
-              <div>{data ? data : likes}</div>
+              <div>{likeSWR.data ? likeSWR.data : likes}</div>
+              <div>{likedSWR.data ? "cancel" : "like"}</div>
             </div>
           </button>
         </div>
