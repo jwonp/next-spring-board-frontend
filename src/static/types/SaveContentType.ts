@@ -3,7 +3,7 @@ import { HeaderMiddleMenuType } from "./menuType";
 
 export interface SaveContentType {
   title: string;
-  contents: ContentBarDataType[];
+  contents: string;
   writer: string;
   board: HeaderMiddleMenuType;
 }

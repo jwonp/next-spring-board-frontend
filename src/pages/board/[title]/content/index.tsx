@@ -35,6 +35,7 @@ import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
 import { saveContents } from "@src/components/func/sendRequest";
 import { HeaderMiddleMenuType } from "@src/static/types/menuType";
+import qs from "qs";
 
 const ContentEdit = () => {
   const { data: session } = useSession();
@@ -346,7 +347,7 @@ const ContentEdit = () => {
 
     const data: SaveContentType = {
       title: $title.current.value,
-      contents: contents,
+      contents: qs.stringify(contents),
       writer: session.user.id,
       board: title as HeaderMiddleMenuType,
     };

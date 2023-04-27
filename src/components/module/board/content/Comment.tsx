@@ -17,9 +17,7 @@ const Comment = ({ id }: { id: number }) => {
   const user = useMemo(() => {
     return session?.user?.id;
   }, [session]);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+
   const uploadComment = () => {
     saveCommentByContentId($textarea.current.value, id, user).then((_res) => {
       if (_res.data === false) {

@@ -14,7 +14,7 @@ import ContentViewBar from "@src/components/module/board/content/ContentViewBar"
 import useSWR from "swr";
 import Comment from "@src/components/module/board/content/Comment";
 import { useRouter } from "next/router";
-import Image from "next/image";
+
 import {
   LikeFetcherURLByContentId,
   LikeFetcher,
@@ -22,6 +22,9 @@ import {
   isLikedURLByContentIdAndUserId,
 } from "@src/components/fetcher/LikeFetcher";
 import { useSession } from "next-auth/react";
+import LikeButton from "@src/components/module/board/content/button/LikeButton";
+import ModifyButton from "@src/components/module/board/content/button/ModifyButton";
+import DeleteButton from "@src/components/module/board/content/button/DeleteButton";
 type ParsedContentType = {
   [key: number]: ContentBarDataType;
 };
@@ -79,19 +82,25 @@ const ContentById = ({
   return (
     <div id={"ContentById"} className={`${styles.wrapper}`}>
       <div className={`${styles.header_box}`}>
-        <div>
-          <div className={`${styles.board}`}>{board}</div>
-          <div className={`${styles.title}`}>{title}</div>
-        </div>
-        <div>
-          <div className={`${styles.author}`}>{`작성자 ${author}`}</div>
-          <div className={`${styles.updated}`}>
-            {`작성일 ${getDateFromRowDateAsString(updated)}`}
+        <div className={`${styles.meta_box}`}>
+          <div>
+            <div className={`${styles.board}`}>{board}</div>
+            <div className={`${styles.title}`}>{title}</div>
           </div>
-          <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
-          <div className={`${styles.likes}`}>{`좋아요 ${
-            likeSWR.data ? likeSWR.data : likes
-          }`}</div>
+          <div>
+            <div className={`${styles.author}`}>{`작성자 ${author}`}</div>
+            <div className={`${styles.updated}`}>
+              {`작성일 ${getDateFromRowDateAsString(updated)}`}
+            </div>
+            <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
+            <div className={`${styles.likes}`}>{`좋아요 ${
+              likeSWR.data ? likeSWR.data : likes
+            }`}</div>
+          </div>
+        </div>
+        <div className={`${styles.control_btn_box}`}>
+          <ModifyButton board={board} contentId={id} author={userId} />
+          <DeleteButton board={board} contentId={id} author={userId} />
         </div>
       </div>
       <div className={`${styles.content_box}`}>
@@ -103,32 +112,14 @@ const ContentById = ({
           );
         })}
       </div>
-      <div className={`${styles.like}`}>
-        <div>
-          <button
-            onClick={() => {
-              console.log(likedSWR.data);
-              if (likedSWR.data === false) {
-                addLikeByContentAndUser(id, userId).then((res) => {
-                  likeSWR.mutate();
-                  likedSWR.mutate();
-                });
-              }
-              if (likedSWR.data === true) {
-                deleteLikeByContentAndUser(id, userId).then((res) => {
-                  likeSWR.mutate();
-                  likedSWR.mutate();
-                });
-              }
-            }}>
-            <div>
-              <Image src={"/like.svg"} alt={"No like"} width={30} height={30} />
-              <div>{likeSWR.data ? likeSWR.data : likes}</div>
-              <div>{likedSWR.data ? "cancel" : "like"}</div>
-            </div>
-          </button>
-        </div>
-      </div>
+      <LikeButton
+        likeCount={likeSWR.data}
+        isLiked={likedSWR.data}
+        contentId={id}
+        userId={userId}
+        likeCountMutate={likeSWR.mutate}
+        isLikedMutate={likedSWR.mutate}
+      />
       <Comment id={id} />
     </div>
   );
