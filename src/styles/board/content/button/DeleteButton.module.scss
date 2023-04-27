@@ -1,0 +1,7 @@
+@use "@src/styles/vars.scss" as vars;
+.delete_btn{
+    @include vars.control-button-box;
+    & button {
+        @include vars.control-button
+    }
+}

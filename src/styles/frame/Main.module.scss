@@ -1,7 +1,7 @@
 @use "@src/styles/vars.scss" as vars;
 .wrapper{
     width:calc(100% - 2rem);
-    background-color: rgb(50,50,50);
+    background-color: vars.$mainBackgroundColor;
     
     
     max-height: 100%;

@@ -5,3 +5,17 @@ $headerTotalHeight: calc($headerHeight + $headerPaddingHeight * 2);
 $mainWrapperPadding: 1rem;
 
 $footerHeight:3rem;
+
+$mainBackgroundColor: rgb(50,50,50);
+@mixin control-button-box{
+    margin-bottom: 1em;
+}
+@mixin control-button {
+    cursor: pointer;
+    width: 100%;
+    padding: 0.4em 0.3em;
+    background-color: $mainBackgroundColor;
+    border: none;
+    font-size: 1.4em;
+
+}
