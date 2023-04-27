@@ -19,7 +19,7 @@ const sendContent = async (
       title: title,
       board: board,
       content: content,
-      writer: csrf.id,
+      author: csrf.id,
     },
     {
       headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
@@ -34,6 +34,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     id: writer,
     csrfToken: csrfToken,
   };
-  sendContent(title, board, qs.stringify(contents), csrf);
+  sendContent(title, board, contents, csrf);
   res.status(200).send("good");
 }

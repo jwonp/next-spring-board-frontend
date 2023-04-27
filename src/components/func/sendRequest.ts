@@ -51,10 +51,16 @@ export const addLikeByContentAndUser = async (
 };
 export const deleteLikeByContentAndUser = async (
   contentId: number,
-  user: String
+  userId: String
 ) => {
-  if (!user) return;
+  if (!userId) return;
   return await axios.get(
-    `/api/board/like/delete?content=${contentId}&user=${user}`
+    `/api/board/like/delete?content=${contentId}&user=${userId}`
+  );
+};
+
+export const deleteContent = async (contentId: number, userId: string) => {
+  return await axios.get(
+    `/api/board/delete?content=${contentId}&user=${userId}`
   );
 };
