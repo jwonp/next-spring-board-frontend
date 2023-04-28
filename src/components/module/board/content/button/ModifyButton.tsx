@@ -18,7 +18,7 @@ const ModifyButton = ({ board, contentId, author }: ModifyButtonPropsType) => {
       <div className={`${styles.modify_btn}`}>
         <button
           onClick={() => {
-            router.push(`/board/${board}`);
+            router.push(`/board/${board}/content/modify/${contentId}`);
           }}>
           <div>수정</div>
         </button>

@@ -55,7 +55,7 @@ const BoardByTitle = () => {
           </button>
         </div>
         <div className={`${styles.edit_btn}`}>
-          <Link href={`/board/${title}/content`}>write</Link>
+          <Link href={`/board/${title}/content/edit`}>write</Link>
         </div>
       </div>
       <div className={`${styles.list}`}>

@@ -27,6 +27,12 @@ export const getContentById = async (id: string) => {
   );
 };
 
+export const getContentShortById = async (id: string) => {
+  return await axios.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/board/content/short?id=${id}`
+  );
+};
+
 export const saveCommentByContentId = async (
   comment: string,
   contentId: number,
@@ -60,6 +66,7 @@ export const deleteLikeByContentAndUser = async (
 };
 
 export const deleteContent = async (contentId: number, userId: string) => {
+  if (!userId) return;
   return await axios.get(
     `/api/board/delete?content=${contentId}&user=${userId}`
   );

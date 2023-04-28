@@ -6,8 +6,11 @@ import {
   isAuthorByContentIdFetcher,
 } from "@src/components/fetcher/IsAuthorFetcher";
 import { useRouter } from "next/router";
+import { deleteContent } from "@src/components/func/sendRequest";
+import { useSession } from "next-auth/react";
 const DeleteButton = ({ board, contentId, author }: DeleteButtonPropsType) => {
   const router = useRouter();
+  const { data: session } = useSession();
   const { data, mutate } = useSWR(
     isAuthorURLByContentId(contentId, author),
     isAuthorByContentIdFetcher
@@ -16,6 +19,7 @@ const DeleteButton = ({ board, contentId, author }: DeleteButtonPropsType) => {
     <div className={`${styles.delete_btn}`}>
       <button
         onClick={() => {
+          deleteContent(contentId, session.user.id);
           router.push(`/board/${board}`);
         }}>
         <div>삭제</div>

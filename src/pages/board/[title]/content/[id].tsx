@@ -25,9 +25,8 @@ import { useSession } from "next-auth/react";
 import LikeButton from "@src/components/module/board/content/button/LikeButton";
 import ModifyButton from "@src/components/module/board/content/button/ModifyButton";
 import DeleteButton from "@src/components/module/board/content/button/DeleteButton";
-type ParsedContentType = {
-  [key: number]: ContentBarDataType;
-};
+import { ParsedContentType } from "@src/static/types/ParsedContentType";
+
 const ContentById = ({
   views,
   title,
@@ -65,18 +64,22 @@ const ContentById = ({
   }, [router.isReady]);
 
   const getWindowWidth = () => {
-    if (!document) return;
-    const mainWrapper = document.getElementById("ContentById");
-    const paddingWidth =
-      Number(
-        window
-          .getComputedStyle(mainWrapper, null)
-          .getPropertyValue("padding")
-          .split("px")[0]
-      ) * 2;
+    try {
+      if (!document) return;
+      const mainWrapper = document.getElementById("ContentById");
+      const paddingWidth =
+        Number(
+          window
+            .getComputedStyle(mainWrapper, null)
+            .getPropertyValue("padding")
+            .split("px")[0]
+        ) * 2;
 
-    const width = mainWrapper.offsetWidth - paddingWidth;
-    $windowWidth.current = width;
+      const width = mainWrapper.offsetWidth - paddingWidth;
+      $windowWidth.current = width;
+    } catch {
+      return;
+    }
   };
 
   return (
