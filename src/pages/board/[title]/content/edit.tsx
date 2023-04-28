@@ -36,8 +36,13 @@ import { useSession } from "next-auth/react";
 import { saveContents } from "@src/components/func/sendRequest";
 import { HeaderMiddleMenuType } from "@src/static/types/menuType";
 import qs from "qs";
+import { ModifyContentType } from "@src/static/types/ModifyContentType";
 
-const ContentEdit = () => {
+const ContentEdit = ({
+  preTitle,
+  preContents,
+  contentId,
+}: ModifyContentType) => {
   const { data: session } = useSession();
   const router = useRouter();
   const $wrapper = useRef<HTMLDivElement>(null);
@@ -60,16 +65,21 @@ const ContentEdit = () => {
   const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
   const $mouseLocation = useRef<LocationType>({ x: 0, y: 0 });
   const $lastIndex = useRef<number>(0);
-  const [addType, setAddType] = useState<string>("text");
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState<boolean>(false);
   const [AddTypeModalLocation, setAddTypeModalLocation] =
     useState<LocationType>({ x: 0, y: 0 });
   const [contents, setContents] = useState<ContentBarDataType[]>([
     { type: "text", content: "", image: "" },
-    // { type: "image", content: "", image: "/favicon.png" },
     { type: "text", content: "", image: "" },
   ]);
-
+  useEffect(() => {
+    if (preTitle) {
+      $title.current.value = preTitle;
+    }
+    if (preContents) {
+      setContents(preContents);
+    }
+  }, []);
   const ContentEditBarList = useMemo(() => {
     $lastIndex.current = contents.length - 1;
     return contents.map((value, index) => (
@@ -91,7 +101,7 @@ const ContentEdit = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contents]);
 
-  const title = useMemo(() => {
+  const board = useMemo(() => {
     return router.query.title;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
@@ -349,10 +359,10 @@ const ContentEdit = () => {
       title: $title.current.value,
       contents: qs.stringify(contents),
       writer: session.user.id,
-      board: title as HeaderMiddleMenuType,
+      board: board as HeaderMiddleMenuType,
     };
     saveContents(data);
-    router.push(`/board/${title}`);
+    router.push(`/board/${board}`);
   };
 
   return (
@@ -362,7 +372,7 @@ const ContentEdit = () => {
       onScroll={handleWrapperScroll}
       onMouseUp={handleHandleBtnMouseUp}>
       <div className={`${styles.header_container}`}>
-        <div className={`${styles.board_name}`}>{title}</div>
+        <div className={`${styles.board_name}`}>{board}</div>
         <div className={`${styles.title_box}`}>
           <div className={`${styles.content_title}`}>
             <input
@@ -421,7 +431,6 @@ const ContentEdit = () => {
         mouseOnIndex={$mouseOnIndex.current}
         location={AddTypeModalLocation}
         setIsOpen={setIsOpenAddTypeModal}
-        setAddType={setAddType}
         addContent={addContent}
       />
       <div

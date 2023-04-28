@@ -13,14 +13,12 @@ const AddTypeModel = ({
   location,
   addContent,
   setIsOpen,
-  setAddType,
 }: {
   isOpen: boolean;
   location: LocationType;
   mouseOnIndex: number;
   addContent: AddContentType;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAddType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const $wrapper = useRef<HTMLDivElement>(null);
   const $fileInput = useRef<HTMLInputElement>(null);
@@ -37,8 +35,6 @@ const AddTypeModel = ({
     setIsOpen(false);
   };
   const handleClickText = (e: React.MouseEvent<HTMLDivElement>) => {
-    // setAddType();
-
     addContent(
       mouseOnIndex,
       "",
@@ -55,6 +51,7 @@ const AddTypeModel = ({
     const formData = new FormData();
     formData.append("file", file);
     formData.append("username", session.user.name);
+
     sendFile(formData).then((res) => {
       addContent(
         $mouseOnIndex.current,

@@ -11,9 +11,7 @@ import {
   ContentBarDataType,
   ContentTypeType,
 } from "@src/static/types/ContentDataType";
-import { SaveContentType } from "@src/static/types/SaveContentType";
 
-import axios from "axios";
 export const pointEndOfBeforeTheTarget = (
   beforeTheTarget: Node,
   range: Range,
