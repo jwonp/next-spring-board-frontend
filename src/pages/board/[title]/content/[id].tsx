@@ -1,9 +1,5 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
-import {
-  addLikeByContentAndUser,
-  deleteLikeByContentAndUser,
-  getContentById,
-} from "@src/components/func/sendRequest";
+import { getContentById } from "@src/components/func/sendRequest";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -23,8 +19,8 @@ import {
 } from "@src/components/fetcher/LikeFetcher";
 import { useSession } from "next-auth/react";
 import LikeButton from "@src/components/module/board/content/button/LikeButton";
-import ModifyButton from "@src/components/module/board/content/button/ModifyButton";
-import DeleteButton from "@src/components/module/board/content/button/DeleteButton";
+import ContentModifyButton from "@src/components/module/board/content/button/ContentModifyButton";
+import ContentDeleteButton from "@src/components/module/board/content/button/ContentDeleteButton";
 import { ParsedContentType } from "@src/static/types/ParsedContentType";
 
 const ContentById = ({
@@ -102,8 +98,8 @@ const ContentById = ({
           </div>
         </div>
         <div className={`${styles.control_btn_box}`}>
-          <ModifyButton board={board} contentId={id} author={userId} />
-          <DeleteButton board={board} contentId={id} author={userId} />
+          <ContentModifyButton board={board} contentId={id} author={userId} />
+          <ContentDeleteButton board={board} contentId={id} author={userId} />
         </div>
       </div>
       <div className={`${styles.content_box}`}>

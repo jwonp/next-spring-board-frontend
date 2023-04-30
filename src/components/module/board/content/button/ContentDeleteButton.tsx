@@ -1,4 +1,4 @@
-import styles from "@src/styles/board/content/button/DeleteButton.module.scss";
+import styles from "@src/styles/board/content/button/ContentDeleteButton.module.scss";
 import { DeleteButtonPropsType } from "@src/static/types/ButtonPropsType";
 import useSWR from "swr";
 import {
@@ -8,7 +8,11 @@ import {
 import { useRouter } from "next/router";
 import { deleteContent } from "@src/components/func/sendRequest";
 import { useSession } from "next-auth/react";
-const DeleteButton = ({ board, contentId, author }: DeleteButtonPropsType) => {
+const ContentDeleteButton = ({
+  board,
+  contentId,
+  author,
+}: DeleteButtonPropsType) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { data, mutate } = useSWR(
@@ -28,4 +32,4 @@ const DeleteButton = ({ board, contentId, author }: DeleteButtonPropsType) => {
   );
 };
 
-export default DeleteButton;
+export default ContentDeleteButton;

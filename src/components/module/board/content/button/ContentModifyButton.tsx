@@ -1,4 +1,4 @@
-import styles from "@src/styles/board/content/button/ModifyButton.module.scss";
+import styles from "@src/styles/board/content/button/ContentModifyButton.module.scss";
 import { ModifyButtonPropsType } from "@src/static/types/ButtonPropsType";
 import useSWR from "swr";
 import {
@@ -6,7 +6,11 @@ import {
   isAuthorByContentIdFetcher,
 } from "@src/components/fetcher/IsAuthorFetcher";
 import { useRouter } from "next/router";
-const ModifyButton = ({ board, contentId, author }: ModifyButtonPropsType) => {
+const ContentModifyButton = ({
+  board,
+  contentId,
+  author,
+}: ModifyButtonPropsType) => {
   const router = useRouter();
   const { data, mutate } = useSWR(
     isAuthorURLByContentId(contentId, author),
@@ -29,4 +33,4 @@ const ModifyButton = ({ board, contentId, author }: ModifyButtonPropsType) => {
   }
 };
 
-export default ModifyButton;
+export default ContentModifyButton;
