@@ -5,3 +5,9 @@ export interface ModifyContentType {
   preTitle?: string;
   preContents?: ContentBarDataType[];
 }
+export interface ModifyContentRequestType {
+  contentId: number;
+  title: string;
+  contents: string;
+  writer: string;
+}

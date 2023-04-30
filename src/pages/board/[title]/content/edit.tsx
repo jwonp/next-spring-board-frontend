@@ -33,10 +33,13 @@ import { AddContentType } from "@src/static/types/AddContentsType";
 import ContentEditBar from "@src/components/module/board/content/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
-import { saveContents } from "@src/components/func/sendRequest";
+import { modifyContents, saveContents } from "@src/components/func/sendRequest";
 import { HeaderMiddleMenuType } from "@src/static/types/menuType";
 import qs from "qs";
-import { ModifyContentType } from "@src/static/types/ModifyContentType";
+import {
+  ModifyContentRequestType,
+  ModifyContentType,
+} from "@src/static/types/ModifyContentType";
 
 const ContentEdit = ({
   preTitle,
@@ -354,14 +357,24 @@ const ContentEdit = ({
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
+    if (contentId) {
+      const data: ModifyContentRequestType = {
+        contentId: contentId,
+        title: $title.current.value,
+        contents: qs.stringify(contents),
+        writer: session.user.id,
+      };
+      modifyContents(data);
+    } else {
+      const data: SaveContentType = {
+        title: $title.current.value,
+        contents: qs.stringify(contents),
+        writer: session.user.id,
+        board: board as HeaderMiddleMenuType,
+      };
+      saveContents(data);
+    }
 
-    const data: SaveContentType = {
-      title: $title.current.value,
-      contents: qs.stringify(contents),
-      writer: session.user.id,
-      board: board as HeaderMiddleMenuType,
-    };
-    saveContents(data);
     router.push(`/board/${board}`);
   };
 

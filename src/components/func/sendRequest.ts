@@ -1,3 +1,4 @@
+import { ModifyContentRequestType } from "@src/static/types/ModifyContentType";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { UserType } from "@src/static/types/UserType";
 import axios from "axios";
@@ -19,6 +20,10 @@ export const addUser = async (data: UserType) => {
 
 export const saveContents = async (data: SaveContentType) => {
   await axios.post(`/api/board/edit`, data);
+};
+
+export const modifyContents = async (data: ModifyContentRequestType) => {
+  await axios.post(`/api/board/modify`, data);
 };
 
 export const getContentById = async (id: string) => {
