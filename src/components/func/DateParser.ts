@@ -9,13 +9,13 @@ export const getDateFromRowDateAsObject = (row: string): DateType => {
 };
 
 export const getDateFromRowDateAsString = (row: string): string => {
-  const date = row.substring(0, 9).split("-");
-  const time = row.substring(11, 18).split(":");
-  const year = Number(date[0]);
-  const month = Number(date[1]);
-  const day = Number(date[2]);
-  const hour = Number(time[0]);
-  const minute = Number(time[1]);
-  const second = Number(time[2]);
-  return `${year}.${month}.${day} ${hour}:${minute}:${second}`;
+  const date = row.substring(0, 10).split("-");
+  const time = row.substring(11, 17).split(":");
+  const year = date[0];
+  const month = date[1];
+  const day = date[2];
+  const hour = time[0];
+  const minute = time[1];
+
+  return `${year}.${month}.${day} ${hour}:${minute}`;
 };

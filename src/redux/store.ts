@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction } from "@reduxjs/toolkit";
 import pageIndexReducer from "./features/pageIndex";
+import commentModifyReducer from "./features/commentModify";
 
 import { Action } from "redux";
 
@@ -7,6 +8,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       pageIndex: pageIndexReducer,
+      commentModify: commentModifyReducer,
     },
   });
 };

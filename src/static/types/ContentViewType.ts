@@ -3,8 +3,9 @@ export interface ContentViewType {
   title: string;
   board: string;
   author: string;
+  authorId: string;
   updated: string;
   likes: number;
-  id: number;
+  contentId: number;
   content: string;
 }

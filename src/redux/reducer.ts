@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 import pageIndexReducer from "./features/pageIndex";
+import commentModifyReducer from "./features/commentModify";
 
 const combinedReducer = combineReducers({
   pageIndex: pageIndexReducer,
+  commentModify: commentModifyReducer,
 });
 
 const rootReducer: typeof combinedReducer = (state, action) => {

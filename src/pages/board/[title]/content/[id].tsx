@@ -28,9 +28,10 @@ const ContentById = ({
   title,
   board,
   author,
+  authorId,
   updated,
   likes,
-  id,
+  contentId,
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
@@ -38,9 +39,9 @@ const ContentById = ({
   const userId = useMemo(() => {
     return session?.user?.id;
   }, [session]);
-  const likeSWR = useSWR(LikeFetcherURLByContentId(id), LikeFetcher);
+  const likeSWR = useSWR(LikeFetcherURLByContentId(contentId), LikeFetcher);
   const likedSWR = useSWR(
-    isLikedURLByContentIdAndUserId(id, userId),
+    isLikedURLByContentIdAndUserId(contentId, userId),
     LikedFetcher
   );
 
@@ -97,10 +98,22 @@ const ContentById = ({
             }`}</div>
           </div>
         </div>
-        <div className={`${styles.control_btn_box}`}>
-          <ContentModifyButton board={board} contentId={id} author={userId} />
-          <ContentDeleteButton board={board} contentId={id} author={userId} />
-        </div>
+        {userId === authorId ? (
+          <div className={`${styles.control_btn_box}`}>
+            <ContentModifyButton
+              board={board}
+              contentId={contentId}
+              author={userId}
+            />
+            <ContentDeleteButton
+              board={board}
+              contentId={contentId}
+              author={userId}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className={`${styles.content_box}`}>
         {parsedContent.map((value, index) => {
@@ -114,12 +127,12 @@ const ContentById = ({
       <LikeButton
         likeCount={likeSWR.data}
         isLiked={likedSWR.data}
-        contentId={id}
+        contentId={contentId}
         userId={userId}
         likeCountMutate={likeSWR.mutate}
         isLikedMutate={likedSWR.mutate}
       />
-      <Comment id={id} />
+      <Comment contentId={contentId} />
     </div>
   );
 };

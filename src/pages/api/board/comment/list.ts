@@ -9,6 +9,7 @@ type CommentResponseType = {
   created: string;
   updated: string;
   writer: string;
+  writerId: string;
 };
 const getCommentListByContentId = async (contentId: string) => {
   return await axios.get(
@@ -29,6 +30,7 @@ export default function handler(
         contentId: value.contentId,
         comment: value.comment,
         writer: value.writer,
+        writerId: value.writerId,
         created: value.created,
         updated: value.updated,
       };

@@ -5,27 +5,41 @@ import {
 } from "@src/components/fetcher/CommentFetcher";
 import { saveCommentByContentId } from "@src/components/func/sendRequest";
 import { useSession, signOut } from "next-auth/react";
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import useSWR from "swr";
-import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
 import { useRouter } from "next/router";
-const Comment = ({ id }: { id: number }) => {
+import CommentBar from "./CommentBar";
+
+const Comment = ({ contentId }: { contentId: number }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const $textarea = useRef<HTMLTextAreaElement>(null);
-  const { data, mutate } = useSWR(CommentURLByContent(id), CommentFetcher);
-  const user = useMemo(() => {
-    return session?.user?.id;
-  }, [session]);
+  const { data, mutate } = useSWR(
+    CommentURLByContent(contentId),
+    CommentFetcher
+  );
 
+  const CommentList = useMemo(() => {
+    return data?.map((value, index) => (
+      <CommentBar
+        key={index}
+        comment={value}
+        userId={session?.user?.id}
+        mutate={mutate}
+      />
+    ));
+  }, [data]);
   const uploadComment = () => {
-    saveCommentByContentId($textarea.current.value, id, user).then((_res) => {
+    saveCommentByContentId(
+      $textarea.current.value,
+      contentId,
+      session?.user?.id
+    ).then((_res) => {
       if (_res.data === false) {
         signOut();
         router.push("/");
         return;
       }
-
       $textarea.current.value = "";
       mutate();
     });
@@ -41,22 +55,9 @@ const Comment = ({ id }: { id: number }) => {
             maxLength={500}
             required={true}></textarea>
         </div>
-
         <button onClick={uploadComment}>등록</button>
       </div>
-      <div className={`${styles.comment_list}`}>
-        {data?.map((value, index) => {
-          return (
-            <div key={index} className={`${styles.comment}`}>
-              <div>{value.comment}</div>
-              <div>
-                <div>{value.writer}</div>
-                <div>{getDateFromRowDateAsString(value.updated)}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <div className={`${styles.comment_list}`}>{CommentList}</div>
     </div>
   );
 };
