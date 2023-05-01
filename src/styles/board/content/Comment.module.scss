@@ -4,13 +4,7 @@
     margin-top: 2em;
     margin-bottom: 2em;
     font-size: 1.3em;
-    & div:first-child {
-        padding-left: 0.2em;
-        margin-bottom: 0.3em;
-    }
-    & div:nth-child(2){
-        width: 100%;
-    }
+
     & textarea {
         width: calc(100% - 0.8em - 2px);
         min-height: 5em;
@@ -33,21 +27,6 @@
 .input_form{
     margin-bottom: 2em;
 }
-.comment{
-    display: flex;
-    justify-content: space-between;
-    padding:0.3em 0.05em;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
-    & div:nth-child(2) {
-        width: auto;
-        font-size: 0.8em;
-        & div:nth-child(2){
-            float: right;
-        }
-    }
-}
-
-
 .comment_list{
     padding-top: 0.5em;
     border-top: 1px solid forestgreen;
