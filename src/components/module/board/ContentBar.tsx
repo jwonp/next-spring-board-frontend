@@ -1,3 +1,4 @@
+import { getDateAsShortString } from "@src/components/func/DateParser";
 import { convertNumberToUnitK } from "@src/components/func/stringTools";
 import { sizes } from "@src/static/data/stringSet";
 import { ContentType } from "@src/static/types/ContentType";
@@ -30,7 +31,9 @@ const ContentBar = ({ data, title }: { data: ContentType; title: string }) => {
             </div>
           </div>
           <div className={`${styles.author}`}>{data.author}</div>
-          <div className={`${styles.update_date}`}>{data.update_date}</div>
+          <div className={`${styles.update_date}`}>
+            {getDateAsShortString(data.updateDate)}
+          </div>
         </div>
       </div>
     </Link>

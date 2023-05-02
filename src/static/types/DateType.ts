@@ -1,4 +1,8 @@
 export interface DateType {
-  date: string;
-  time: string;
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
