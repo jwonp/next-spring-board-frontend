@@ -2,7 +2,7 @@ import { CommentBarType } from "@src/static/types/CommentType";
 import styles from "@src/styles/board/content/CommentBar.module.scss";
 import CommentModifyButton from "./button/CommentModifyButton";
 import CommentDeleteButton from "./button/CommentDeleteButton";
-import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
+import { getDateAsString } from "@src/components/func/DateParser";
 import { useRef } from "react";
 import { useAppSelector } from "@src/redux/hooks";
 import { getModifyIndex } from "@src/redux/features/commentModify";
@@ -26,7 +26,7 @@ const CommentBar = ({ comment, userId, mutate }: CommentBarType) => {
       <div className={`${styles.handler_box}`}>
         <div className={`${styles.meta}`}>
           <div>{comment.writer}</div>
-          <div>{getDateFromRowDateAsString(comment.updated)}</div>
+          <div>{getDateAsString(comment.updated)}</div>
         </div>
         {userId && comment.writerId === userId ? (
           <div className={`${styles.control}`}>
