@@ -10,7 +10,6 @@ const ContentBar = ({ data, title }: { data: ContentType; title: string }) => {
     <Link href={`/board/${title}/content/${data.id}`}>
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.left}`}>
-          <div className={`${styles.index}`}>{data.id}</div>
           <div className={`${styles.title}`}>{data.title}</div>
         </div>
         <div className={`${styles.right}`}>
