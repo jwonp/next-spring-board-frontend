@@ -1,34 +1,34 @@
+import styles from "@src/styles/board/content/ContentViewBar.module.scss";
 import {
   getImage,
   getImageSizeByWindowWidth,
 } from "@src/components/func/ImageHandler";
+import { getWidth } from "@src/redux/features/windowWidth";
+import { useAppSelector } from "@src/redux/hooks";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
-import styles from "@src/styles/board/content/ContentViewBar.module.scss";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { MutableRefObject, useEffect, useState } from "react";
-const ContentViewBar = ({
-  data,
-  windowWidth,
-}: {
-  data: ContentBarDataType;
-  windowWidth: MutableRefObject<number>;
-}) => {
+
+import { useEffect, useState } from "react";
+const ContentViewBar = ({ data }: { data: ContentBarDataType }) => {
+  const windowWidth = useAppSelector(getWidth);
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
     height: 0,
   });
-  useEffect(() => {
+
+  const resizeImage = () => {
     if (data.image === "" || data.image === undefined) return;
     getImage(data.image).then((img) => {
       const _size = getImageSizeByWindowWidth(
         img.naturalWidth,
         img.naturalHeight,
-        windowWidth.current
+        windowWidth
       );
       setSize({ width: _size.width, height: _size.height });
     });
-  }, [data, windowWidth]);
+  };
+
+  useEffect(resizeImage, [data, windowWidth]);
 
   const getViewBar = () => {
     if (data.type === "image") {
@@ -45,7 +45,7 @@ const ContentViewBar = ({
 
     return data.content;
   };
-  //   const  = ;
+
   return <div>{getViewBar()}</div>;
 };
 

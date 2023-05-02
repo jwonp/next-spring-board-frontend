@@ -5,7 +5,7 @@ import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import qs from "qs";
 import { useEffect, useMemo, useRef } from "react";
-import { getDateFromRowDateAsString } from "@src/components/func/DateParser";
+import { getDateAsString } from "@src/components/func/DateParser";
 import ContentViewBar from "@src/components/module/board/content/ContentViewBar";
 import useSWR from "swr";
 import Comment from "@src/components/module/board/content/Comment";
@@ -22,6 +22,9 @@ import LikeButton from "@src/components/module/board/content/button/LikeButton";
 import ContentModifyButton from "@src/components/module/board/content/button/ContentModifyButton";
 import ContentDeleteButton from "@src/components/module/board/content/button/ContentDeleteButton";
 import { ParsedContentType } from "@src/static/types/ParsedContentType";
+import { useAppDispatch } from "@src/redux/hooks";
+import { setWidth } from "@src/redux/features/windowWidth";
+import { getWindowWidth } from "@src/components/func/ContentViewFuncs";
 
 const ContentById = ({
   views,
@@ -35,6 +38,7 @@ const ContentById = ({
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { data: session } = useSession();
   const userId = useMemo(() => {
     return session?.user?.id;
@@ -55,29 +59,14 @@ const ContentById = ({
 
   useEffect(() => {
     if (router.isReady) {
-      getWindowWidth();
-      window.addEventListener("resize", getWindowWidth);
-    }
-  }, [router.isReady]);
-
-  const getWindowWidth = () => {
-    try {
       if (!document) return;
       const mainWrapper = document.getElementById("ContentById");
-      const paddingWidth =
-        Number(
-          window
-            .getComputedStyle(mainWrapper, null)
-            .getPropertyValue("padding")
-            .split("px")[0]
-        ) * 2;
-
-      const width = mainWrapper.offsetWidth - paddingWidth;
-      $windowWidth.current = width;
-    } catch {
-      return;
+      dispatch(setWidth(getWindowWidth(mainWrapper)));
+      window.addEventListener("resize", () => {
+        dispatch(setWidth(getWindowWidth(mainWrapper)));
+      });
     }
-  };
+  }, [router.isReady]);
 
   return (
     <div id={"ContentById"} className={`${styles.wrapper}`}>
@@ -90,7 +79,7 @@ const ContentById = ({
           <div>
             <div className={`${styles.author}`}>{`작성자 ${author}`}</div>
             <div className={`${styles.updated}`}>
-              {`작성일 ${getDateFromRowDateAsString(updated)}`}
+              {`작성일 ${getDateAsString(updated)}`}
             </div>
             <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
             <div className={`${styles.likes}`}>{`좋아요 ${
@@ -119,7 +108,7 @@ const ContentById = ({
         {parsedContent.map((value, index) => {
           return (
             <div key={index} className={`${styles.item}`}>
-              <ContentViewBar data={value} windowWidth={$windowWidth} />
+              <ContentViewBar data={value} />
             </div>
           );
         })}

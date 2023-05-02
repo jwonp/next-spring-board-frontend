@@ -1,8 +1,8 @@
+import styles from "@src/styles/board/BoardByTitle.module.scss";
 import { boardListFetcher } from "@src/components/fetcher/BoardListFetcher";
 import ContentBar from "@src/components/module/board/ContentBar";
 import PaginationBar from "@src/components/module/board/PaginationBar";
 import { ContentType } from "@src/static/types/ContentType";
-import styles from "@src/styles/board/BoardByTitle.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,12 +15,15 @@ import { getIndex, setIndex } from "@src/redux/features/pageIndex";
 const BoardByTitle = () => {
   const router = useRouter();
   const $searchInput = useRef<HTMLInputElement>(null);
+
   const title = useMemo(() => {
     return router.query.title as string;
   }, [router.query.title]);
+
   const searchQuery = useMemo(() => {
     return router.query.search as string;
   }, [router.query.search]);
+
   const dispatch = useAppDispatch();
   const pageIndex = useAppSelector(getIndex);
 
@@ -30,11 +33,26 @@ const BoardByTitle = () => {
       : `/api/board/list?index=${pageIndex}&board=${title}`,
     boardListFetcher
   );
+
+  const ContentBarList = useMemo(() => {
+    if (contentData.data?.length === 0) {
+      return <div className={`${styles.no_content}`}>No Content</div>;
+    }
+    return contentData.data?.map((item: ContentType, index) => (
+      <div key={index}>
+        <ContentBar data={item} title={title} />
+      </div>
+    ));
+  }, [contentData]);
+
   useEffect(() => {
     $searchInput.current.value = "";
     dispatch(setIndex(0));
   }, [title]);
 
+  const runSearch = () => {
+    router.push(`/board/${title}?search=${$searchInput.current.value}`);
+  };
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.header}`}>
@@ -44,13 +62,7 @@ const BoardByTitle = () => {
           <div className={`${styles.search_input_box}`}>
             <input ref={$searchInput} type={"text"} />
           </div>
-          <button
-            className={`${styles.search_icon}`}
-            onClick={() => {
-              router.push(
-                `/board/${title}?search=${$searchInput.current.value}`
-              );
-            }}>
+          <button className={`${styles.search_icon}`} onClick={runSearch}>
             <Image src={"/search.svg"} alt={""} fill sizes={sizes} />
           </button>
         </div>
@@ -58,13 +70,7 @@ const BoardByTitle = () => {
           <Link href={`/board/${title}/content/edit`}>write</Link>
         </div>
       </div>
-      <div className={`${styles.list}`}>
-        {contentData.data?.map((item: ContentType, index) => (
-          <div key={index}>
-            <ContentBar data={item} title={title} />
-          </div>
-        ))}
-      </div>
+      <div className={`${styles.list}`}>{ContentBarList}</div>
       <PaginationBar boardTitle={title} search={searchQuery} />
     </div>
   );
