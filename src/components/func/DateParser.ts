@@ -47,7 +47,6 @@ export const getDateAsString = (row: string): string => {
  */
 export const getDateAsShortString = (row: string): string => {
   const date = getDateAsObject(row, DateTime.now());
-
   if (date.minutes === 0 && date.seconds >= 0) {
     return `${date.seconds.toFixed(0)}초전`;
   }
