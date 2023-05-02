@@ -5,5 +5,5 @@ export interface ContentType {
   likes: number;
   author: string;
   board: string;
-  updateDate: string;
+  createdDate: string;
 }
