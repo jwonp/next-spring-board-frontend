@@ -1,8 +1,8 @@
 
 // content_box
 .wrapper{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 6fr 4fr;
     height: 1em;
     line-height: 1.25em;
     vertical-align: middle;
@@ -13,28 +13,32 @@
     border-radius: 12px;
     cursor: pointer;
 }
-.left,
-.right{
+.left{
     display: flex;
-    gap:0.6em;
+    
+}
+.right{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 1.4fr;
 }
 
 // .index,
-// .title{
-    
-// }
+.title{
+    padding-left: 0.4em;
+}
 
 
-.views,.likes{
-    width: 3em;
+.views,
+.likes{
+ 
     display: flex;
     gap:0.3em;
 }
 
-.author,
-.update_date{
-    width: 5em;
-}
+// .author,
+// .update_date{
+    
+// }
 
 .icon{
     position: relative;
@@ -44,8 +48,6 @@
     border-radius: 15px;
 }
 .count{
-    width: 2em;
     font-size: 0.7em;
     text-align: right;
 }
-// 
