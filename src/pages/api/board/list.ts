@@ -44,7 +44,7 @@ export default function handler(
           likes: value.likes,
           author: value.author,
           board: value.board,
-          updateDate: value.updated,
+          createdDate: value.created,
         };
       });
       res.status(200).send(returnData);

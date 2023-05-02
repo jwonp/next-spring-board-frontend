@@ -5,9 +5,15 @@ import { ContentType } from "@src/static/types/ContentType";
 import styles from "@src/styles/board/content/ContentBar.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-const ContentBar = ({ data, title }: { data: ContentType; title: string }) => {
+const ContentBar = ({
+  data,
+  boardTitle,
+}: {
+  data: ContentType;
+  boardTitle: string;
+}) => {
   return (
-    <Link href={`/board/${title}/content/${data.id}`}>
+    <Link href={`/board/${boardTitle}/content/${data.id}`}>
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.left}`}>
           <div className={`${styles.title}`}>{data.title}</div>
@@ -31,7 +37,7 @@ const ContentBar = ({ data, title }: { data: ContentType; title: string }) => {
           </div>
           <div className={`${styles.author}`}>{data.author}</div>
           <div className={`${styles.update_date}`}>
-            {getDateAsShortString(data.updateDate)}
+            {getDateAsShortString(data.createdDate)}
           </div>
         </div>
       </div>

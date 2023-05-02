@@ -1,3 +1,4 @@
+import { ContentType } from "@src/static/types/ContentType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 const searchByQuery = async (query: string, board: string) => {
@@ -7,7 +8,7 @@ const searchByQuery = async (query: string, board: string) => {
 };
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<string>
+  res: NextApiResponse<ContentType[] | null>
 ) {
   const { query, board } = req.query;
 
