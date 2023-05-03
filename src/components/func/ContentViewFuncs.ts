@@ -1,3 +1,5 @@
+import pageIndex from "@src/redux/features/pageIndex";
+
 export const getWindowWidth = (mainWrapper: HTMLElement) => {
   try {
     const paddingWidth =
@@ -12,4 +14,10 @@ export const getWindowWidth = (mainWrapper: HTMLElement) => {
   } catch {
     return;
   }
+};
+export const getPaginationIndex = (
+  pageIndex: number,
+  lastPointNumber: number
+) => {
+  return Math.floor(pageIndex / 10) * 10 + lastPointNumber;
 };
