@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { ContentType } from "@src/static/types/ContentType";
-import { HeaderMiddleMenuType } from "@src/static/types/menuType";
+import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 type ListDtoType = {
@@ -15,7 +15,7 @@ type ListDtoType = {
 };
 
 const getContentListByBoardAndIndex = async (
-  board: HeaderMiddleMenuType,
+  board: BoardMenuType,
   index: number
 ) => {
   return await axios.get(
@@ -30,25 +30,24 @@ export default function handler(
   const { index, board } = req.query;
 
   try {
-    getContentListByBoardAndIndex(
-      board as HeaderMiddleMenuType,
-      Number(index)
-    ).then((_res) => {
-      const responseData: ListDtoType[] = _res.data;
+    getContentListByBoardAndIndex(board as BoardMenuType, Number(index)).then(
+      (_res) => {
+        const responseData: ListDtoType[] = _res.data;
 
-      const returnData: ContentType[] = responseData.map((value) => {
-        return {
-          id: value.contentMetaId,
-          title: value.title,
-          views: value.views,
-          likes: value.likes,
-          author: value.author,
-          board: value.board,
-          createdDate: value.created,
-        };
-      });
-      res.status(200).send(returnData);
-    });
+        const returnData: ContentType[] = responseData.map((value) => {
+          return {
+            id: value.contentMetaId,
+            title: value.title,
+            views: value.views,
+            likes: value.likes,
+            author: value.author,
+            board: value.board,
+            createdDate: value.created,
+          };
+        });
+        res.status(200).send(returnData);
+      }
+    );
   } catch (error) {
     res.status(201).send(null);
   }

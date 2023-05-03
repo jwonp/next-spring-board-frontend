@@ -34,7 +34,7 @@ import ContentEditBar from "@src/components/module/board/content/ContentEditBar"
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
 import { modifyContents, saveContents } from "@src/components/func/sendRequest";
-import { HeaderMiddleMenuType } from "@src/static/types/menuType";
+import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import qs from "qs";
 import {
   ModifyContentRequestType,
@@ -370,7 +370,7 @@ const ContentEdit = ({
         title: $title.current.value,
         contents: qs.stringify(contents),
         writer: session.user.id,
-        board: board as HeaderMiddleMenuType,
+        board: board as BoardMenuType,
       };
       saveContents(data);
     }

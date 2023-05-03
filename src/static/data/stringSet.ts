@@ -1,5 +1,5 @@
-import { HeaderMiddleMenuType } from "@src/static/types/menuType";
-export const HeaderMiddleMenu: HeaderMiddleMenuType[] = [
+import { BoardMenuType } from "@src/static/types/BoardMenuType";
+export const BoardMenu: BoardMenuType[] = [
   "Board One",
   "Board Two",
   "Board Three",

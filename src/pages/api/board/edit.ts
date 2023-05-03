@@ -5,11 +5,11 @@ import qs from "qs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
-import { HeaderMiddleMenuType } from "@src/static/types/menuType";
+import { BoardMenuType } from "@src/static/types/BoardMenuType";
 
 const sendContent = async (
   title: string,
-  board: HeaderMiddleMenuType,
+  board: BoardMenuType,
   content: string,
   csrf: CsrfIdentityType
 ) => {

@@ -1,4 +1,4 @@
-const HeaderMiddleMenu = {
+const BoardMenu = {
   Menu1: "Board One",
   Menu2: "Board Two",
   Menu3: "Board Three",
@@ -11,8 +11,7 @@ const HeaderMiddleMenu = {
 //   Menu4: "합방 결과 공유",
 // } as const;
 
-export type HeaderMiddleMenuType =
-  typeof HeaderMiddleMenu[keyof typeof HeaderMiddleMenu];
+export type BoardMenuType = (typeof BoardMenu)[keyof typeof BoardMenu];
 
 const HeaderRightMenu = {
   alert: "alert",
@@ -20,4 +19,4 @@ const HeaderRightMenu = {
   logout: "Logout",
 } as const;
 export type HeaderRightMenuType =
-  typeof HeaderRightMenu[keyof typeof HeaderRightMenu];
+  (typeof HeaderRightMenu)[keyof typeof HeaderRightMenu];

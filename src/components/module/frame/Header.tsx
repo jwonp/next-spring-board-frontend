@@ -1,14 +1,11 @@
-import {
-  HeaderMiddleMenu,
-  HeaderRightMenu,
-  sizes,
-} from "@src/static/data/stringSet";
+import { HeaderRightMenu, sizes } from "@src/static/data/stringSet";
 import { useSession, signIn, signOut } from "next-auth/react";
 import styles from "@src/styles/frame/Header.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import { isUserRegisted } from "@src/components/func/sendRequest";
+import BoardMenu from "./menu/BoardMenu";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -37,7 +34,9 @@ const Header = () => {
             <Link href={`/`}>{session?.user?.name}</Link>
           </div>
         </div>
-
+        <div className={`${styles.box}`}>
+          <BoardMenu />
+        </div>
         <div className={`${styles.box}`}>
           <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div>
           <div className={`${styles.item}`} onClick={signFunc}>
