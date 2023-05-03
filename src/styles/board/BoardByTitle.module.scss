@@ -69,3 +69,17 @@
     text-align: center;
     margin: 2em 0;
 }
+@media screen and (max-width:vars.$windowWidth-half) {
+    .wrapper{
+        font-size: 1.8em;
+    }
+
+    .title{
+        height: 1.2em;
+        line-height: 1.5em;
+    }
+    .search{
+        
+        width: 50%;
+    }
+}

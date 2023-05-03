@@ -1,5 +1,5 @@
 
-// content_box
+@use "@src/styles/vars.scss" as vars;
 .wrapper{
     display: grid;
     grid-template-columns: 6fr 4fr;
@@ -9,7 +9,7 @@
     font-size: 0.7em;
     margin: 1em 0.3em;
     padding: 0.2em 0.5em;
-    border: 1px solid burlywood;
+    border: 1px solid vars.$mainColor-100;
     border-radius: 12px;
     cursor: pointer;
 }
@@ -35,10 +35,10 @@
     gap:0.3em;
 }
 
-// .author,
-// .update_date{
-    
-// }
+.author,
+.created_date{
+        font-size:0.9em;
+}
 
 .icon{
     position: relative;
@@ -50,4 +50,13 @@
 .count{
     font-size: 0.7em;
     text-align: right;
+}
+@media screen and (max-width:vars.$windowWidth-half) {
+    .wrapper{
+        line-height: 1.2em;
+        font-size: 0.8em;
+    }.icon{
+        width: 0.85em;
+        height: 0.85em ;
+    }
 }

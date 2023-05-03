@@ -1,11 +1,11 @@
-@use "@src/styles/vars.scss" as var;
+@use "@src/styles/vars.scss" as vars;
 .wrapper{
     position: relative;
     width: calc(100% - 2rem);
-    height: var.$headerHeight;
-    font-size: var.$headerHeight;
-    background-color: darkgreen;
-    padding:  var.$headerPaddingHeight 1rem;
+    height: vars.$headerHeight;
+    font-size: vars.$headerHeight;
+    background-color: vars.$mainColor-70;
+    padding:  vars.$headerPaddingHeight 1rem;
     overflow: hidden;    
 }
 
@@ -22,14 +22,23 @@
     gap: 0.8rem;
 }
 .box:nth-child(2) {
-    line-height:  var.$headerHeight * 1.25;
-    vertical-align: middle;
-    font-size: 1.5rem;
+    display: none;
 }
 .logo{
     position: relative;
-    width: var.$headerHeight * 1.1;
-    height: var.$headerHeight * 1.1;
+    width: vars.$headerHeight * 1.1;
+    height: vars.$headerHeight * 1.1;
     overflow: hidden;
     border-radius: 15px;
+}
+
+@media screen and (max-width:vars.$windowWidth-half) {
+    .box div{
+        line-height:  vars.$headerHeight * 1.25;
+        vertical-align: middle;
+        font-size: 1.2rem;
+    }
+    .box:nth-child(2) {
+        display: block;
+    }
 }

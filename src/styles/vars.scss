@@ -6,7 +6,13 @@ $mainWrapperPadding: 1rem;
 
 $footerHeight:3rem;
 
-$mainBackgroundColor: rgb(50,50,50);
+$mainColor: rgb(50,50,50);
+$mainColor-30: rgb(30,30,30);
+$mainColor-70: rgb(70,70,70);
+$mainColor-100: rgb(100,100,100);
+
+$windowWidth-half: 930px;
+
 @mixin control-button-box{
     margin-bottom: 1em;
 }
@@ -14,7 +20,7 @@ $mainBackgroundColor: rgb(50,50,50);
     cursor: pointer;
     width: 100%;
     padding: 0.4em 0.3em;
-    background-color: $mainBackgroundColor;
+    background-color: $mainColor;
     border: none;
     font-size: 1.4em;
 

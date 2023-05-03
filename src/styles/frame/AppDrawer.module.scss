@@ -1,6 +1,7 @@
+@use "@src/styles/vars.scss" as vars;
 .wrapper{
     width: 15rem;
-    background-color: green;
+    background-color: vars.$mainColor-70;
     padding-top: 3em;
     padding-bottom: 5em;
     max-height: 100%;
@@ -9,9 +10,9 @@
 .box{
     display: block;
 }
-.item{
-    padding: 0.6em 1.2em;
-    font-size: 1.4em;
-    cursor: pointer;
-    
+
+@media screen and (max-width:vars.$windowWidth-half) {
+    .wrapper{
+        display: none;
+    }
 }
