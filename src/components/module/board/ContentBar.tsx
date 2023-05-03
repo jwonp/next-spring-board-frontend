@@ -36,7 +36,7 @@ const ContentBar = ({
             </div>
           </div>
           <div className={`${styles.author}`}>{data.author}</div>
-          <div className={`${styles.update_date}`}>
+          <div className={`${styles.created_date}`}>
             {getDateAsShortString(data.createdDate)}
           </div>
         </div>
