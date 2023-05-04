@@ -9,26 +9,20 @@ import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import Image from "next/image";
 
 import { useEffect, useState } from "react";
+import { SizeType } from "@src/static/types/SizeType";
+import { resizeImage } from "@src/components/func/ContentViewFuncs";
 const ContentViewBar = ({ data }: { data: ContentBarDataType }) => {
   const windowWidth = useAppSelector(getWidth);
-  const [size, setSize] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0,
+  const [size, setSize] = useState<SizeType>({
+    width: 100,
+    height: 100,
   });
 
-  const resizeImage = () => {
-    if (data.image === "" || data.image === undefined) return;
-    getImage(data.image).then((img) => {
-      const _size = getImageSizeByWindowWidth(
-        img.naturalWidth,
-        img.naturalHeight,
-        windowWidth
-      );
-      setSize({ width: _size.width, height: _size.height });
-    });
-  };
-
-  useEffect(resizeImage, [data, windowWidth]);
+  useEffect(() => {
+    if (!data.image) return;
+    console.log(size.width, size.height);
+    resizeImage(data.image, windowWidth, setSize);
+  }, [data.image, windowWidth]);
 
   const getViewBar = () => {
     if (data.type === "image") {
