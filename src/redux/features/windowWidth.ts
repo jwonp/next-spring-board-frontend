@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store";
-interface windowWidthState {
+interface WindowWidthState {
   width: any;
 }
 
-const initialState: windowWidthState = {
+const initialState: WindowWidthState = {
   width: 0,
 };
 

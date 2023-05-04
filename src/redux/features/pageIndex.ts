@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store";
-interface pageIndexState {
+interface PageIndexState {
   index: number;
 }
 
-const initialState: pageIndexState = {
+const initialState: PageIndexState = {
   index: 0,
 };
 

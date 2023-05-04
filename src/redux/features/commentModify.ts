@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store";
-interface commentModifyState {
+interface CommentModifyState {
   modifyIndex: number;
 }
 
-const initialState: commentModifyState = {
+const initialState: CommentModifyState = {
   modifyIndex: -1,
 };
 
