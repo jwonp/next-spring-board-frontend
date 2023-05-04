@@ -79,7 +79,11 @@
         line-height: 1.5em;
     }
     .search{
-        
         width: 50%;
+    }
+}
+@media screen and (max-width:vars.$windowWidth-quarter) {
+    .wrapper{
+        width: vars.$windowWidth-quarter;
     }
 }

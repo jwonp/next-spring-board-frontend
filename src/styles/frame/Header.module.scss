@@ -42,3 +42,8 @@
         display: block;
     }
 }
+@media screen and (max-width:vars.$windowWidth-quarter) {
+    .wrapper{
+        width: vars.$windowWidth-quarter;
+    }
+}

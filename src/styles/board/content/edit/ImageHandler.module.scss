@@ -1,0 +1,23 @@
+
+@use "@src/styles/vars.scss" as vars;
+.wrapper{
+    position: fixed;
+    width: auto;
+    height: auto;
+    z-index: 9999;
+}
+.button_box{
+    display: flex;
+    padding:0.4em 0.5em;
+    
+}
+.button{
+    cursor: pointer;
+    position: relative;
+    width: 25px;
+    height: 25px;
+}
+
+.invisible {
+    display: none;
+}
