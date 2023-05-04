@@ -1,5 +1,4 @@
-import styles from "@src/styles/board/content/ContentEdit.module.scss";
-
+import styles from "@src/styles/board/content/edit/ContentEdit.module.scss";
 import {
   ContentBarDataType,
   ContentTypeType,
@@ -28,9 +27,9 @@ import {
   swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
 import { KeySet, sizes } from "@src/static/data/stringSet";
-import AddTypeModel from "@src/components/module/board/content/AddTypeModal";
+import AddTypeModel from "@src/components/module/board/content/edit/AddTypeModal";
 import { AddContentType } from "@src/static/types/AddContentsType";
-import ContentEditBar from "@src/components/module/board/content/ContentEditBar";
+import ContentEditBar from "@src/components/module/board/content/edit/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
 import { modifyContents, saveContents } from "@src/components/func/sendRequest";
@@ -40,6 +39,18 @@ import {
   ModifyContentRequestType,
   ModifyContentType,
 } from "@src/static/types/ModifyContentType";
+import ImageHandler from "@src/components/module/board/content/edit/ImageHandler";
+import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
+import {
+  ModifyDataType,
+  getContents,
+  modifyContentByIndex,
+  setContents,
+  addContent as insertContent,
+  resetContents,
+  addContentByIndex,
+  AddDataType,
+} from "@src/redux/features/content";
 
 const ContentEdit = ({
   preTitle,
@@ -71,18 +82,25 @@ const ContentEdit = ({
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState<boolean>(false);
   const [AddTypeModalLocation, setAddTypeModalLocation] =
     useState<LocationType>({ x: 0, y: 0 });
-  const [contents, setContents] = useState<ContentBarDataType[]>([
-    { type: "text", content: "", image: "" },
-    { type: "text", content: "", image: "" },
-  ]);
+  const contents = useAppSelector(getContents);
+  const dispatch = useAppDispatch();
+  // const [contents, setContents] = useState<ContentBarDataType[]>([
+  //   { type: "text", content: "", image: "" },
+  //   { type: "text", content: "", image: "" },
+  // ]);
   useEffect(() => {
+    dispatch(resetContents());
     if (preTitle) {
       $title.current.value = preTitle;
     }
     if (preContents) {
-      setContents(preContents);
+      dispatch(setContents(preContents));
     }
   }, []);
+  // useEffect(() => {
+  //   if (contents.length > 0) return;
+  //   dispatch(resetContents());
+  // }, [contents]);
   const ContentEditBarList = useMemo(() => {
     $lastIndex.current = contents.length - 1;
     return contents.map((value, index) => (
@@ -97,8 +115,6 @@ const ContentEdit = ({
         control={$control}
         onDragIndex={$onDragIndex}
         moveToIndex={$moveToIndex}
-        contents={contents}
-        setContents={setContents}
       />
     ));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,12 +143,13 @@ const ContentEdit = ({
     if ($variationFlag.current === VariationFlag.default) {
       return;
     }
+
     let _focusTarget = getFocusTarget(
       $focusIndex.current,
       $variationFlag.current,
       contents.length
     );
-
+    if (_focusTarget === -1) return;
     const targetDiv = _getTargetFirstChildDivByIndex(_focusTarget);
     targetDiv.click();
     if (isVariationFlagDecrease($variationFlag.current)) {
@@ -168,19 +185,26 @@ const ContentEdit = ({
     type: ContentTypeType = "text"
   ) => {
     const newContent = createNewContent(content, type);
+
     if (contents.length === 0) {
-      setContents([newContent]);
+      dispatch(setContents([newContent])); //setContents([newContent]);
       return;
     }
     if (target === contents.length - 1) {
-      setContents([...contents, newContent]);
+      dispatch(insertContent(newContent));
+      // setContents([...contents, newContent]);
       return;
     }
 
-    const contentsClone = Object.assign([], contents) as ContentBarDataType[];
-    contentsClone.splice(target + 1, 0, newContent);
-
-    setContents(contentsClone);
+    // const contentsClone = Object.assign([], contents) as ContentBarDataType[];
+    // const contentsClone = [...contents];
+    // contentsClone.splice(target + 1, 0, newContent);
+    const AddData: AddDataType = {
+      index: target,
+      content: newContent,
+    };
+    dispatch(addContentByIndex(AddData));
+    // setContents(contentsClone);
   };
 
   const handleWrapperScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
@@ -217,7 +241,7 @@ const ContentEdit = ({
       $moveToIndex.current,
       [...contents]
     );
-    setContents(tempContents);
+    dispatch(setContents(tempContents));
 
     $onDragIndex.current = -1;
   };
@@ -273,18 +297,27 @@ const ContentEdit = ({
     }
     if (e.key === KeySet.Enter) {
       const targetDiv = _getTargetFirstChildDivByIndex($focusIndex.current);
-
+      console.log(targetDiv.innerText);
       const anchorOffset = $selection.current.anchorOffset;
 
-      let sub: string = "";
+      let textBefore: string = "";
+      let textAfter: string = "";
       if ($selection.current.isCollapsed) {
-        sub = targetDiv.innerText.substring(anchorOffset);
+        textBefore = targetDiv.innerText.substring(0, anchorOffset);
+        textAfter = targetDiv.innerText.substring(anchorOffset);
       }
-      contents[$focusIndex.current].content = targetDiv.innerText.substring(
-        0,
-        anchorOffset
-      );
-      addContent($focusIndex.current, sub);
+      console.log(textBefore, textAfter);
+      const modifyData: ModifyDataType = {
+        index: $focusIndex.current,
+        content: textBefore,
+      };
+      dispatch(modifyContentByIndex(modifyData));
+      // contents[$focusIndex.current].content = targetDiv.innerText.substring(
+      //   0,
+      //   anchorOffset
+      // );
+
+      addContent($focusIndex.current, textAfter);
       $variationFlag.current = VariationFlag.increase;
 
       setControlInvisible($control.current, true);
@@ -327,7 +360,11 @@ const ContentEdit = ({
       ) {
         const contentToMerged = targetDiv.innerText;
         const originIndex = $focusIndex.current - 1;
-        setContents(_getMergedContents(contents, originIndex, contentToMerged));
+        dispatch(
+          setContents(
+            _getMergedContents(contents, originIndex, contentToMerged)
+          )
+        );
 
         $variationFlag.current = VariationFlag.decrease;
       }
@@ -385,7 +422,10 @@ const ContentEdit = ({
       onScroll={handleWrapperScroll}
       onMouseUp={handleHandleBtnMouseUp}>
       <div className={`${styles.header_container}`}>
-        <div className={`${styles.board_name}`}>{board}</div>
+        <div className={`${styles.board_name}`}>
+          {board}
+          {contents.length}
+        </div>
         <div className={`${styles.title_box}`}>
           <div className={`${styles.content_title}`}>
             <input
@@ -446,6 +486,7 @@ const ContentEdit = ({
         setIsOpen={setIsOpenAddTypeModal}
         addContent={addContent}
       />
+      <ImageHandler />
       <div
         ref={$draggedTarget}
         className={`${styles.mouse} ${styles.invisible}`}></div>

@@ -1,6 +1,6 @@
-import ContentEditStyles from "@src/styles/board/content/ContentEdit.module.scss";
-import TextBarStyles from "@src/styles/board/content/TextBar.module.scss";
-import ContentEditBarStyles from "@src/styles/board/content/ContentEditBar.module.scss";
+import ContentEditStyles from "@src/styles/board/content/edit/ContentEdit.module.scss";
+import TextBarStyles from "@src/styles/board/content/edit/TextBar.module.scss";
+import ContentEditBarStyles from "@src/styles/board/content/edit/ContentEditBar.module.scss";
 import {
   VariationFlag,
   VariationFlagType,
