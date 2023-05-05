@@ -111,17 +111,10 @@ const ContentEditBar = ({
   };
   const getBarByType = (type: string) => {
     if (type === "text") {
-      return (
-        <TextBar
-          index={index}
-          focus={focus}
-          content={contents[index]}
-          onDragIndex={onDragIndex}
-        />
-      );
+      return <TextBar index={index} focus={focus} onDragIndex={onDragIndex} />;
     }
     if (type === "image") {
-      return <ImageBar content={contents[index]} index={index} />;
+      return <ImageBar index={index} />;
     }
   };
   return (

@@ -3,23 +3,18 @@ import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { SizeType } from "@src/static/types/SizeType";
 import Image from "next/image";
 import { useRef } from "react";
-import { useAppDispatch } from "@src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
   setPosition,
   setSize,
   setVisible,
 } from "@src/redux/features/imageHandler";
-const ImageBar = ({
-  content,
-  index,
-}: {
-  content: ContentBarDataType;
-  index: number;
-}) => {
+import { getContents } from "@src/redux/features/content";
+const ImageBar = ({ index }: { index: number }) => {
   const $image = useRef<HTMLDivElement>(null);
   const size: SizeType = { width: 320, height: 10 };
+  const content = useAppSelector(getContents)[index];
   const dispatch = useAppDispatch();
-
   const mouseEnterEvent = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {

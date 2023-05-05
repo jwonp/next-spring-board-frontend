@@ -297,7 +297,6 @@ const ContentEdit = ({
     }
     if (e.key === KeySet.Enter) {
       const targetDiv = _getTargetFirstChildDivByIndex($focusIndex.current);
-      console.log(targetDiv.innerText);
       const anchorOffset = $selection.current.anchorOffset;
 
       let textBefore: string = "";
@@ -306,7 +305,6 @@ const ContentEdit = ({
         textBefore = targetDiv.innerText.substring(0, anchorOffset);
         textAfter = targetDiv.innerText.substring(anchorOffset);
       }
-      console.log(textBefore, textAfter);
       const modifyData: ModifyDataType = {
         index: $focusIndex.current,
         content: textBefore,
@@ -394,6 +392,7 @@ const ContentEdit = ({
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
+
     if (contentId) {
       const data: ModifyContentRequestType = {
         contentId: contentId,

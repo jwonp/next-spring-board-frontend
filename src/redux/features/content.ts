@@ -59,7 +59,12 @@ export const content = createSlice({
       state.contents = tempContents;
     },
     modifyContentByIndex: (state, actions: ModifyByIndexActionType) => {
-      state.contents[actions.payload.index].content = actions.payload.content;
+      const modifiedContent: ContentBarDataType = {
+        type: "text",
+        content: actions.payload.content,
+        image: "",
+      };
+      state.contents[actions.payload.index] = { ...modifiedContent };
     },
     removeContentByIndex: (state, actions: DeleteByIndexActionType) => {
       state.contents = state.contents.filter(

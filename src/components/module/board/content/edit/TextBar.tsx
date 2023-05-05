@@ -2,41 +2,40 @@ import styles from "@src/styles/board/content/edit/TextBar.module.scss";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "@src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
   ModifyDataType,
+  getContents,
   modifyContentByIndex,
 } from "@src/redux/features/content";
 
 const TextBar = ({
   index,
   focus,
-  content,
   onDragIndex,
 }: {
   index: number;
   focus: React.MutableRefObject<number>;
-  content: ContentBarDataType;
   onDragIndex: React.MutableRefObject<number>;
 }) => {
   const $content = useRef<HTMLDivElement>(null);
   const [placeholder, setPlaceholder] = useState<string>("");
+  const contents = useAppSelector(getContents);
   const dispatch = useAppDispatch();
   /**
    * ContentEditBar의 위치(index)가 바뀔 떄마다 재랜더링
    */
   useEffect(() => {
-    $content.current.innerText = content.content;
-  }, [content, index]);
+    console.log(contents[index].content);
+    $content.current.innerText = contents[index].content;
+  }, [contents.length]);
 
   const handleFocus = () => {
     focus.current = index;
-    console.log(focus.current);
     setPlaceholder("내용을 입력해주세요.");
   };
   const handleBlur = () => {
     focus.current = -1;
-    console.log(focus.current);
     setPlaceholder("");
   };
 
@@ -53,7 +52,7 @@ const TextBar = ({
       index: index,
       content: e.currentTarget.innerText,
     };
-    // dispatch(modifyContentByIndex(modifyData));
+    dispatch(modifyContentByIndex(modifyData));
   };
   return (
     <div
