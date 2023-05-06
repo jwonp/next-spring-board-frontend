@@ -6,6 +6,9 @@ import { AddContentType } from "@src/static/types/AddContentsType";
 import { ContentTypeType } from "@src/static/types/ContentDataType";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
+import { useAppDispatch } from "@src/redux/hooks";
+import { addImage } from "@src/redux/features/content";
 
 const AddTypeModel = ({
   isOpen,
@@ -23,6 +26,7 @@ const AddTypeModel = ({
   const $wrapper = useRef<HTMLDivElement>(null);
   const $fileInput = useRef<HTMLInputElement>(null);
   const $mouseOnIndex = useRef<number>(null);
+  const dispatch = useAppDispatch();
   const iconSize = { width: 32, height: 32 };
   const IMAGE_ACCEPT = "image/*";
   const { data: session } = useSession();
@@ -50,12 +54,14 @@ const AddTypeModel = ({
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("username", session.user.name);
+    formData.append("username", session.user.id);
 
     sendFile(formData).then((res) => {
+      const imageMeta = res.data as ImageUploadResponse;
+      dispatch(addImage(imageMeta.fileNameOnStoarge));
       addContent(
         $mouseOnIndex.current,
-        res.data.imageLocation,
+        imageMeta.imageLocation,
         "image" as ContentTypeType
       );
     });

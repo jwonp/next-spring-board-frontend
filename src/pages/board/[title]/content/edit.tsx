@@ -32,7 +32,11 @@ import { AddContentType } from "@src/static/types/AddContentsType";
 import ContentEditBar from "@src/components/module/board/content/edit/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
-import { modifyContents, saveContents } from "@src/components/func/sendRequest";
+import {
+  confirmImages,
+  modifyContents,
+  saveContents,
+} from "@src/components/func/sendRequest";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import qs from "qs";
 import {
@@ -47,9 +51,10 @@ import {
   modifyContentByIndex,
   setContents,
   addContent as insertContent,
-  resetContents,
   addContentByIndex,
   AddDataType,
+  resetContent,
+  getImages,
 } from "@src/redux/features/content";
 
 const ContentEdit = ({
@@ -83,13 +88,11 @@ const ContentEdit = ({
   const [AddTypeModalLocation, setAddTypeModalLocation] =
     useState<LocationType>({ x: 0, y: 0 });
   const contents = useAppSelector(getContents);
+  const images = useAppSelector(getImages);
   const dispatch = useAppDispatch();
-  // const [contents, setContents] = useState<ContentBarDataType[]>([
-  //   { type: "text", content: "", image: "" },
-  //   { type: "text", content: "", image: "" },
-  // ]);
+
   useEffect(() => {
-    dispatch(resetContents());
+    dispatch(resetContent());
     if (preTitle) {
       $title.current.value = preTitle;
     }
@@ -97,10 +100,7 @@ const ContentEdit = ({
       dispatch(setContents(preContents));
     }
   }, []);
-  // useEffect(() => {
-  //   if (contents.length > 0) return;
-  //   dispatch(resetContents());
-  // }, [contents]);
+
   const ContentEditBarList = useMemo(() => {
     $lastIndex.current = contents.length - 1;
     return contents.map((value, index) => (
@@ -400,7 +400,9 @@ const ContentEdit = ({
         contents: qs.stringify(contents),
         writer: session.user.id,
       };
-      modifyContents(data);
+      modifyContents(data).then((res) => {
+        confirmImages(contentId, images, session.user.id);
+      });
     } else {
       const data: SaveContentType = {
         title: $title.current.value,

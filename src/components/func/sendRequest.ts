@@ -1,4 +1,5 @@
-import { ModifyCommentRequestType } from "@src/static/types/ModifyCommentType";
+import { ModifyCommentRequestType } from "@src/static/types/CommentType";
+import { ImageConfirmType } from "@src/static/types/ImageUploadType";
 import { ModifyContentRequestType } from "@src/static/types/ModifyContentType";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { UserType } from "@src/static/types/UserType";
@@ -20,11 +21,24 @@ export const addUser = async (data: UserType) => {
 };
 
 export const saveContents = async (data: SaveContentType) => {
-  await axios.post(`/api/board/edit`, data);
+  return await axios.post(`/api/board/edit`, data);
 };
 
 export const modifyContents = async (data: ModifyContentRequestType) => {
-  await axios.post(`/api/board/modify`, data);
+  return await axios.post(`/api/board/modify`, data);
+};
+
+export const confirmImages = async (
+  contentId: number,
+  images: string[],
+  author: string
+) => {
+  const data: ImageConfirmType = {
+    images: images,
+    contentId: contentId,
+    author: author,
+  };
+  return await axios.post(`/api/board/images`, data);
 };
 
 export const getContentById = async (contentId: string) => {

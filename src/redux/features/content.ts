@@ -3,36 +3,42 @@ import { AppState } from "../store";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 interface ContentState {
   contents: ContentBarDataType[];
+  images: string[];
 }
 
 const initialState: ContentState = {
   contents: [{ type: "text", content: "", image: "" }],
+  images: [],
 };
+
+export type ModifyDataType = { index: number; content: string };
+export type AddDataType = { index: number; content: ContentBarDataType };
 
 type ContentsActionType = {
   payload: ContentBarDataType[];
   type: string;
 };
+
 type ContentActionType = {
   payload: ContentBarDataType;
   type: string;
 };
-export type ModifyDataType = { index: number; content: string };
 
 type ModifyByIndexActionType = {
   payload: ModifyDataType;
   type: string;
 };
-export type AddDataType = { index: number; content: ContentBarDataType };
 
 type addWithIndexActionType = {
   payload: AddDataType;
   type: string;
 };
+
 type DeleteByIndexActionType = {
   payload: number;
   type: string;
 };
+
 export const content = createSlice({
   name: "content",
   initialState,
@@ -68,11 +74,27 @@ export const content = createSlice({
     },
     removeContentByIndex: (state, actions: DeleteByIndexActionType) => {
       state.contents = state.contents.filter(
-        (value, index) => index != actions.payload
+        (_, index) => index != actions.payload
       );
     },
     resetContents: (state) => {
       state.contents = [{ type: "text", content: "", image: "" }];
+    },
+
+    addImage: (state, actions) => {
+      state.images.push(actions.payload);
+    },
+    removeImageByIndex: (state, actions) => {
+      state.images = state.images.filter(
+        (_, index) => actions.payload != index
+      );
+    },
+    resetImages: (state) => {
+      state.images = [];
+    },
+    resetContent: (state) => {
+      state.contents = [{ type: "text", content: "", image: "" }];
+      state.images = [];
     },
   },
 });
@@ -84,9 +106,14 @@ export const {
   modifyContentByIndex,
   removeContentByIndex,
   resetContents,
+  addImage,
+  removeImageByIndex,
+  resetImages,
+  resetContent,
 } = content.actions;
 
 export const getContent = (state: AppState) => state.content;
 export const getContents = (state: AppState) => state.content.contents;
+export const getImages = (state: AppState) => state.content.images;
 
 export default content.reducer;
