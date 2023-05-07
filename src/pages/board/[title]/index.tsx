@@ -41,7 +41,10 @@ const BoardByTitle = () => {
     }
     return contentData.data?.map((item: ContentType, index) => (
       <div key={index}>
-        <ContentBar data={item} boardTitle={boardTitle} />
+        <ContentBar
+          data={item}
+          boardTitle={boardTitle}
+        />
       </div>
     ));
   }, [contentData]);
@@ -61,18 +64,33 @@ const BoardByTitle = () => {
 
         <div className={`${styles.search}`}>
           <div className={`${styles.search_input_box}`}>
-            <input ref={$searchInput} type={"text"} />
+            <div className={`${styles.search_input}`}>
+              <input
+                ref={$searchInput}
+                type={"text"}
+              />
+            </div>
+            <button
+              className={`${styles.search_icon}`}
+              onClick={runSearch}>
+              <Image
+                src={"/search.svg"}
+                alt={""}
+                fill
+                sizes={sizes}
+              />
+            </button>
           </div>
-          <button className={`${styles.search_icon}`} onClick={runSearch}>
-            <Image src={"/search.svg"} alt={""} fill sizes={sizes} />
-          </button>
         </div>
         <div className={`${styles.edit_btn}`}>
           <Link href={`/board/${boardTitle}/content/edit`}>write</Link>
         </div>
       </div>
       <div className={`${styles.list}`}>{ContentBarList}</div>
-      <PaginationBar boardTitle={boardTitle} search={searchQuery} />
+      <PaginationBar
+        boardTitle={boardTitle}
+        search={searchQuery}
+      />
     </div>
   );
 };
