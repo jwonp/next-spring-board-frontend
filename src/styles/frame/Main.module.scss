@@ -1,21 +1,31 @@
 @use "@src/styles/vars.scss" as vars;
-.wrapper{
-    width:calc(100% - 2rem);
-    background-color: vars.$mainColor;
-    max-height: 100%;
-    min-height: 100%;
-    overflow: hidden;
-    
+.wrapper {
+  width: 100%; // ?? calc(100% - 2rem);
+
+  background-color: vars.$mainColor;
+  max-height: 100%;
+  min-height: 100%;
+
+  overflow-y: scroll;
 }
 
-@media screen and (max-width:vars.$windowWidth-half) {
-    .wrapper{
-        width:100%
-    }
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  .wrapper {
+    width: 100%;
+  }
 }
-@media screen and (max-width:vars.$windowWidth-quarter) {
-    .wrapper{
-        width: vars.$windowWidth-quarter;
-        overflow: scroll;
-    }
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  .wrapper {
+    width: 100%;
+  }
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  .wrapper {
+    width: 100%;
+  }
 }

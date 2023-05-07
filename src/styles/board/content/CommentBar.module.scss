@@ -1,24 +1,38 @@
-.comment{
-    display: flex;
-    justify-content: space-between;
-    padding:0.3em 0.05em;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
-    
+@use "@src/styles/vars.scss" as vars;
+.comment {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3em 0.05em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 .content,
-.content_modify{
-    max-width: calc(100% - 12em);
+.content_modify {
+  max-width: calc(100% - 12em);
 }
 
 .handler_box {
-    width: 12em;
-    font-size: 0.8em;
-    display: flex;
-    justify-content: space-between;
+  width: 12em;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: space-between;
 }
 
 .meta,
 .control {
- text-align: right;
-    
+  text-align: right;
+}
+
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  /*스타일입력*/
 }

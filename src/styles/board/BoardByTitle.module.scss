@@ -1,89 +1,138 @@
 @use "@src/styles/vars.scss" as vars;
-.wrapper{
-    width: calc(100% - 2 * vars.$mainWrapperPadding);
-    height: 100%;
-    display: block;
-    font-size: 2em;
-    padding: vars.$mainWrapperPadding;
+.wrapper {
+  width: calc(100% - 2 * vars.$mainWrapperPadding);
+  height: 100%;
+  display: block;
+  font-size: 2em;
+  padding: vars.$mainWrapperPadding;
 }
 
 .header {
-    position: sticky;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0.2em;
-    border-bottom: 1px solid lightblue;
+  position: sticky;
+  display: flex !important;
 
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid vars.$mainColor-100;
 }
 
-.title{
-    width: 25%;  
-    height: 1.2em;
-    margin-right: 0.2em;
-    line-height: 1.5em;
-    vertical-align:middle;
+.title {
+  flex-grow: 1 !important;
+  flex-shrink: 2 !important;
+  flex-basis: 25% !important;
+  height: 1.2em;
+  margin-right: 0.2em;
+  line-height: 1.5em;
+  vertical-align: middle;
 }
-.search{
-    display: flex;
-    width: 65%;
+.search {
+  flex-grow: 2 !important;
+  flex-shrink: 1 !important;
+  flex-basis: auto !important;
+  width: 100%;
+  display: flex;
 }
-.search_icon{
-    position: relative;
-    width: 3em;
-    background-color: grey;
-    margin-top: 0.14em;
-    margin-left: 0.14em;
-    
-    overflow: hidden;
+.search_input_box {
+  margin: 0 auto;
+  display: flex;
+}
+.search_icon {
+  position: relative;
+  width: 3em;
+  background-color: vars.$mainColor-100;
+  margin-top: 0.14em;
+  overflow: hidden;
+  border: none;
+  border-radius: 0 6px 6px 0;
+}
+.search_input {
+  & input {
+    height: 90%;
+    line-height: 90%;
+    vertical-align: middle;
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    border-radius: 6px 0 0 6px;
     border: none;
-    border-radius: 0 6px 6px 0;
-}
-.search_input_box{
-    & input{
-        height: 90%;
-        line-height: 90%;
-        vertical-align: middle;
-        padding-left: 0.5em;
-        padding-right: 0.2em;
-        border-radius: 6px 0 0 6px;
-        border: none; 
-        font-size: 24px;
-        background-color: grey;
-        &:focus{
-            outline: none;
-        }
-        
+    font-size: 24px;
+    background-color: vars.$mainColor-100;
+    &:focus {
+      outline: none;
     }
-
+  }
 }
-.edit_btn{
-    width: 10%;
-    cursor: pointer;
+.edit_btn {
+  flex-grow: 1 !important;
+  flex-shrink: 2 !important;
+  flex-basis: 10% !important;
+  cursor: pointer;
+  text-align: center;
+  height: 1.2em;
+  line-height: 1.5em;
+  vertical-align: middle;
 }
 
-.list{
-    margin-top:0.5em;
-    
+.list {
+  margin-top: 0.5em;
 }
-.no_content{
-    text-align: center;
-    margin: 2em 0;
+.no_content {
+  text-align: center;
+  margin: 2em 0;
 }
-@media screen and (max-width:vars.$windowWidth-half) {
-    .wrapper{
-        font-size: 1.8em;
-    }
 
-    .title{
-        height: 1.2em;
-        line-height: 1.5em;
-    }
-    .search{
-        width: 50%;
-    }
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  .wrapper {
+    font-size: 1.8em;
+  }
+
+  .title {
+    height: 1.2em;
+    line-height: 1.5em;
+  }
+  .search {
+    width: 50%;
+  }
 }
-@media screen and (max-width:vars.$windowWidth-quarter) {
-    .wrapper{
-        width: vars.$windowWidth-quarter;
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  .wrapper {
+    font-size: 0.9em;
+  }
+  .title {
+    flex-basis: 35% !important;
+  }
+  .search_icon {
+    width: 2em;
+    margin-top: 0.05em;
+  }
+  .search_input {
+    & input {
+      font-size: 16px;
     }
+  }
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  .wrapper {
+    font-size: 0.9em;
+  }
+  .title {
+    flex-basis: 35% !important;
+  }
+  .search_icon {
+    width: 1.5em;
+    margin-top: 0.05em;
+  }
+  .search_input {
+    & input {
+      font-size: 16px;
+    }
+  }
+  .edit_btn {
+    height: 1.2em;
+    line-height: 1.8em;
+    vertical-align: middle;
+  }
 }

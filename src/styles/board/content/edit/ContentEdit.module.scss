@@ -1,130 +1,137 @@
-// @use "@src/styles/vars.scss" as vars;
+@use "@src/styles/vars.scss" as vars;
 $fadein: fadein 0.3s;
 $fadeout: fadeout 0.3s;
-.wrapper{
-    width: 100%;
-    height: 100%;
+.wrapper {
+  width: 100%;
+  height: 100%;
 
-    overflow-y: scroll;
-
+  overflow-y: scroll;
 }
-.header_container{
-width: calc(100% - 5em);
+.header_container {
+  width: calc(100% - 5em);
 
-display: block;
+  display: block;
 
-padding: 1em 2em;
-
-
-
+  padding: 1em 2em;
 }
-.board_name{
-    font-size:2em;
-    padding-bottom: 0.2em;
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid rgb(170,170,170,0.5);
+.board_name {
+  font-size: 2em;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid rgb(170, 170, 170, 0.5);
 }
-.title_box{
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0.2em;
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid rgb(170,170,170,0.5);
+.title_box {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.2em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid rgb(170, 170, 170, 0.5);
 }
 .content_title {
-    & input{
-        width: 100%;
-        background-color: rgb(50,50,50);
-        border: none;
-        font-size:2em;
-
-        &:focus{
-            outline: none;
-        }
-    }
-}
-
-.submit_btn input{
-    width: 3em;
-    height: 1.8em;
-    font-size:1.5em;
-    cursor: pointer;
+  & input {
+    width: 100%;
+    background-color: rgb(50, 50, 50);
     border: none;
-    background-color: rgb(50,50,50);
-}
+    font-size: 2em;
 
-.content_container{
-    width: calc(100% - 6em);
-    padding: 1.5em 2em;
-
-    // border: 1px solid floralwhite;
-}
-
-.add_content_edit_bar_btn{
-    cursor: pointer;
-    font-size:1.6em;
-    text-align: center;
-}
-
-.mouse{
-    position: absolute;
-    
-    border-radius: 50%;
-    opacity: 60%;
-    
-}
-.control{
-    position: absolute;
-    display: flex;
-   
-}
-.fadein{
-    animation: $fadein;
-    -moz-animation: $fadein; /* Firefox */
-    -webkit-animation: $fadein; /* Safari and Chrome */
-    -o-animation: $fadein; /* Opera */
-}
-.fadeout{
-    animation: $fadeout;
-    animation-fill-mode: forwards;
-    -moz-animation: $fadeout; /* Firefox */
-    -webkit-animation: $fadeout; /* Safari and Chrome */
-    -o-animation: $fadeout; /* Opera */
-}
-@keyframes fadein {
-    from {
-      opacity: 0;
-    }
-  
-    to {
-      opacity: 1;
+    &:focus {
+      outline: none;
     }
   }
+}
+
+.submit_btn input {
+  width: 3em;
+  height: 1.8em;
+  font-size: 1.5em;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(50, 50, 50);
+}
+
+.content_container {
+  width: calc(100% - 6em);
+  padding: 1.5em 2em;
+
+  // border: 1px solid floralwhite;
+}
+
+.add_content_edit_bar_btn {
+  cursor: pointer;
+  font-size: 1.6em;
+  text-align: center;
+}
+
+.mouse {
+  position: absolute;
+
+  border-radius: 50%;
+  opacity: 60%;
+}
+.control {
+  position: absolute;
+  display: flex;
+}
+.fadein {
+  animation: $fadein;
+  -moz-animation: $fadein; /* Firefox */
+  -webkit-animation: $fadein; /* Safari and Chrome */
+  -o-animation: $fadein; /* Opera */
+}
+.fadeout {
+  animation: $fadeout;
+  animation-fill-mode: forwards;
+  -moz-animation: $fadeout; /* Firefox */
+  -webkit-animation: $fadeout; /* Safari and Chrome */
+  -o-animation: $fadeout; /* Opera */
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 
 @keyframes fadeout {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        opacity: 0;
-    }
+  to {
+    opacity: 0;
+  }
 }
 
 .add div,
-.handle div{
-    position: relative;
-    width: 1.5em ;
-    height: calc(2em + 4px);
-    overflow: hidden;
-    border-radius: 15px;
-    & :hover{
-        cursor: pointer;
-    }
+.handle div {
+  position: relative;
+  width: 1.5em;
+  height: calc(2em + 4px);
+  overflow: hidden;
+  border-radius: 15px;
+  & :hover {
+    cursor: pointer;
+  }
 }
 
+.invisible {
+  display: none;
+}
 
-.invisible{
-    display: none;
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  /*스타일입력*/
+}
 
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  /*스타일입력*/
 }

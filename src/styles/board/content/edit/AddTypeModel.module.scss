@@ -1,34 +1,49 @@
-.background{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    // background-color: azure;
-    z-index: 999;
-    background-color: rgba(0,0,0,0.45);
+@use "@src/styles/vars.scss" as vars;
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  // background-color: azure;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.45);
 }
-.wrapper{
-    position: absolute;
+.wrapper {
+  position: absolute;
 
-    width: 12em;
-    
-    border: 2px solid rgb(50,50,50);
-    background-color: rgb(50,50,50);
+  width: 12em;
+
+  border: 2px solid rgb(50, 50, 50);
+  background-color: rgb(50, 50, 50);
 }
 
-.item{
-    cursor: pointer;
-    display: flex;
-    height: 2em;
-    
-    padding:0.3em 0.5em;
-    font-size: 1.2em;
-    vertical-align: middle;
-    line-height: 2em;
-    gap:0.6em;
+.item {
+  cursor: pointer;
+  display: flex;
+  height: 2em;
 
+  padding: 0.3em 0.5em;
+  font-size: 1.2em;
+  vertical-align: middle;
+  line-height: 2em;
+  gap: 0.6em;
 }
 .invisible {
-    display: none;
+  display: none;
+}
+
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  /*스타일입력*/
 }

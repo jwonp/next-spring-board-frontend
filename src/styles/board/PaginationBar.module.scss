@@ -1,30 +1,50 @@
-.wrapper{width: 100%; display: flex;}
-.container{
-    width: auto;
-    margin: 0 auto;
-    margin-top: 0.3em;
-    display: flex;
-    gap: 0.4em;
+@use "@src/styles/vars.scss" as vars;
+.wrapper {
+  width: 100%;
+  display: flex;
+}
+.container {
+  width: auto;
+  margin: 0 auto;
+  margin-top: 0.3em;
+  display: flex;
+  gap: 0.4em;
 }
 .container div {
-    cursor: pointer;
+  cursor: pointer;
 }
-.item{    
-    height: 1.1em;
-    line-height: 1.3em;
-    vertical-align: middle;
-    border: 1px solid lightcyan;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 0.8em;
+.item {
+  height: 1.1em;
+  line-height: 1.3em;
+  vertical-align: middle;
+
+  text-align: center;
+  font-size: 0.8em;
 }
-.indicator{
-    width: 1.5em;
+.indicator {
+  width: 1.5em;
 }
-.number_panel_box{
-    display: flex;
-    gap: 0.4em;
+.number_panel_box {
+  display: flex;
+  gap: 0.4em;
 }
-.number_panel{
-    width: 1.3em;
+.number_panel {
+  width: 1.3em;
+}
+
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  .item {
+    font-size: 1em;
+  }
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  /*스타일입력*/
 }

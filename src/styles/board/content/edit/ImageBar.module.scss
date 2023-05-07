@@ -1,19 +1,34 @@
-.wrapper{
-    position: relative;
-    padding:0 0.2em;
-    padding-left: 3em;
-    display: flex;
-    width: calc(100% - 3.4em);
+@use "@src/styles/vars.scss" as vars;
+.wrapper {
+  position: relative;
+  padding: 0 0.2em;
+  padding-left: 3em;
+  display: flex;
+  width: calc(100% - 3.4em);
 }
-.image_box{
-    border: 2px solid rgb(50,50,50);
-    width: 100%;
-    // margin: 0 auto;
-    padding: 0.1em 0.2em;
-    position: relative;
-    
-    & img {
-        
-        height: auto !important;
-    }
+.image_box {
+  border: 2px solid rgb(50, 50, 50);
+  width: 100%;
+  // margin: 0 auto;
+  padding: 0.1em 0.2em;
+  position: relative;
+
+  & img {
+    height: auto !important;
+  }
+}
+
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  /*스타일입력*/
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  /*스타일입력*/
 }
