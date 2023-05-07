@@ -10,8 +10,10 @@ import {
   setVisible,
 } from "@src/redux/features/imageHandler";
 import { getContents } from "@src/redux/features/content";
+import { useSession } from "next-auth/react";
 const ImageBar = ({ index }: { index: number }) => {
   const $image = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
   const size: SizeType = { width: 320, height: 10 };
   const content = useAppSelector(getContents)[index];
   const dispatch = useAppDispatch();
@@ -37,7 +39,7 @@ const ImageBar = ({ index }: { index: number }) => {
     <div ref={$image} className={`${styles.image_box}`}>
       <Image
         onMouseEnter={mouseEnterEvent}
-        src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${content.image}`}
+        src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display/${session.user.id}/${content.image}`}
         alt={"No Image"}
         width={size.width}
         height={size.height}

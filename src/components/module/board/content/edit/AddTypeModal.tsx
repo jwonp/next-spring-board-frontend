@@ -61,7 +61,7 @@ const AddTypeModel = ({
       dispatch(addImage(imageMeta.fileNameOnStoarge));
       addContent(
         $mouseOnIndex.current,
-        imageMeta.imageLocation,
+        imageMeta.fileNameOnStoarge,
         "image" as ContentTypeType
       );
     });

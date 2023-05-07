@@ -9,7 +9,7 @@ const sendContent = async (
   content: string,
   csrf: CsrfIdentityType
 ) => {
-  await axios.patch(
+  return await axios.patch(
     `${process.env.BACKEND_URL}/board/modify`,
     {
       title: title,
@@ -31,6 +31,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     id: writer,
     csrfToken: csrfToken,
   };
-  sendContent(contentId.toString(), title, contents, csrf);
-  res.status(200).send("good");
+  sendContent(contentId.toString(), title, contents, csrf).then((_res) => {
+    res.status(200).send(_res.data);
+  });
 }

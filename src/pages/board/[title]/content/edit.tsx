@@ -401,7 +401,7 @@ const ContentEdit = ({
         writer: session.user.id,
       };
       modifyContents(data).then((res) => {
-        confirmImages(contentId, images, session.user.id);
+        confirmImages(res.data, images, session.user.id);
       });
     } else {
       const data: SaveContentType = {
@@ -410,7 +410,9 @@ const ContentEdit = ({
         writer: session.user.id,
         board: board as BoardMenuType,
       };
-      saveContents(data);
+      saveContents(data).then((res) => {
+        confirmImages(res.data, images, session.user.id);
+      });
     }
 
     router.push(`/board/${board}`);

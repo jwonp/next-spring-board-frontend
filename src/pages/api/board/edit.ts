@@ -13,7 +13,7 @@ const sendContent = async (
   content: string,
   csrf: CsrfIdentityType
 ) => {
-  await axios.post(
+  return await axios.post(
     `${process.env.BACKEND_URL}/board/edit`,
     {
       title: title,
@@ -34,6 +34,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     id: writer,
     csrfToken: csrfToken,
   };
-  sendContent(title, board, contents, csrf);
-  res.status(200).send("good");
+  sendContent(title, board, contents, csrf).then((_res) => {
+    res.status(200).send(_res.data);
+  });
 }
