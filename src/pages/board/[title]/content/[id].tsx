@@ -69,7 +69,9 @@ const ContentById = ({
   }, [router.isReady]);
 
   return (
-    <div id={"ContentById"} className={`${styles.wrapper}`}>
+    <div
+      id={"ContentById"}
+      className={`${styles.wrapper}`}>
       <div className={`${styles.header_box}`}>
         <div className={`${styles.meta_box}`}>
           <div>
@@ -107,8 +109,13 @@ const ContentById = ({
       <div className={`${styles.content_box}`}>
         {parsedContent.map((value, index) => {
           return (
-            <div key={index} className={`${styles.item}`}>
-              <ContentViewBar data={value} />
+            <div
+              key={index}
+              className={`${styles.item}`}>
+              <ContentViewBar
+                data={value}
+                authorId={authorId}
+              />
             </div>
           );
         })}

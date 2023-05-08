@@ -310,11 +310,6 @@ const ContentEdit = ({
         content: textBefore,
       };
       dispatch(modifyContentByIndex(modifyData));
-      // contents[$focusIndex.current].content = targetDiv.innerText.substring(
-      //   0,
-      //   anchorOffset
-      // );
-
       addContent($focusIndex.current, textAfter);
       $variationFlag.current = VariationFlag.increase;
 
@@ -425,10 +420,7 @@ const ContentEdit = ({
       onScroll={handleWrapperScroll}
       onMouseUp={handleHandleBtnMouseUp}>
       <div className={`${styles.header_container}`}>
-        <div className={`${styles.board_name}`}>
-          {board}
-          {contents.length}
-        </div>
+        <div className={`${styles.board_name}`}>{board}</div>
         <div className={`${styles.title_box}`}>
           <div className={`${styles.content_title}`}>
             <input
@@ -438,7 +430,11 @@ const ContentEdit = ({
             />
           </div>
           <div className={`${styles.submit_btn}`}>
-            <input type="submit" value={"저장"} onClick={handleClickSubmit} />
+            <input
+              type="submit"
+              value={"저장"}
+              onClick={handleClickSubmit}
+            />
           </div>
         </div>
       </div>
@@ -455,8 +451,13 @@ const ContentEdit = ({
         </div>
       </div>
 
-      <div ref={$control} className={`${styles.control} ${styles.invisible}`}>
-        <div ref={$addBtn} className={`${styles.add}`} onClick={handleAddBtn}>
+      <div
+        ref={$control}
+        className={`${styles.control} ${styles.invisible}`}>
+        <div
+          ref={$addBtn}
+          className={`${styles.add}`}
+          onClick={handleAddBtn}>
           <div>
             <Image
               src={"/plus.svg"}

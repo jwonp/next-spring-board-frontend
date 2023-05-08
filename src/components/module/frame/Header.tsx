@@ -6,9 +6,13 @@ import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import { isUserRegisted } from "@src/components/func/sendRequest";
 import BoardMenu from "./menu/BoardMenu";
+import { useAppDispatch } from "@src/redux/hooks";
+import { toggleIsAppDrawerOpened } from "@src/redux/features/menuToggle";
 
 const Header = () => {
   const { data: session } = useSession();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (session) {
       isUserRegisted(session?.user?.id, session?.user?.provider);
@@ -28,18 +32,32 @@ const Header = () => {
       <div className={`${styles.container}`}>
         <div className={`${styles.box}`}>
           <div className={`${styles.logo}`}>
-            <Image src={"/favicon.png"} alt={"No Logo"} fill sizes={sizes} />
+            <Image
+              src={"/favicon.png"}
+              alt={"No Logo"}
+              fill
+              sizes={sizes}
+            />
           </div>
           <div>
             <Link href={`/`}>{session?.user?.name}</Link>
           </div>
         </div>
         <div className={`${styles.box}`}>
+          <div
+            className={`${styles.toggle_btn}`}
+            onClick={() => {
+              dispatch(toggleIsAppDrawerOpened());
+            }}>
+            Menu
+          </div>
           <BoardMenu />
         </div>
         <div className={`${styles.box}`}>
           <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div>
-          <div className={`${styles.item}`} onClick={signFunc}>
+          <div
+            className={`${styles.item}`}
+            onClick={signFunc}>
             {signStr}
           </div>
         </div>

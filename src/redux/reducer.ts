@@ -5,6 +5,7 @@ import commentModifyReducer from "./features/commentModify";
 import windowWidthReducer from "./features/windowWidth";
 import imageHandlerReducer from "./features/imageHandler";
 import contentReducer from "./features/content";
+import menuToggleReducer from "./features/menuToggle";
 // import [name]Reducer from "./features/[name]";
 
 const combinedReducer = combineReducers({
@@ -13,6 +14,7 @@ const combinedReducer = combineReducers({
   windowWidth: windowWidthReducer,
   imageHandler: imageHandlerReducer,
   content: contentReducer,
+  menuToggle: menuToggleReducer,
   // [name]: [name]Reducer,
 });
 
