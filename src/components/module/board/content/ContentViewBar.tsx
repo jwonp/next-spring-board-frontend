@@ -11,7 +11,13 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SizeType } from "@src/static/types/SizeType";
 import { resizeImage } from "@src/components/func/ContentViewFuncs";
-const ContentViewBar = ({ data }: { data: ContentBarDataType }) => {
+const ContentViewBar = ({
+  data,
+  authorId,
+}: {
+  data: ContentBarDataType;
+  authorId: string;
+}) => {
   const windowWidth = useAppSelector(getWidth);
   const [size, setSize] = useState<SizeType>({
     width: 100,
@@ -21,14 +27,15 @@ const ContentViewBar = ({ data }: { data: ContentBarDataType }) => {
   useEffect(() => {
     if (!data.image) return;
     console.log(size.width, size.height);
-    resizeImage(data.image, windowWidth, setSize);
+    const imageUrl = `/${authorId}/${data.image}`;
+    resizeImage(imageUrl, windowWidth, setSize);
   }, [data.image, windowWidth]);
 
   const getViewBar = () => {
     if (data.type === "image") {
       return (
         <Image
-          src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${data.image}`}
+          src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display/${authorId}/${data.image}`}
           alt={"No Image"}
           width={size.width}
           height={size.height}
