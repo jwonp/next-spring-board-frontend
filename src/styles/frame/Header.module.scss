@@ -7,6 +7,7 @@
   background-color: vars.$mainColor-70;
   padding: vars.$headerPaddingHeight vars.$headerPaddingWidth;
   overflow: hidden;
+  z-index: vars.$header-z-index;
 }
 
 .item {
@@ -31,6 +32,9 @@
   overflow: hidden;
   border-radius: 15px;
 }
+.toggle_btn {
+  display: none;
+}
 
 /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
 @media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
@@ -46,9 +50,6 @@
 
 /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
 @media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
-  // .wrapper {
-  //   padding: calc(vars.$headerPaddingHeight * 0.5) vars.$headerPaddingWidth;
-  // }
   .logo {
     width: vars.$headerHeight;
     height: vars.$headerHeight;
@@ -65,12 +66,23 @@
 
 /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
 @media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
-  .box div {
-    line-height: vars.$headerHeight * 1.25;
-    vertical-align: middle;
-    font-size: 0.7rem;
+  .wrapper {
+    overflow: visible;
+  }
+  .box {
+    & > div:first-child {
+      flex-basis: 30% !important;
+    }
+    & div {
+      line-height: vars.$headerHeight;
+      vertical-align: middle;
+      font-size: 1rem;
+    }
   }
   .box:nth-child(2) {
+    display: block;
+  }
+  .toggle_btn {
     display: block;
   }
 }

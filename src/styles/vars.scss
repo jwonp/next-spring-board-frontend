@@ -5,16 +5,23 @@ $headerTotalHeight: calc($headerHeight + $headerPaddingHeight * 2);
 
 $mainWrapperPadding: 1rem;
 
+$appDrawerWidth: 15rem;
+
 $footerHeight: 3rem;
 
 $mainColor: rgb(50, 50, 50);
 $mainColor-30: rgb(30, 30, 30);
 $mainColor-70: rgb(70, 70, 70);
+$mainColor-70-half: rgba(70, 70, 70, 0.5);
 $mainColor-100: rgb(100, 100, 100);
 
 $windowWidth-pc: 1024px;
 $windowWidth-tablet: 768px;
 $windowWidth-mobile: 480px;
+
+$appDrawer-z-index: 5000;
+$boardMenu-z-index: 5000;
+$header-z-index: 5000;
 
 @mixin control-button-box {
   margin-bottom: 1em;

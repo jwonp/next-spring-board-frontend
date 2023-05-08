@@ -14,6 +14,7 @@
   .wrapper {
     display: flex;
   }
+
   .item {
     padding: 0 0.2em;
   }
@@ -24,6 +25,7 @@
   .wrapper {
     display: flex;
   }
+
   .item {
     padding: 0 0.2em;
   }
@@ -32,9 +34,12 @@
 /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
 @media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
   .wrapper {
-    display: flex;
+    display: none;
+    padding: 0 0.7em;
   }
   .item {
+    font-size: 16px;
     padding: 0 0.2em;
+    margin-bottom: 1em;
   }
 }
