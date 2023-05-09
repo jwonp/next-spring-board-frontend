@@ -12,8 +12,7 @@ import { LocationType } from "@src/static/types/LocationType";
 import { useRef } from "react";
 import TextBar from "./TextBar";
 import ImageBar from "./ImageBar";
-import { useAppSelector } from "@src/redux/hooks";
-import { getContents } from "@src/redux/features/content";
+
 const ContentEditBar = ({
   index,
   type,
@@ -24,8 +23,7 @@ const ContentEditBar = ({
   onDragIndex,
   focus,
   moveToIndex,
-}: // contents,
-{
+}: {
   index: number;
   type: string;
   mouseOnIndex: React.MutableRefObject<number>;
@@ -37,7 +35,6 @@ const ContentEditBar = ({
   onDragIndex: React.MutableRefObject<number>;
 }) => {
   const $wrapper = useRef<HTMLDivElement>(null);
-  const contents = useAppSelector(getContents);
 
   const handleClickWrapper = () => {
     ($wrapper.current.firstChild as HTMLDivElement).focus();

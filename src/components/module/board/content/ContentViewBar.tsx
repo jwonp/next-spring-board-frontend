@@ -1,8 +1,5 @@
 import styles from "@src/styles/board/content/ContentViewBar.module.scss";
-import {
-  getImage,
-  getImageSizeByWindowWidth,
-} from "@src/components/func/ImageHandler";
+
 import { getWidth } from "@src/redux/features/windowWidth";
 import { useAppSelector } from "@src/redux/hooks";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
