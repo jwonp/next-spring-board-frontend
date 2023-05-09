@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { addUser } from "@src/components/func/sendRequest";
 import { UserType } from "@src/static/types/UserType";
 import { getProviders } from "next-auth/react";
+import { randomBytes, randomUUID } from "crypto";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -41,6 +42,11 @@ export const authOptions: AuthOptions = {
 
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
+    generateSessionToken: () => {
+      return randomUUID?.() ?? randomBytes(32).toString("hex");
+    },
   },
 
   jwt: {
