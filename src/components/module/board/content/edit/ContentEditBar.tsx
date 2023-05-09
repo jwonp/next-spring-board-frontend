@@ -7,12 +7,12 @@ import {
   invisibleBorder,
 } from "@src/components/func/ContentEditFuncs";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
+
 import { LocationType } from "@src/static/types/LocationType";
 import { useRef } from "react";
 import TextBar from "./TextBar";
 import ImageBar from "./ImageBar";
-import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
+import { useAppSelector } from "@src/redux/hooks";
 import { getContents } from "@src/redux/features/content";
 const ContentEditBar = ({
   index,
@@ -34,7 +34,6 @@ const ContentEditBar = ({
   control: React.MutableRefObject<HTMLDivElement>;
   focus: React.MutableRefObject<number>;
   moveToIndex: React.MutableRefObject<number>;
-  // contents: ContentBarDataType[];
   onDragIndex: React.MutableRefObject<number>;
 }) => {
   const $wrapper = useRef<HTMLDivElement>(null);
@@ -111,7 +110,13 @@ const ContentEditBar = ({
   };
   const getBarByType = (type: string) => {
     if (type === "text") {
-      return <TextBar index={index} focus={focus} onDragIndex={onDragIndex} />;
+      return (
+        <TextBar
+          index={index}
+          focus={focus}
+          onDragIndex={onDragIndex}
+        />
+      );
     }
     if (type === "image") {
       return <ImageBar index={index} />;

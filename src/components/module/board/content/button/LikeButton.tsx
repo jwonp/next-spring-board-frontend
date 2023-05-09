@@ -18,7 +18,6 @@ const LikeButton = ({
       <div>
         <button
           onClick={() => {
-            console.log(isLiked);
             if (isLiked === false) {
               addLikeByContentAndUser(contentId, userId).then((res) => {
                 likeCountMutate();
@@ -33,7 +32,12 @@ const LikeButton = ({
             }
           }}>
           <div>
-            <Image src={"/like.svg"} alt={"No like"} width={30} height={30} />
+            <Image
+              src={"/like.svg"}
+              alt={"No like"}
+              width={30}
+              height={30}
+            />
             <div>{likeCount ? likeCount : 0}</div>
             <div>{isLiked ? "cancel" : "like"}</div>
           </div>
