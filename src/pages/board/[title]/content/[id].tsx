@@ -79,14 +79,22 @@ const ContentById = ({
             <div className={`${styles.title}`}>{title}</div>
           </div>
           <div>
-            <div className={`${styles.author}`}>{`작성자 ${author}`}</div>
-            <div className={`${styles.updated}`}>
-              {`작성일 ${getDateAsString(updated)}`}
+            <div className={`${styles.author}`}>
+              <div>작성자</div>
+              <div>{author}</div>
             </div>
-            <div className={`${styles.views}`}>{`조회수 ${views}`}</div>
-            <div className={`${styles.likes}`}>{`좋아요 ${
-              likeSWR.data ? likeSWR.data : likes
-            }`}</div>
+            <div className={`${styles.updated}`}>
+              <div>작성일</div>
+              <div>{getDateAsString(updated)}</div>
+            </div>
+            <div className={`${styles.views}`}>
+              <div>조회수</div>
+              <div>{views}</div>
+            </div>
+            <div className={`${styles.likes}`}>
+              <div>좋아요</div>
+              <div>{likeSWR.data ? likeSWR.data : likes}</div>
+            </div>
           </div>
         </div>
         {userId === authorId ? (
