@@ -1,4 +1,9 @@
 import {
+  getImageFocusIndex,
+  removeContentByIndex,
+  resetImageFocusIndex,
+} from "@src/redux/features/content";
+import {
   getIsVisible,
   getPosition,
   getSize,
@@ -15,16 +20,19 @@ const ImageHandler = () => {
   const position = useAppSelector(getPosition);
   const isVisible = useAppSelector(getIsVisible);
   const dispatch = useAppDispatch();
-
+  const imageFocusIndex = useAppSelector(getImageFocusIndex);
   const onMouseLeaveEvent = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    dispatch(resetImageFocusIndex());
     dispatch(setVisible(false));
   };
   const onImageClickEvent = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
-    console.log("delete");
+    dispatch(removeContentByIndex(imageFocusIndex));
+    dispatch(resetImageFocusIndex());
+    dispatch(setVisible(false));
   };
 
   useEffect(() => {

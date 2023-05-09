@@ -4,11 +4,13 @@ import { ContentBarDataType } from "@src/static/types/ContentDataType";
 interface ContentState {
   contents: ContentBarDataType[];
   images: string[];
+  imageFocusIdnex: number;
 }
 
 const initialState: ContentState = {
   contents: [{ type: "text", content: "", image: "" }],
   images: [],
+  imageFocusIdnex: -1,
 };
 
 export type ModifyDataType = { index: number; content: string };
@@ -35,6 +37,10 @@ type addWithIndexActionType = {
 };
 
 type DeleteByIndexActionType = {
+  payload: number;
+  type: string;
+};
+type indexActionType = {
   payload: number;
   type: string;
 };
@@ -73,9 +79,11 @@ export const content = createSlice({
       state.contents[actions.payload.index] = { ...modifiedContent };
     },
     removeContentByIndex: (state, actions: DeleteByIndexActionType) => {
+      const image = state.contents[actions.payload].image;
       state.contents = state.contents.filter(
         (_, index) => index != actions.payload
       );
+      state.images = state.images.filter((value) => value !== image);
     },
     resetContents: (state) => {
       state.contents = [{ type: "text", content: "", image: "" }];
@@ -84,10 +92,13 @@ export const content = createSlice({
     addImage: (state, actions) => {
       state.images.push(actions.payload);
     },
-    removeImageByIndex: (state, actions) => {
+    removeImageByIndex: (state, actions: DeleteByIndexActionType) => {
       state.images = state.images.filter(
         (_, index) => actions.payload != index
       );
+    },
+    setImageFocusIndex: (state, actions: indexActionType) => {
+      state.imageFocusIdnex = actions.payload;
     },
     resetImages: (state) => {
       state.images = [];
@@ -95,6 +106,9 @@ export const content = createSlice({
     resetContent: (state) => {
       state.contents = [{ type: "text", content: "", image: "" }];
       state.images = [];
+    },
+    resetImageFocusIndex: (state) => {
+      state.imageFocusIdnex = -1;
     },
   },
 });
@@ -108,12 +122,16 @@ export const {
   resetContents,
   addImage,
   removeImageByIndex,
+  setImageFocusIndex,
   resetImages,
   resetContent,
+  resetImageFocusIndex,
 } = content.actions;
 
 export const getContent = (state: AppState) => state.content;
 export const getContents = (state: AppState) => state.content.contents;
 export const getImages = (state: AppState) => state.content.images;
+export const getImageFocusIndex = (state: AppState) =>
+  state.content.imageFocusIdnex;
 
 export default content.reducer;

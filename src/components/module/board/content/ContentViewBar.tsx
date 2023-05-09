@@ -26,7 +26,6 @@ const ContentViewBar = ({
 
   useEffect(() => {
     if (!data.image) return;
-    console.log(size.width, size.height);
     const imageUrl = `/${authorId}/${data.image}`;
     resizeImage(imageUrl, windowWidth, setSize);
   }, [data.image, windowWidth]);

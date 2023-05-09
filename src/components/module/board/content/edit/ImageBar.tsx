@@ -1,22 +1,29 @@
 import styles from "@src/styles/board/content/edit/ImageBar.module.scss";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
-import { SizeType } from "@src/static/types/SizeType";
+
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
   setPosition,
   setSize,
   setVisible,
 } from "@src/redux/features/imageHandler";
-import { getContents } from "@src/redux/features/content";
+import { getContents, setImageFocusIndex } from "@src/redux/features/content";
 import { useSession } from "next-auth/react";
+import { resizeImage } from "@src/components/func/ContentViewFuncs";
+import { getWidth } from "@src/redux/features/windowWidth";
+import { SizeType } from "@src/static/types/SizeType";
 const ImageBar = ({ index }: { index: number }) => {
   const $image = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
-  const size: SizeType = { width: 320, height: 10 };
   const content = useAppSelector(getContents)[index];
+  const windowWidth = useAppSelector(getWidth);
   const dispatch = useAppDispatch();
+  const [imageSize, setImageSize] = useState<SizeType>({
+    width: 100,
+    height: 100,
+  });
+
   const mouseEnterEvent = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
@@ -32,17 +39,26 @@ const ImageBar = ({ index }: { index: number }) => {
         y: e.currentTarget.getBoundingClientRect().top,
       })
     );
+    dispatch(setImageFocusIndex(index));
     dispatch(setVisible(true));
   };
-
+  // useEffect(() => {
+  //   if (!content.image) return;
+  // }, [content.image, windowWidth]);
   return (
-    <div ref={$image} className={`${styles.image_box}`}>
+    <div
+      ref={$image}
+      className={`${styles.image_box}`}>
       <Image
         onMouseEnter={mouseEnterEvent}
+        onLoadingComplete={() => {
+          const imageUrl = `/${session.user.id}/${content.image}`;
+          resizeImage(imageUrl, $image.current.offsetWidth, setImageSize);
+        }}
         src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display/${session.user.id}/${content.image}`}
         alt={"No Image"}
-        width={size.width}
-        height={size.height}
+        width={imageSize.width}
+        height={imageSize.height}
         placeholder="blur"
         blurDataURL="/image.svg"
         priority={true}

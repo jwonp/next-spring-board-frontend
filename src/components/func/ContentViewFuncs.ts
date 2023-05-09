@@ -30,7 +30,6 @@ export const resizeImage = (
   windowWidth: number,
   setSize: Dispatch<SetStateAction<SizeType>>
 ) => {
-  console.log("call resize");
   if (imageSrc === "" || imageSrc === undefined) return;
   getImage(imageSrc).then((img) => {
     const _size = getImageSizeByWindowWidth(
@@ -40,6 +39,8 @@ export const resizeImage = (
     );
 
     if (_size.width === 0 && _size.height === 0) return;
-    setSize({ width: _size.width, height: _size.height });
+    const _imageSize: SizeType = { width: _size.width, height: _size.height };
+
+    setSize(_imageSize);
   });
 };
