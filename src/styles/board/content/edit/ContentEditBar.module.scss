@@ -25,5 +25,8 @@
 
 /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
 @media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
-  /*스타일입력*/
+  .wrapper {
+    padding: 0 0.2em;
+    padding-left: 3em;
+  }
 }
