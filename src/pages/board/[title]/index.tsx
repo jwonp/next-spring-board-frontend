@@ -39,7 +39,8 @@ const BoardByTitle = () => {
     if (contentData.data?.length === 0) {
       return <div className={`${styles.no_content}`}>No Content</div>;
     }
-    return contentData.data?.map((item: ContentType, index) => (
+
+    return contentData?.data?.map((item: ContentType, index) => (
       <div key={index}>
         <ContentBar
           data={item}
@@ -50,6 +51,7 @@ const BoardByTitle = () => {
   }, [contentData]);
 
   useEffect(() => {
+    contentData.mutate();
     $searchInput.current.value = "";
     dispatch(setIndex(0));
   }, [boardTitle]);
