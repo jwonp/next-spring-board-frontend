@@ -3,21 +3,23 @@ import {
   CommentURLByContent,
   CommentFetcher,
 } from "@src/components/fetcher/CommentFetcher";
-import { saveCommentByContentId } from "@src/components/func/sendRequest";
-import { useSession, signOut } from "next-auth/react";
-import { useMemo, useRef } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect, useMemo, useRef } from "react";
 import useSWR from "swr";
-import { useRouter } from "next/router";
 import CommentBar from "./CommentBar";
+import { uploadComment } from "@src/components/func/CommentFuncs";
 
 const Comment = ({ contentId }: { contentId: number }) => {
-  const router = useRouter();
   const { data: session } = useSession();
   const $textarea = useRef<HTMLTextAreaElement>(null);
   const { data, mutate } = useSWR(
     CommentURLByContent(contentId),
     CommentFetcher
   );
+
+  useEffect(() => {
+    mutate();
+  }, []);
 
   const CommentList = useMemo(() => {
     return data?.map((value, index) => (
@@ -29,21 +31,7 @@ const Comment = ({ contentId }: { contentId: number }) => {
       />
     ));
   }, [data]);
-  const uploadComment = () => {
-    saveCommentByContentId(
-      $textarea.current.value,
-      contentId,
-      session?.user?.id
-    ).then((_res) => {
-      if (_res.data === false) {
-        signOut();
-        router.push("/");
-        return;
-      }
-      $textarea.current.value = "";
-      mutate();
-    });
-  };
+
   return (
     <div className={`${styles.wrapper}`}>
       <div>댓글 {data?.length}</div>
@@ -55,7 +43,12 @@ const Comment = ({ contentId }: { contentId: number }) => {
             maxLength={500}
             required={true}></textarea>
         </div>
-        <button onClick={uploadComment}>등록</button>
+        <button
+          onClick={() =>
+            uploadComment($textarea, contentId, session.user.id, mutate)
+          }>
+          등록
+        </button>
       </div>
       <div className={`${styles.comment_list}`}>{CommentList}</div>
     </div>

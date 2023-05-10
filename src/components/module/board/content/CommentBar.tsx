@@ -2,13 +2,11 @@ import { CommentBarType } from "@src/static/types/CommentType";
 import styles from "@src/styles/board/content/CommentBar.module.scss";
 import CommentModifyButton from "./button/CommentModifyButton";
 import CommentDeleteButton from "./button/CommentDeleteButton";
-import {
-  getDateAsShortString,
-  getDateAsString,
-} from "@src/components/func/DateParser";
+import { getDateAsShortString } from "@src/components/func/DateParser";
 import { useRef } from "react";
 import { useAppSelector } from "@src/redux/hooks";
 import { getModifyIndex } from "@src/redux/features/commentModify";
+import { DateTime } from "luxon";
 
 const CommentBar = ({ comment, userId, mutate }: CommentBarType) => {
   const $textarea = useRef<HTMLTextAreaElement>(null);
@@ -29,7 +27,7 @@ const CommentBar = ({ comment, userId, mutate }: CommentBarType) => {
 
         <div className={`${styles.meta}`}>
           <div>{comment.writer}</div>
-          <div>{getDateAsShortString(comment.updated)}</div>
+          <div>{getDateAsShortString(comment.updated, DateTime.now())}</div>
         </div>
       </div>
       <div className={`${styles.handler_box}`}>
