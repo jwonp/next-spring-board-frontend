@@ -42,3 +42,4 @@ src/public/favicon.png
 .gitignore
 .vscode/settings.json
 src/redux/features/init.ts
+src/pages/login.tsx
