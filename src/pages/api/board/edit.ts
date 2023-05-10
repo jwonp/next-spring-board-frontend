@@ -1,7 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { SaveContentType } from "@src/static/types/SaveContentType";
-
-import qs from "qs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";

@@ -1,5 +1,4 @@
 import { CommentType } from "@src/static/types/CommentType";
-
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 type CommentResponseType = {

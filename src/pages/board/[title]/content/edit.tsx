@@ -36,7 +36,7 @@ import {
   confirmImages,
   modifyContents,
   saveContents,
-} from "@src/components/func/sendRequest";
+} from "@src/components/func/requestFuncs";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import qs from "qs";
 import {

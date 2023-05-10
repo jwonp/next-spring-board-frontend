@@ -45,8 +45,8 @@ export const getDateAsString = (row: string): string => {
  * @param row ex) 2023-04-18T13:04:50.935+00:00
  * @returns ..초전, ..분전, ..시간전, ..일전, YYYY.MM.DD (if, DD > 7)
  */
-export const getDateAsShortString = (row: string): string => {
-  const date = getDateAsObject(row, DateTime.now());
+export const getDateAsShortString = (row: string, now: DateTime): string => {
+  const date = getDateAsObject(row, now);
   if (date.minutes === 0 && date.seconds >= 0) {
     return `${date.seconds.toFixed(0)}초전`;
   }

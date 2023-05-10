@@ -1,4 +1,4 @@
-import { deleteComment } from "@src/components/func/sendRequest";
+import { deleteComment } from "@src/components/func/requestFuncs";
 import { DeleteCommentType } from "@src/static/types/CommentType";
 import styles from "@src/styles/board/content/button/CommentDeleteButton.module.scss";
 const CommentDeleteButton = ({

@@ -3,6 +3,7 @@ import { convertNumberToUnitK } from "@src/components/func/stringTools";
 import { sizes } from "@src/static/data/stringSet";
 import { ContentType } from "@src/static/types/ContentType";
 import styles from "@src/styles/board/content/ContentBar.module.scss";
+import { DateTime } from "luxon";
 import Image from "next/image";
 import Link from "next/link";
 const ContentBar = ({
@@ -21,7 +22,12 @@ const ContentBar = ({
         <div className={`${styles.right}`}>
           <div className={`${styles.views}`}>
             <div className={`${styles.icon}`}>
-              <Image src={"/view.svg"} alt={"No icon"} fill sizes={sizes} />
+              <Image
+                src={"/view.svg"}
+                alt={"No icon"}
+                fill
+                sizes={sizes}
+              />
             </div>
             <div className={`${styles.count}`}>
               {convertNumberToUnitK(data.views)}
@@ -29,7 +35,12 @@ const ContentBar = ({
           </div>
           <div className={`${styles.likes}`}>
             <div className={`${styles.icon}`}>
-              <Image src={"/like.svg"} alt={"No icon"} fill sizes={sizes} />
+              <Image
+                src={"/like.svg"}
+                alt={"No icon"}
+                fill
+                sizes={sizes}
+              />
             </div>
             <div className={`${styles.count}`}>
               {convertNumberToUnitK(data.likes)}
@@ -37,7 +48,7 @@ const ContentBar = ({
           </div>
           <div className={`${styles.author}`}>{data.author}</div>
           <div className={`${styles.created_date}`}>
-            {getDateAsShortString(data.createdDate)}
+            {getDateAsShortString(data.created, DateTime.now())}
           </div>
         </div>
       </div>

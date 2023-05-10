@@ -13,11 +13,7 @@ const AppDrawer = () => {
     <div
       className={`${styles.wrapper}`}
       data-opened={isAppDrawerOpened}>
-      <div
-        className={`${styles.box}`}
-        onClick={() => {
-          console.log("box");
-        }}>
+      <div className={`${styles.box}`}>
         <BoardMenu />
       </div>
       <div

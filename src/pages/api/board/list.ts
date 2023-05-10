@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { ContentType } from "@src/static/types/ContentType";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import axios from "axios";
@@ -42,7 +41,7 @@ export default function handler(
             likes: value.likes,
             author: value.author,
             board: value.board,
-            createdDate: value.created,
+            created: value.created,
           };
         });
         res.status(200).send(returnData);

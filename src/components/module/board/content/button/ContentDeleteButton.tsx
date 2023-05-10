@@ -6,7 +6,7 @@ import {
   isAuthorByContentIdFetcher,
 } from "@src/components/fetcher/IsAuthorFetcher";
 import { useRouter } from "next/router";
-import { deleteContent } from "@src/components/func/sendRequest";
+import { deleteContent } from "@src/components/func/requestFuncs";
 import { useSession } from "next-auth/react";
 const ContentDeleteButton = ({
   board,
@@ -19,17 +19,21 @@ const ContentDeleteButton = ({
     isAuthorURLByContentId(contentId, author),
     isAuthorByContentIdFetcher
   );
-  return (
-    <div className={`${styles.delete_btn}`}>
-      <button
-        onClick={() => {
-          deleteContent(contentId, session.user.id);
-          router.push(`/board/${board}`);
-        }}>
-        <div>삭제</div>
-      </button>
-    </div>
-  );
+  if (data) {
+    return (
+      <div className={`${styles.delete_btn}`}>
+        <button
+          onClick={() => {
+            deleteContent(contentId, session.user.id);
+            router.push(`/board/${board}`);
+          }}>
+          <div>삭제</div>
+        </button>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default ContentDeleteButton;

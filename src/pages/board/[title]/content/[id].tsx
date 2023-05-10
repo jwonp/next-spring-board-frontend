@@ -1,10 +1,10 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
-import { getContentById } from "@src/components/func/sendRequest";
+import { getContentById } from "@src/components/func/requestFuncs";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import qs from "qs";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { getDateAsString } from "@src/components/func/DateParser";
 import ContentViewBar from "@src/components/module/board/content/ContentViewBar";
 import useSWR from "swr";
@@ -55,7 +55,6 @@ const ContentById = ({
     }) as unknown as ParsedContentType;
     return Object.values(parsedData) as ContentBarDataType[];
   }, [content]);
-  const $windowWidth = useRef<number>(0);
 
   useEffect(() => {
     if (router.isReady) {

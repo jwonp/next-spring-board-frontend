@@ -21,15 +21,11 @@ const ImageHandler = () => {
   const isVisible = useAppSelector(getIsVisible);
   const dispatch = useAppDispatch();
   const imageFocusIndex = useAppSelector(getImageFocusIndex);
-  const onMouseLeaveEvent = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const onMouseLeaveEvent = () => {
     dispatch(resetImageFocusIndex());
     dispatch(setVisible(false));
   };
-  const onImageClickEvent = (
-    e: React.MouseEvent<HTMLImageElement, MouseEvent>
-  ) => {
+  const onImageClickEvent = () => {
     dispatch(removeContentByIndex(imageFocusIndex));
     dispatch(resetImageFocusIndex());
     dispatch(setVisible(false));

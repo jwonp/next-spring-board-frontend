@@ -1,5 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { isUserRegistedForServer } from "@src/components/func/sendRequest";
+import { isUserRegistedForServer } from "@src/components/func/requestFuncs";
 import { UserType } from "@src/static/types/UserType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";

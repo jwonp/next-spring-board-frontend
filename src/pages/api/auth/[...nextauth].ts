@@ -1,11 +1,8 @@
 import NextAuth, { AuthOptions } from "next-auth";
-
 import TwitchProvider from "next-auth/providers/twitch";
 import GoogleProvider from "next-auth/providers/google";
-
-import { addUser } from "@src/components/func/sendRequest";
+import { addUser } from "@src/components/func/requestFuncs";
 import { UserType } from "@src/static/types/UserType";
-import { getProviders } from "next-auth/react";
 import { randomBytes, randomUUID } from "crypto";
 
 export const authOptions: AuthOptions = {

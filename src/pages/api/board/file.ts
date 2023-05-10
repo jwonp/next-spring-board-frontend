@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
 import httpProxyMiddleware from "next-http-proxy-middleware";
 import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
 

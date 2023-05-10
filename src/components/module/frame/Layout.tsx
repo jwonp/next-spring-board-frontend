@@ -9,21 +9,8 @@ import Main from "./Main";
 import { useSession, signIn } from "next-auth/react";
 const Layout = ({ children }: { children: JSX.Element }) => {
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const indexPageHeight = useMemo(() => {
-    if (router.asPath === "/") {
-      return styles.main_with_footer;
-    } else {
-      return "";
-    }
-  }, [router.asPath]);
-  const footer = useMemo(() => {
-    if (router.asPath === "/") {
-      return <Footer />;
-    } else {
-      <></>;
-    }
-  }, [router.asPath]);
+  const { status } = useSession();
+
   useEffect(() => {
     if (status === "unauthenticated" && router.asPath !== "/") {
       signIn();
@@ -32,11 +19,10 @@ const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <div className={`${styles.wrapper}`}>
       <Header />
-      <div className={`${styles.main} ${indexPageHeight}`}>
+      <div className={`${styles.main}`}>
         <AppDrawer />
         <Main>{children}</Main>
       </div>
-      {footer}
     </div>
   );
 };

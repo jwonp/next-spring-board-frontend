@@ -2,7 +2,7 @@ import "@src/styles/globals.scss";
 
 import Layout from "@src/components/module/frame/Layout";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
+
 import { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
@@ -14,7 +14,6 @@ const App = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) => {
-  const router = useRouter();
   return (
     <SessionProvider
       session={session}
@@ -28,7 +27,10 @@ const App = ({
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
-            <link rel="icon" href="/favicon.ico" />
+            <link
+              rel="icon"
+              href="/favicon.ico"
+            />
           </Head>
           <Layout>
             <Component {...pageProps} />
