@@ -21,11 +21,11 @@ export const addUser = async (data: UserType) => {
 };
 
 export const saveContents = async (data: SaveContentType) => {
-  return await axios.post(`/api/board/edit`, data);
+  return await axios.post(`/api/content/edit`, data);
 };
 
 export const modifyContents = async (data: ModifyContentRequestType) => {
-  return await axios.post(`/api/board/modify`, data);
+  return await axios.post(`/api/content/modify`, data);
 };
 
 export const confirmImages = async (
@@ -43,13 +43,13 @@ export const confirmImages = async (
 
 export const getContentById = async (contentId: string) => {
   return await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/board/content?id=${contentId}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/content?id=${contentId}`
   );
 };
 
 export const getContentShortById = async (contentId: string) => {
   return await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/board/content/short?id=${contentId}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/content/short?id=${contentId}`
   );
 };
 
@@ -58,7 +58,7 @@ export const saveCommentByContentId = async (
   contentId: number,
   user: string
 ) => {
-  return await axios.post(`/api/board/comment/edit`, {
+  return await axios.post(`/api/comment/edit`, {
     comment: comment,
     contentId: contentId,
     user: user,
@@ -70,7 +70,7 @@ export const addLikeByContentAndUser = async (
   user: String
 ) => {
   if (!user) return;
-  return await axios.post(`/api/board/like/add`, {
+  return await axios.post(`/api/like/add`, {
     contentId: contentId,
     user: user,
   });
@@ -81,22 +81,22 @@ export const deleteLikeByContentAndUser = async (
 ) => {
   if (!userId) return;
   return await axios.get(
-    `/api/board/like/delete?content=${contentId}&user=${userId}`
+    `/api/like/delete?content=${contentId}&user=${userId}`
   );
 };
 
 export const deleteContent = async (contentId: number, userId: string) => {
   if (!userId) return;
   return await axios.get(
-    `/api/board/delete?content=${contentId}&user=${userId}`
+    `/api/content/delete?content=${contentId}&user=${userId}`
   );
 };
 
 export const modifyComment = async (data: ModifyCommentRequestType) => {
-  return await axios.post(`/api/board/comment/modify`, data);
+  return await axios.post(`/api/comment/modify`, data);
 };
 export const deleteComment = async (commentId: number, userId: string) => {
   return await axios.get(
-    `/api/board/comment/delete?comment=${commentId}&user=${userId}`
+    `/api/comment/delete?comment=${commentId}&user=${userId}`
   );
 };

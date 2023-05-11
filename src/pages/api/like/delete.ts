@@ -2,30 +2,29 @@ import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const deleteComment = async (
-  commentId: string,
-  userId: string,
+const deleteLikeByContentAndUser = async (
+  contentId: string,
+  user: string,
   csrf: CsrfIdentityType
 ) => {
   return await axios.delete(
-    `${process.env.BACKEND_URL}/board/comment?comment=${commentId}&user=${userId}`,
+    `${process.env.BACKEND_URL}/like?content=${contentId}&user=${user}`,
     {
       headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
     }
   );
 };
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<boolean>
-) {
-  const { comment, user } = req.query;
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { content, user } = req.query;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
   const csrf: CsrfIdentityType = {
     id: user as string,
     csrfToken: csrfToken,
   };
-  deleteComment(comment as string, user as string, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  deleteLikeByContentAndUser(content as string, user as string, csrf).then(
+    (_res) => {
+      res.status(200).send(_res.data);
+    }
+  );
 }

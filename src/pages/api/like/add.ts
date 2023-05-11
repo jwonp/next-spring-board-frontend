@@ -10,13 +10,9 @@ const addLikeByContentAndUser = async (
   likeRequest: LikeRequestType,
   csrf: CsrfIdentityType
 ) => {
-  return await axios.post(
-    `${process.env.BACKEND_URL}/board/content/like`,
-    likeRequest,
-    {
-      headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
-    }
-  );
+  return await axios.post(`${process.env.BACKEND_URL}/like`, likeRequest, {
+    headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
+  });
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

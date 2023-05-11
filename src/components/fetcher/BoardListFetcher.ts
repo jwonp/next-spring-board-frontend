@@ -8,6 +8,6 @@ export const boardListURLByBoardAndIndex = (
   searchQuery?: string
 ) => {
   return searchQuery
-    ? `/api/board/search?board=${board}&query=${searchQuery}`
+    ? `/api/board/search?board=${board}&query=${searchQuery}&index=${index}`
     : `/api/board/list?index=${index}&board=${board}`;
 };

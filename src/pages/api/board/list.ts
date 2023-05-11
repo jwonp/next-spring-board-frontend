@@ -33,18 +33,7 @@ export default function handler(
       (_res) => {
         const responseData: ListDtoType[] = _res.data;
 
-        const returnData: ContentType[] = responseData.map((value) => {
-          return {
-            id: value.contentMetaId,
-            title: value.title,
-            views: value.views,
-            likes: value.likes,
-            author: value.author,
-            board: value.board,
-            created: value.created,
-          };
-        });
-        res.status(200).send(returnData);
+        res.status(200).send(responseData);
       }
     );
   } catch (error) {

@@ -13,7 +13,7 @@ const saveComment = async (
   data: SaveCommentRequest,
   csrf: CsrfIdentityType
 ) => {
-  return await axios.post(`${process.env.BACKEND_URL}/board/comment`, data, {
+  return await axios.post(`${process.env.BACKEND_URL}/comment`, data, {
     headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
   });
 };

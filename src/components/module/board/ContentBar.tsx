@@ -6,6 +6,7 @@ import styles from "@src/styles/board/content/ContentBar.module.scss";
 import { DateTime } from "luxon";
 import Image from "next/image";
 import Link from "next/link";
+
 const ContentBar = ({
   data,
   boardTitle,
@@ -14,7 +15,7 @@ const ContentBar = ({
   boardTitle: string;
 }) => {
   return (
-    <Link href={`/board/${boardTitle}/content/${data.id}`}>
+    <Link href={`/board/${boardTitle}/content/${data.contentMetaId}`}>
       <div className={`${styles.wrapper}`}>
         <div className={`${styles.left}`}>
           <div className={`${styles.title}`}>{data.title}</div>

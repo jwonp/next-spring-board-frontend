@@ -4,4 +4,4 @@ export const CommentFetcher = (url: string): Promise<CommentType[]> =>
   axios.get(url).then((res) => res.data);
 
 export const CommentURLByContent = (contentId: number) =>
-  `/api/board/comment/list?id=${contentId}`;
+  `/api/comment/list?id=${contentId}`;

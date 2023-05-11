@@ -26,7 +26,6 @@ const TextBar = ({
    * ContentEditBar의 위치(index)가 바뀔 떄마다 재랜더링
    */
   useEffect(() => {
-    console.log(contents[index].content);
     $content.current.innerText = contents[index].content;
   }, [contents.length]);
 

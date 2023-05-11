@@ -1,5 +1,5 @@
 export interface ContentType {
-  id: number;
+  contentMetaId: number;
   title: string;
   views: number;
   likes: number;
