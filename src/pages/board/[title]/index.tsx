@@ -14,6 +14,7 @@ import useSWR from "swr";
 import { sizes } from "@src/static/data/stringSet";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import { getIndex, setIndex } from "@src/redux/features/pageIndex";
+import ContentViewList from "@src/components/module/board/content/edit/ContentViewList";
 
 const BoardByTitle = () => {
   const router = useRouter();
@@ -40,14 +41,12 @@ const BoardByTitle = () => {
       return <div className={`${styles.no_content}`}>No Content</div>;
     }
 
-    return contentData?.data?.map((item: ContentType, index) => (
-      <div key={index}>
-        <ContentBar
-          data={item}
-          boardTitle={boardTitle}
-        />
-      </div>
-    ));
+    return (
+      <ContentViewList
+        contentList={contentData?.data}
+        boardTitle={boardTitle}
+      />
+    );
   }, [contentData]);
 
   useEffect(() => {
@@ -59,6 +58,7 @@ const BoardByTitle = () => {
   const runSearch = () => {
     router.push(`/board/${boardTitle}?search=${$searchInput.current.value}`);
   };
+
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.header}`}>
