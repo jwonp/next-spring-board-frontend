@@ -5,19 +5,19 @@ export const MostViewFetcher = (url: string) =>
   axios.get(url).then((res) => res.data as ContentType[]);
 
 export const MostViewURL = () => {
-  return `/api/board/index/viewest`;
+  return `/api/board/viewest`;
 };
 
 export const MostLikeFetcher = (url: string) =>
   axios.get(url).then((res) => res.data as ContentType[]);
 
 export const MostLikeURL = () => {
-  return `/api/board/index/likest`;
+  return `/api/board/likest`;
 };
 
 export const RecentlyFetcher = (url: string) =>
   axios.get(url).then((res) => res.data as ContentType[]);
 
 export const RecentlyURL = () => {
-  return `/api/board/index/recent`;
+  return `/api/board/recent`;
 };

@@ -14,20 +14,23 @@ import { useMemo } from "react";
 import useSWR from "swr";
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const Home = () => {
   const MostViewSWR = useSWR(MostViewURL(), MostViewFetcher);
   const MostLikeSWR = useSWR(MostLikeURL(), MostLikeFetcher);
   const RecentlySWR = useSWR(RecentlyURL(), RecentlyFetcher);
 
   const MostViewList = useMemo(() => {
+    console.log(MostLikeSWR?.data);
     return <ContentViewList contentList={MostLikeSWR?.data} />;
   }, [MostViewSWR]);
 
   const MostLikeList = useMemo(() => {
+    console.log(MostLikeSWR?.data);
     return <ContentViewList contentList={MostLikeSWR?.data} />;
   }, [MostLikeSWR]);
 
   const RecentlyList = useMemo(() => {
+    console.log(RecentlySWR?.data);
     return <ContentViewList contentList={RecentlySWR?.data} />;
   }, [RecentlySWR]);
 
@@ -47,4 +50,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;
