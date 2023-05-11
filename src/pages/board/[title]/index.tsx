@@ -3,9 +3,7 @@ import {
   boardListFetcher,
   boardListURLByBoardAndIndex,
 } from "@src/components/fetcher/BoardListFetcher";
-import ContentBar from "@src/components/module/board/ContentBar";
 import PaginationBar from "@src/components/module/board/PaginationBar";
-import { ContentType } from "@src/static/types/ContentType";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -40,7 +38,7 @@ const BoardByTitle = () => {
     if (contentData.data?.length === 0) {
       return <div className={`${styles.no_content}`}>No Content</div>;
     }
-
+    console.log(contentData?.data);
     return (
       <ContentViewList
         contentList={contentData?.data}

@@ -2,16 +2,6 @@ import { ContentType } from "@src/static/types/ContentType";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-type ListDtoType = {
-  contentMetaId: number;
-  title: string;
-  author: string;
-  board: string;
-  created: string;
-  updated: string;
-  views: number;
-  likes: number;
-};
 
 const getContentListByBoardAndIndex = async (
   board: BoardMenuType,
@@ -31,7 +21,7 @@ export default function handler(
   try {
     getContentListByBoardAndIndex(board as BoardMenuType, Number(index)).then(
       (_res) => {
-        const responseData: ListDtoType[] = _res.data;
+        const responseData: ContentType[] = _res.data;
 
         res.status(200).send(responseData);
       }

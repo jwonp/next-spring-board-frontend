@@ -6,4 +6,5 @@ export interface ContentType {
   author: string;
   board: string;
   created: string;
+  updated: string;
 }

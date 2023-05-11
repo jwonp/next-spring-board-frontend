@@ -1,6 +1,6 @@
 import { ContentType } from "@src/static/types/ContentType";
 import ContentBar from "../../ContentBar";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 const ContentViewList = ({
   contentList,

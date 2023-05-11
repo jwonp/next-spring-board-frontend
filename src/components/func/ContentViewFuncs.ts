@@ -1,4 +1,3 @@
-import { ContentType } from "@src/static/types/ContentType";
 import { getImage, getImageSizeByWindowWidth } from "./ImageHandler";
 
 import { SizeType } from "@src/static/types/SizeType";
