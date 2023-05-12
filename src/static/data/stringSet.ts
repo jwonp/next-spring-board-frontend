@@ -28,3 +28,9 @@ export const KeySet = {
 export const OneToTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export const sizes = "(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw";
+
+export const titlesOnIndexPage = {
+  MostViewed: "Most Viewed",
+  MostLiked: "Most Liked",
+  Recently: "Recently",
+};

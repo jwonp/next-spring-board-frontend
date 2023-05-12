@@ -8,6 +8,7 @@ import {
 } from "@src/components/fetcher/IndexPageFetecher";
 
 import ContentViewList from "@src/components/module/board/content/edit/ContentViewList";
+import { titlesOnIndexPage } from "@src/static/data/stringSet";
 import styles from "@src/styles/index.module.scss";
 import { Inter } from "next/font/google";
 import { useMemo } from "react";
@@ -20,32 +21,29 @@ const Home = () => {
   const RecentlySWR = useSWR(RecentlyURL(), RecentlyFetcher);
 
   const MostViewList = useMemo(() => {
-    console.log(MostLikeSWR?.data);
-    return <ContentViewList contentList={MostLikeSWR?.data} />;
+    return <ContentViewList contentList={MostViewSWR?.data} />;
   }, [MostViewSWR]);
 
   const MostLikeList = useMemo(() => {
-    console.log(MostLikeSWR?.data);
     return <ContentViewList contentList={MostLikeSWR?.data} />;
   }, [MostLikeSWR]);
 
   const RecentlyList = useMemo(() => {
-    console.log(RecentlySWR?.data);
     return <ContentViewList contentList={RecentlySWR?.data} />;
   }, [RecentlySWR]);
 
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.box}`}>
-        <div className={`${styles.title}`}>most viewed</div>
+        <div className={`${styles.title}`}>{titlesOnIndexPage.MostViewed}</div>
         <div className={`${styles.list}`}>{MostViewList}</div>
       </div>
       <div className={`${styles.box}`}>
-        <div className={`${styles.title}`}>most liked</div>
+        <div className={`${styles.title}`}>{titlesOnIndexPage.MostLiked}</div>
         <div className={`${styles.list}`}>{MostLikeList}</div>
       </div>
       <div className={`${styles.box}`}>
-        <div className={`${styles.title}`}>recently</div>
+        <div className={`${styles.title}`}>{titlesOnIndexPage.Recently}</div>
         <div className={`${styles.list}`}>{RecentlyList}</div>
       </div>
     </div>
