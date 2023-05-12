@@ -1,8 +1,8 @@
 import styles from "@src/styles/frame/Layout.module.scss";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import AppDrawer from "./AppDrawer";
-import Footer from "./Footer";
+
 import Header from "./Header";
 import Main from "./Main";
 
