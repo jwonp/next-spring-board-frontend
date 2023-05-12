@@ -1,8 +1,70 @@
+@use "@src/styles/vars.scss" as vars;
 .wrapper {
+  width: calc(100% - 1em);
+  padding: 0.5em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .box {
+  margin: 0.5em;
+  padding: 1em;
+  border: 1px solid vars.$mainColor-70;
 }
 .title {
+  font-weight: bold;
+  border-bottom: 3px solid vars.$mainColor-100;
+  font-size: 26px;
 }
 .list {
+  & div {
+    font-size: 13px !important;
+  }
+  & > div > div > a > div {
+    // contentBar`s wrapper
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media all and (min-width: vars.$windowWidth-tablet) and (max-width: calc(vars.$windowWidth-pc - 1px)) {
+  .title {
+    font-size: 22px;
+  }
+  .list div {
+    font-size: 11px !important;
+  }
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+@media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
+  .title {
+    font-size: 20px;
+  }
+  .list {
+    & div {
+      font-size: 10px !important;
+    }
+    & > div > div > a > div {
+      // contentBar`s wrapper
+      & > div:nth-child(2) {
+        // contentBars`s right
+        grid-template-columns: 1fr 1fr;
+        & div:nth-child(1),
+        & div:nth-child(2) {
+          // views, likes
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+@media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
+  .title {
+    font-size: 16px;
+  }
+  .list div {
+    font-size: 10px !important;
+  }
 }

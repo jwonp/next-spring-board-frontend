@@ -31,7 +31,7 @@
 @media all and (max-width: calc(vars.$windowWidth-mobile - 1px)) {
   .wrapper {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: vars.$appDrawerWidth * 0.5 auto;
     padding-top: 0;
     padding-bottom: 0;
     background-color: rgba(0, 0, 0, 0);
