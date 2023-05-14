@@ -38,15 +38,17 @@
 .search_icon {
   position: relative;
   width: 3em;
+  height: calc(100% + 2px);
   background-color: vars.$mainColor-100;
-  margin-top: 0.14em;
+
   overflow: hidden;
   border: none;
   border-radius: 0 6px 6px 0;
 }
 .search_input {
+  height: 100%;
   & input {
-    height: 90%;
+    height: 100%;
     line-height: 90%;
     vertical-align: middle;
     padding-left: 0.5em;
@@ -104,8 +106,8 @@
   }
   .search_icon {
     width: 2em;
-    margin-top: 0.05em;
   }
+
   .search_input {
     & input {
       font-size: 16px;
@@ -123,7 +125,6 @@
   }
   .search_icon {
     width: 1.5em;
-    margin-top: 0.05em;
   }
   .search_input {
     & input {
