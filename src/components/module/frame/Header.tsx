@@ -12,7 +12,17 @@ import { toggleIsAppDrawerOpened } from "@src/redux/features/menuToggle";
 const Header = () => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
-
+  const adminPageLink = useMemo(() => {
+    if (session?.user?.id === process.env.NEXT_PUBLIC_ADMIN_PROVIDER_ID) {
+      return (
+        <div>
+          <Link href={"/admin"}>admin</Link>
+        </div>
+      );
+    } else {
+      <></>;
+    }
+  }, [session]);
   useEffect(() => {
     if (session) {
       isUserRegisted(session?.user?.id, session?.user?.provider);
@@ -54,6 +64,7 @@ const Header = () => {
           <BoardMenu />
         </div>
         <div className={`${styles.box}`}>
+          {adminPageLink}
           <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div>
           <div
             className={`${styles.item}`}
