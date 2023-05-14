@@ -1,8 +1,11 @@
+@use "@src/styles/vars.scss" as vars;
 .wrapper {
   padding: 0.5em;
 }
 
 .toolbar {
+  display: flex;
+  gap: 0.7em;
   padding: 1em;
 }
 .title {
@@ -11,7 +14,15 @@
 }
 .box {
   display: flex;
-  gap: 0.5em;
+  gap: 0.7em;
+  padding-right: 0.5em;
+  border-right: 1px solid vars.$mainColor-100;
 }
 .button {
+  border-radius: 7px;
+  padding: 0.4em 0.7em;
+  background-color: vars.$mainColor-70;
+  &:hover {
+    background-color: vars.$mainColor-100;
+  }
 }

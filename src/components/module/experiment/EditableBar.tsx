@@ -1,6 +1,6 @@
 import styles from "@src/styles/Init.module.scss";
-const EditableBar = () => {
-  return <div></div>;
+const EditableBar = ({ children }: { children: string | JSX.Element }) => {
+  return <div>{children}</div>;
 };
 
 export default EditableBar;
