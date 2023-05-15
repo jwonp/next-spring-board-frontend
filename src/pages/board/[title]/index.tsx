@@ -38,7 +38,7 @@ const BoardByTitle = () => {
     if (contentData.data?.length === 0) {
       return <div className={`${styles.no_content}`}>No Content</div>;
     }
-    console.log(contentData?.data);
+
     return (
       <ContentViewList
         contentList={contentData?.data}

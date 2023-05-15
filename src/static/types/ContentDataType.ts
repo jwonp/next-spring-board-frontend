@@ -3,10 +3,15 @@ export interface ContentBarDataType {
   content: string;
   image: string;
 }
-
-const contentType = {
+const ContentType = {
   text: "text",
   image: "image",
 } as const;
 
-export type ContentTypeType = typeof contentType[keyof typeof contentType];
+export type ContentTypeType = (typeof ContentType)[keyof typeof ContentType];
+
+export interface ContentBarAddType {
+  target: number;
+  content: string;
+  type: ContentTypeType;
+}

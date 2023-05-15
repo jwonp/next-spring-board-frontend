@@ -3,24 +3,27 @@ import Image from "next/image";
 import { LocationType } from "@src/static/types/LocationType";
 import { useEffect, useRef } from "react";
 import { AddContentType } from "@src/static/types/AddContentsType";
-import { ContentTypeType } from "@src/static/types/ContentDataType";
+import {
+  ContentBarAddType,
+  ContentTypeType,
+} from "@src/static/types/ContentDataType";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
 import { useAppDispatch } from "@src/redux/hooks";
-import { addImage } from "@src/redux/features/content";
+import { addImage, addNewContent } from "@src/redux/features/content";
 
 const AddTypeModel = ({
   isOpen,
   mouseOnIndex,
   location,
-  addContent,
+
   setIsOpen,
 }: {
   isOpen: boolean;
   location: LocationType;
   mouseOnIndex: number;
-  addContent: AddContentType;
+
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const $wrapper = useRef<HTMLDivElement>(null);
@@ -35,20 +38,25 @@ const AddTypeModel = ({
     $wrapper.current.style.left = `${location.x}px`;
     $wrapper.current.style.top = `${location.y}px`;
   }, [isOpen, location]);
+
   const handleClickBackground = () => {
     setIsOpen(false);
   };
+
   const handleClickText = (e: React.MouseEvent<HTMLDivElement>) => {
-    addContent(
-      mouseOnIndex,
-      "",
-      e.currentTarget.getAttribute("data-value") as ContentTypeType
-    );
+    const newContentData: ContentBarAddType = {
+      target: mouseOnIndex,
+      content: "",
+      type: e.currentTarget.getAttribute("data-value") as ContentTypeType,
+    };
+    dispatch(addNewContent(newContentData));
   };
+
   const handleClickImage = (e: React.MouseEvent<HTMLDivElement>) => {
     $mouseOnIndex.current = mouseOnIndex;
     $fileInput.current.click();
   };
+
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = $fileInput.current.files[0];
 
@@ -59,11 +67,14 @@ const AddTypeModel = ({
     sendFile(formData).then((res) => {
       const imageMeta = res.data as ImageUploadResponse;
       dispatch(addImage(imageMeta.fileNameOnStoarge));
-      addContent(
-        $mouseOnIndex.current,
-        imageMeta.fileNameOnStoarge,
-        "image" as ContentTypeType
-      );
+
+      const newContentData: ContentBarAddType = {
+        target: $mouseOnIndex.current,
+        content: imageMeta.fileNameOnStoarge,
+        type: "image" as ContentTypeType,
+      };
+
+      dispatch(addNewContent(newContentData));
     });
   };
   const sendFile = async (formData: FormData) => {
@@ -77,7 +88,9 @@ const AddTypeModel = ({
         isOpen === false ? styles.invisible : ""
       }`}
       onClick={handleClickBackground}>
-      <div ref={$wrapper} className={`${styles.wrapper}`}>
+      <div
+        ref={$wrapper}
+        className={`${styles.wrapper}`}>
         <div
           className={`${styles.item}`}
           onClick={handleClickText}

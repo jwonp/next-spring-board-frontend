@@ -1,10 +1,9 @@
 import styles from "@src/styles/board/content/edit/ContentEditBar.module.scss";
 import {
   isMouseOnTarget,
-  isLoactionYOnBottomOfTarget,
-  isLoactionYOnTopOfTarget,
   relocateControl,
   invisibleBorder,
+  displayBorderOnTarget,
 } from "@src/components/func/ContentEditFuncs";
 import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
 
@@ -12,6 +11,7 @@ import { LocationType } from "@src/static/types/LocationType";
 import { useRef } from "react";
 import TextBar from "./TextBar";
 import ImageBar from "./ImageBar";
+import { MouseLocationCheckType } from "@src/static/types/MouseLocationCheckType";
 
 const ContentEditBar = ({
   index,
@@ -50,36 +50,36 @@ const ContentEditBar = ({
     content.classList.toggle(styles.border_bottom, false);
     content.classList.toggle(styles.border_top, false);
   };
+
   const handleMouseMoveWrapper = () => {
+    if (!$wrapper.current) return;
+
     const _wrapperSizes: ContainerSizeType = {
       left: $wrapper.current.offsetLeft,
       top: $wrapper.current.offsetTop,
       width: $wrapper.current.offsetWidth,
       height: $wrapper.current.offsetHeight,
     };
-    if (!$wrapper.current) return;
+
+    const _locations: MouseLocationCheckType = {
+      mouseY: mouseLocation.current.y,
+      wrapperTop: _wrapperSizes.top,
+      wrapperHeight: _wrapperSizes.height,
+      scroll: scroll.current,
+    };
+
+    displayBorderOnTarget(
+      $wrapper.current,
+      onDragIndex.current,
+      index,
+      _locations
+    );
+
     const _isMouseOnTarget = isMouseOnTarget(
       mouseLocation.current,
       _wrapperSizes,
       scroll.current
     );
-    const isMouseOnTargetBefore =
-      onDragIndex.current >= index &&
-      isLoactionYOnTopOfTarget(
-        mouseLocation.current.y,
-        _wrapperSizes.top,
-        _wrapperSizes.height,
-        scroll.current
-      );
-    const isMouseOnTargetAfter =
-      onDragIndex.current >= 0 &&
-      onDragIndex.current < index &&
-      isLoactionYOnBottomOfTarget(
-        mouseLocation.current.y,
-        _wrapperSizes.top,
-        _wrapperSizes.height,
-        scroll.current
-      );
 
     if (_isMouseOnTarget) {
       mouseOnIndex.current = index;
@@ -90,20 +90,7 @@ const ContentEditBar = ({
       };
       relocateControl(_targetLocation, control.current, onDragIndex.current);
     }
-
     moveToIndex.current = index;
-    if (isMouseOnTargetBefore) {
-      $wrapper.current.firstElementChild.classList.toggle(
-        styles.border_top,
-        true
-      );
-    }
-    if (isMouseOnTargetAfter) {
-      $wrapper.current.firstElementChild.classList.toggle(
-        styles.border_bottom,
-        true
-      );
-    }
   };
   const getBarByType = (type: string) => {
     if (type === "text") {

@@ -1,7 +1,7 @@
 import styles from "@src/styles/board/content/edit/ContentEdit.module.scss";
 import {
+  ContentBarAddType,
   ContentBarDataType,
-  ContentTypeType,
 } from "@src/static/types/ContentDataType";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -15,7 +15,6 @@ import {
 
 import { LocationType } from "@src/static/types/LocationType";
 import {
-  createNewContent,
   getFocusTarget,
   isCaretOnFront,
   isContentEmpty,
@@ -23,12 +22,12 @@ import {
   isOutOfContendEditBars,
   isVariationFlagDecrease,
   pointEndOfBeforeTheTarget,
+  relocateDraggedTarget,
   setControlInvisible,
   swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
 import { KeySet, sizes } from "@src/static/data/stringSet";
 import AddTypeModel from "@src/components/module/board/content/edit/AddTypeModal";
-import { AddContentType } from "@src/static/types/AddContentsType";
 import ContentEditBar from "@src/components/module/board/content/edit/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
@@ -50,9 +49,7 @@ import {
   getContents,
   modifyContentByIndex,
   setContents,
-  addContent as insertContent,
-  addContentByIndex,
-  AddDataType,
+  addNewContent,
   resetContent,
   getImages,
 } from "@src/redux/features/content";
@@ -64,7 +61,7 @@ const ContentEdit = ({
 }: ModifyContentType) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const $wrapper = useRef<HTMLDivElement>(null);
+
   const $contentContainer = useRef<HTMLDivElement>(null);
   const $title = useRef<HTMLInputElement>(null);
   const $contentWrapper = useRef<HTMLDivElement>(null);
@@ -102,6 +99,7 @@ const ContentEdit = ({
   }, []);
 
   const ContentEditBarList = useMemo(() => {
+    console.log("changed");
     $lastIndex.current = contents.length - 1;
     return contents.map((value, index) => (
       <ContentEditBar
@@ -127,19 +125,19 @@ const ContentEdit = ({
 
   useEffect(() => {
     if (router.isReady === false) return;
-    _initSelection();
+    initSelection();
   }, [router.isReady]);
 
   useEffect(() => {
-    _handleEventOnContentEditBarList();
+    handleEventOnContentEditBarList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ContentEditBarList.length]);
 
-  const _initSelection = () => {
+  const initSelection = () => {
     $selection.current = document.getSelection();
     $range.current = document.createRange();
   };
-  const _handleEventOnContentEditBarList = () => {
+  const handleEventOnContentEditBarList = () => {
     if ($variationFlag.current === VariationFlag.default) {
       return;
     }
@@ -150,7 +148,7 @@ const ContentEdit = ({
       contents.length
     );
     if (_focusTarget === -1) return;
-    const targetDiv = _getTargetFirstChildDivByIndex(_focusTarget);
+    const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
     targetDiv.click();
     if (isVariationFlagDecrease($variationFlag.current)) {
       pointEndOfBeforeTheTarget(
@@ -163,48 +161,32 @@ const ContentEdit = ({
     $variationFlag.current = VariationFlag.default;
   };
 
-  const _getTargetDivByIndex = (index: number) => {
+  const getTargetDivByIndex = (index: number) => {
     return $contentContainer.current.children[index] as HTMLDivElement;
   };
 
-  const _getTargetFirstChildDivByIndex = (index: number) => {
+  const getTargetFirstChildDivByIndex = (index: number) => {
     return $contentContainer.current.children[index]
       .firstChild as HTMLDivElement;
   };
 
-  /**
-   *
-   * @param target target 다음에 EditBar를 추가함
-   * @param content EditBar에 들어갈 내용, image의 경우 src
-   * @param type "text" | "image"
-   * @returns
-   */
-  const addContent: AddContentType = (
-    target: number,
-    content: string = "",
-    type: ContentTypeType = "text"
+  const getMergedContents = (
+    contents: ContentBarDataType[],
+    originIndex: number,
+    contentToMerged: string
   ) => {
-    const newContent = createNewContent(content, type);
-
-    if (contents.length === 0) {
-      dispatch(setContents([newContent])); //setContents([newContent]);
-      return;
-    }
-    if (target === contents.length - 1) {
-      dispatch(insertContent(newContent));
-      // setContents([...contents, newContent]);
-      return;
-    }
-
-    // const contentsClone = Object.assign([], contents) as ContentBarDataType[];
-    // const contentsClone = [...contents];
-    // contentsClone.splice(target + 1, 0, newContent);
-    const AddData: AddDataType = {
-      index: target,
-      content: newContent,
-    };
-    dispatch(addContentByIndex(AddData));
-    // setContents(contentsClone);
+    const originContent = contents[originIndex].content;
+    const targetIndex = originIndex + 1;
+    return contents
+      .map((value, index) => {
+        if (index === originIndex) {
+          value.content = `${originContent}${contentToMerged}`;
+        }
+        if (index !== targetIndex) {
+          return value;
+        }
+      })
+      .filter((_, index) => index !== targetIndex);
   };
 
   const handleWrapperScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
@@ -213,8 +195,8 @@ const ContentEdit = ({
   };
 
   const handleAddBtn = () => {
-    const _targetWrapper = _getTargetDivByIndex($mouseOnIndex.current);
-    const _targetChild = _getTargetFirstChildDivByIndex($mouseOnIndex.current);
+    const _targetWrapper = getTargetDivByIndex($mouseOnIndex.current);
+    const _targetChild = getTargetFirstChildDivByIndex($mouseOnIndex.current);
 
     const _top = _targetWrapper.offsetTop + _targetWrapper.offsetHeight;
     const _left = _targetWrapper.offsetLeft + _targetChild.offsetLeft;
@@ -261,9 +243,7 @@ const ContentEdit = ({
       setControlInvisible($control.current, true);
     }
 
-    if ($draggedTarget.current.classList.contains(styles.invisible)) return;
-    $draggedTarget.current.style.left = $mouseLocation.current.x + 60 + "px";
-    $draggedTarget.current.style.top = $mouseLocation.current.y + "px";
+    relocateDraggedTarget($draggedTarget.current, $mouseLocation.current);
   };
 
   const handleContentContainerKeyUp = (
@@ -274,7 +254,7 @@ const ContentEdit = ({
         return;
       }
       let _focusTarget = $focusIndex.current - 1;
-      const targetDiv = _getTargetFirstChildDivByIndex(_focusTarget);
+      const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
 
       const len = targetDiv.innerText.length;
       const offset = len > 0 ? 1 : 0;
@@ -287,7 +267,7 @@ const ContentEdit = ({
         return;
       }
       let _focusTarget = $focusIndex.current + 1;
-      const targetDiv = _getTargetFirstChildDivByIndex(_focusTarget);
+      const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
 
       const len = targetDiv.innerText.length;
       const offset = len > 0 ? 1 : 0;
@@ -296,7 +276,7 @@ const ContentEdit = ({
       return;
     }
     if (e.key === KeySet.Enter) {
-      const targetDiv = _getTargetFirstChildDivByIndex($focusIndex.current);
+      const targetDiv = getTargetFirstChildDivByIndex($focusIndex.current);
       const anchorOffset = $selection.current.anchorOffset;
 
       let textBefore: string = "";
@@ -310,7 +290,13 @@ const ContentEdit = ({
         content: textBefore,
       };
       dispatch(modifyContentByIndex(modifyData));
-      addContent($focusIndex.current, textAfter);
+
+      const newContentData: ContentBarAddType = {
+        target: $focusIndex.current,
+        content: textAfter,
+        type: "text",
+      };
+      dispatch(addNewContent(newContentData));
       $variationFlag.current = VariationFlag.increase;
 
       setControlInvisible($control.current, true);
@@ -340,12 +326,12 @@ const ContentEdit = ({
       isCaretOnFront(anchorOffset, focusOffset)
     ) {
       e.preventDefault();
-      $targetDivBefore.current = _getTargetFirstChildDivByIndex(
+      $targetDivBefore.current = getTargetFirstChildDivByIndex(
         $focusIndex.current - 1
       );
       $caretLocation.current = $targetDivBefore.current.innerText.length;
 
-      const targetDiv = _getTargetFirstChildDivByIndex($focusIndex.current);
+      const targetDiv = getTargetFirstChildDivByIndex($focusIndex.current);
 
       if (
         $selection.current.isCollapsed &&
@@ -354,9 +340,7 @@ const ContentEdit = ({
         const contentToMerged = targetDiv.innerText;
         const originIndex = $focusIndex.current - 1;
         dispatch(
-          setContents(
-            _getMergedContents(contents, originIndex, contentToMerged)
-          )
+          setContents(getMergedContents(contents, originIndex, contentToMerged))
         );
 
         $variationFlag.current = VariationFlag.decrease;
@@ -365,24 +349,7 @@ const ContentEdit = ({
       setControlInvisible($control.current, true);
     }
   };
-  const _getMergedContents = (
-    contents: ContentBarDataType[],
-    originIndex: number,
-    contentToMerged: string
-  ) => {
-    const originContent = contents[originIndex].content;
-    const targetIndex = originIndex + 1;
-    return contents
-      .map((value, index) => {
-        if (index === originIndex) {
-          value.content = `${originContent}${contentToMerged}`;
-        }
-        if (index !== targetIndex) {
-          return value;
-        }
-      })
-      .filter((value, index) => index !== targetIndex);
-  };
+
   const handleClickSubmit = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
@@ -415,7 +382,6 @@ const ContentEdit = ({
 
   return (
     <div
-      ref={$wrapper}
       className={`${styles.wrapper}`}
       onScroll={handleWrapperScroll}
       onMouseUp={handleHandleBtnMouseUp}>
@@ -424,6 +390,7 @@ const ContentEdit = ({
         <div className={`${styles.title_box}`}>
           <div className={`${styles.content_title}`}>
             <input
+              id="content-title"
               ref={$title}
               type="text"
               placeholder="제목을 입력해주세요."
@@ -440,10 +407,12 @@ const ContentEdit = ({
       </div>
 
       <div
+        id="content-wrapper"
         ref={$contentWrapper}
         className={`${styles.content_container} `}
         onMouseMove={handleContentContainerMouseMove}>
         <div
+          id="content-container"
           ref={$contentContainer}
           onKeyUp={handleContentContainerKeyUp}
           onKeyDown={handleContentContainerKeyDown}>
@@ -452,9 +421,11 @@ const ContentEdit = ({
       </div>
 
       <div
+        id="control"
         ref={$control}
         className={`${styles.control} ${styles.invisible}`}>
         <div
+          id="add-btn"
           ref={$addBtn}
           className={`${styles.add}`}
           onClick={handleAddBtn}>
@@ -469,6 +440,7 @@ const ContentEdit = ({
           </div>
         </div>
         <div
+          id="handle-btn"
           ref={$handleBtn}
           className={`${styles.handle}`}
           onMouseDown={handleHandleBtnMouseDown}>
@@ -488,10 +460,10 @@ const ContentEdit = ({
         mouseOnIndex={$mouseOnIndex.current}
         location={AddTypeModalLocation}
         setIsOpen={setIsOpenAddTypeModal}
-        addContent={addContent}
       />
       <ImageHandler />
       <div
+        id="dragged-target"
         ref={$draggedTarget}
         className={`${styles.mouse} ${styles.invisible}`}></div>
     </div>

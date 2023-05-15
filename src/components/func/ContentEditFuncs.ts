@@ -11,6 +11,7 @@ import {
   ContentBarDataType,
   ContentTypeType,
 } from "@src/static/types/ContentDataType";
+import { MouseLocationCheckType } from "@src/static/types/MouseLocationCheckType";
 
 export const pointEndOfBeforeTheTarget = (
   beforeTheTarget: Node,
@@ -92,22 +93,28 @@ export const isMouseOnTarget = (
     )
   );
 };
-export const isLoactionYOnBottomOfTarget = (
-  y: number,
-  top: number,
-  height: number,
-  scroll: number
-) => {
-  return top + height / 2 - scroll < y && y < top + height - scroll;
+export const isLoactionYOnBottomOfTarget = ({
+  mouseY,
+  wrapperTop,
+  wrapperHeight,
+  scroll,
+}: MouseLocationCheckType) => {
+  return (
+    wrapperTop + wrapperHeight / 2 - scroll < mouseY &&
+    mouseY < wrapperTop + wrapperHeight - scroll
+  );
 };
 
-export const isLoactionYOnTopOfTarget = (
-  y: number,
-  top: number,
-  height: number,
-  scroll: number
-) => {
-  return top - scroll < y && y < top + height / 2 - scroll;
+export const isLoactionYOnTopOfTarget = ({
+  mouseY,
+  wrapperTop,
+  wrapperHeight,
+  scroll,
+}: MouseLocationCheckType) => {
+  return (
+    wrapperTop - scroll < mouseY &&
+    mouseY < wrapperTop + wrapperHeight / 2 - scroll
+  );
 };
 
 export const isOutOfContendEditBars = (
@@ -201,4 +208,40 @@ export const createNewContent = (
   }
 
   return newContent;
+};
+
+export const relocateDraggedTarget = (
+  draggedTarget: HTMLDivElement,
+  mouseLocation: LocationType
+) => {
+  if (draggedTarget.classList.contains(ContentEditStyles.invisible)) return;
+  draggedTarget.style.left = mouseLocation.x + 60 + "px";
+  draggedTarget.style.top = mouseLocation.y + "px";
+  draggedTarget;
+};
+
+export const displayBorderOnTarget = (
+  wrapperDiv: HTMLDivElement,
+  dragIndex: number,
+  targetIndex: number,
+  locations: MouseLocationCheckType
+) => {
+  const isMouseOnTargetBefore =
+    dragIndex >= targetIndex && isLoactionYOnTopOfTarget(locations);
+  const isMouseOnTargetAfter =
+    dragIndex >= 0 &&
+    dragIndex < targetIndex &&
+    isLoactionYOnBottomOfTarget(locations);
+  if (isMouseOnTargetBefore) {
+    wrapperDiv.firstElementChild.classList.toggle(
+      ContentEditBarStyles.border_top,
+      true
+    );
+  }
+  if (isMouseOnTargetAfter) {
+    wrapperDiv.firstElementChild.classList.toggle(
+      ContentEditBarStyles.border_bottom,
+      true
+    );
+  }
 };

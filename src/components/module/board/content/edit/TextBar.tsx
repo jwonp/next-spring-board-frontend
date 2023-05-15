@@ -1,6 +1,4 @@
 import styles from "@src/styles/board/content/edit/TextBar.module.scss";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
-
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
@@ -27,7 +25,7 @@ const TextBar = ({
    */
   useEffect(() => {
     $content.current.innerText = contents[index].content;
-  }, [contents.length]);
+  }, [contents.length, contents[index]]);
 
   const handleFocus = () => {
     focus.current = index;

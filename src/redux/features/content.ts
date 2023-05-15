@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
+import {
+  ContentBarAddType,
+  ContentBarDataType,
+  ContentTypeType,
+} from "@src/static/types/ContentDataType";
+import { createNewContent } from "@src/components/func/ContentEditFuncs";
 interface ContentState {
   contents: ContentBarDataType[];
   images: string[];
@@ -35,7 +40,10 @@ type addWithIndexActionType = {
   payload: AddDataType;
   type: string;
 };
-
+type addNewContentActionType = {
+  payload: ContentBarAddType;
+  type: string;
+};
 type DeleteByIndexActionType = {
   payload: number;
   type: string;
@@ -65,6 +73,29 @@ export const content = createSlice({
         0,
         actions.payload.content
       );
+      if (tempContents.length === 0) {
+        return;
+      }
+      state.contents = tempContents;
+    },
+
+    addNewContent: (state, actions: addNewContentActionType) => {
+      const newContent = createNewContent(
+        actions.payload.content,
+        actions.payload.type
+      );
+
+      if (state.contents.length === 0) {
+        state.contents = [newContent];
+        return;
+      }
+      if (actions.payload.target === state.contents.length - 1) {
+        state.contents = [...state.contents, newContent];
+        return;
+      }
+
+      const tempContents = [...state.contents];
+      tempContents.splice(actions.payload.target + 1, 0, newContent);
       if (tempContents.length === 0) {
         return;
       }
@@ -117,6 +148,7 @@ export const {
   setContents,
   addContent,
   addContentByIndex,
+  addNewContent,
   modifyContentByIndex,
   removeContentByIndex,
   resetContents,
