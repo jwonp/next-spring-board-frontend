@@ -3,7 +3,6 @@ import { AppState } from "../store";
 import {
   ContentBarAddType,
   ContentBarDataType,
-  ContentTypeType,
 } from "@src/static/types/ContentDataType";
 import { createNewContent } from "@src/components/func/ContentEditFuncs";
 interface ContentState {

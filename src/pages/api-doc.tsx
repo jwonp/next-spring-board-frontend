@@ -17,21 +17,30 @@ function ApiDoc({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const spec: Record<string, any> = createSwaggerSpec({
+  const swaggerOptions = {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "Next Swagger API Example",
+        title: "Next Swagger API",
         version: "1.0",
       },
     },
     apiFolder: "src/pages/api",
-  });
+  };
+  try {
+    console.log(swaggerOptions);
+    const spec: Record<string, any> = createSwaggerSpec(swaggerOptions);
 
+    return {
+      props: {
+        spec,
+      },
+    };
+  } catch {
+    console.log("NO options");
+  }
   return {
-    props: {
-      spec,
-    },
+    props: {},
   };
 };
 

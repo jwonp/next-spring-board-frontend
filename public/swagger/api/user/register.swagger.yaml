@@ -1,0 +1,38 @@
+paths:
+  /api/user/register:
+    post:
+      description: Oauth2로 로그인 한 유저의 정보를 Backend를 통해 DB에 저장함
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  description: Oauth2 Provider
+                  example: google
+                id:
+                  type: string
+                  description: Oauth2 Provider에서 발급하는 유저 고유 ID
+                  example: "123456"
+                name:
+                  type: string
+                  description: Oauth2 Provider에서 회원가입 할 때 유저가 입력했던 이름
+                  example: joowon
+                email:
+                  type: string
+                  description: Oauth2 Provider에서 회원가입 할 때 유저가 입력했던 이메일
+                  example: joowon@gmail.com
+                image:
+                  type: string
+                  description: Oauth2 Provider에 등록된 유저의 프로필 사진
+                  example: https://www.google.com/image/icon.png
+              required:
+                - provider
+                - id
+      responses:
+        200:
+          description: 성공적으로 유저의 정보를 저장함
+        400:
+          description: 올바르지 않은 유저 정보를 전달해서 정상적으로 유저 정보가 저장되지 않음

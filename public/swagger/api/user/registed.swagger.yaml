@@ -1,0 +1,24 @@
+paths:
+  /api/user/registed:
+    get:
+      description: Provider ID와 Provider로 DB에 등록되어 있는지 확인함. 추가로 응답으로 CSRF 토큰을 발급 받음
+      parameters:
+        - name: id
+          in: query
+          description: Oauth2 Provider에서 발급한 유저의 ID
+          required: true
+          schema:
+            type: string
+            default: "123456"
+        - name: provider
+          in: query
+          description: 로그인 한 Oauth2 Provider
+          required: true
+          schema:
+            type: string
+            default: google
+      responses:
+        200:
+          description: 응답으로 Backend Server에서 발급한 CSRF 토큰을 httpOnly Cookie로 받음.
+        400:
+          description: 요청 정보에 맞는 유저 정보가 DB에 저장되어 있지 않음.

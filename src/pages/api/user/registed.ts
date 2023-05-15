@@ -10,12 +10,15 @@ const isUserRegisted = async (id: string, provider: string) => {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id, provider } = req.query;
-  isUserRegisted(id as string, provider as string).then((_res) => {
-    res.setHeader(
-      "set-cookie",
-      `X-CSRF-TOKEN=${_res.data}; path=/; samesite=lax; httponly;`
-    );
-    res.status(_res.status).send(_res.status === 200 ? false : true);
-  });
-  //   res.status(200).end();
+  isUserRegisted(id as string, provider as string)
+    .then((_res) => {
+      res.setHeader(
+        "set-cookie",
+        `X-CSRF-TOKEN=${_res.data}; path=/; samesite=lax; httponly;`
+      );
+      res.status(_res.status).send(true);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(false);
+    });
 }
