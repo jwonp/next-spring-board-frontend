@@ -11,13 +11,13 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<ContentType[] | null>
 ) {
-  try {
-    getRecentlyContents().then((_res) => {
+  getRecentlyContents()
+    .then((_res) => {
       const responseData: ContentType[] = _res.data;
 
       res.status(200).send(responseData);
+    })
+    .catch((_err) => {
+      res.status(400).send(null);
     });
-  } catch (error) {
-    res.status(201).send(null);
-  }
 }

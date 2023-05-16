@@ -15,7 +15,7 @@ const handler = (
     target: "http://127.0.0.1:8000",
     pathRewrite: [
       {
-        patternStr: "^/api/board/file",
+        patternStr: "^/api/file/upload",
         replaceStr: "/files/upload/single",
       },
     ],

@@ -38,7 +38,7 @@ export const confirmImages = async (
     contentId: contentId,
     author: author,
   };
-  return await axios.post(`/api/board/images`, data);
+  return await axios.post(`/api/file/images`, data);
 };
 
 export const getContentById = async (contentId: string) => {
@@ -99,4 +99,10 @@ export const deleteComment = async (commentId: number, userId: string) => {
   return await axios.get(
     `/api/comment/delete?comment=${commentId}&user=${userId}`
   );
+};
+
+export const sendFile = async (formData: FormData) => {
+  return await axios.post("/api/file/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data;charset=utf-8" },
+  });
 };

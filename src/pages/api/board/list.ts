@@ -18,15 +18,13 @@ export default function handler(
 ) {
   const { index, board } = req.query;
 
-  try {
-    getContentListByBoardAndIndex(board as BoardMenuType, Number(index)).then(
-      (_res) => {
-        const responseData: ContentType[] = _res.data;
+  getContentListByBoardAndIndex(board as BoardMenuType, Number(index))
+    .then((_res) => {
+      const responseData: ContentType[] = _res.data;
 
-        res.status(200).send(responseData);
-      }
-    );
-  } catch (error) {
-    res.status(201).send(null);
-  }
+      res.status(200).send(responseData);
+    })
+    .catch((_err) => {
+      res.status(400).send(null);
+    });
 }

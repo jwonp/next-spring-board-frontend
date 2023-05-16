@@ -2,16 +2,15 @@ import styles from "@src/styles/board/content/edit/AddTypeModel.module.scss";
 import Image from "next/image";
 import { LocationType } from "@src/static/types/LocationType";
 import { useEffect, useRef } from "react";
-import { AddContentType } from "@src/static/types/AddContentsType";
 import {
   ContentBarAddType,
   ContentTypeType,
 } from "@src/static/types/ContentDataType";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
 import { useAppDispatch } from "@src/redux/hooks";
 import { addImage, addNewContent } from "@src/redux/features/content";
+import { sendFile } from "@src/components/func/requestFuncs";
 
 const AddTypeModel = ({
   isOpen,
@@ -77,11 +76,7 @@ const AddTypeModel = ({
       dispatch(addNewContent(newContentData));
     });
   };
-  const sendFile = async (formData: FormData) => {
-    return await axios.post("/api/board/file", formData, {
-      headers: { "Content-Type": "multipart/form-data;charset=utf-8" },
-    });
-  };
+
   return (
     <div
       className={`${styles.background} ${
