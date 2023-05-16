@@ -25,6 +25,9 @@ import { ParsedContentType } from "@src/static/types/ParsedContentType";
 import { useAppDispatch } from "@src/redux/hooks";
 import { setWidth } from "@src/redux/features/windowWidth";
 import { getWindowWidth } from "@src/components/func/ContentViewFuncs";
+import { CONTENT_BY_ID_ID } from "@src/static/strings/HttpElementId";
+import { contentMetaColumns } from "@src/static/strings/stringSet";
+import Empty from "@src/components/module/Empty";
 
 const ContentById = ({
   views,
@@ -59,7 +62,7 @@ const ContentById = ({
   useEffect(() => {
     if (router.isReady) {
       if (!document) return;
-      const mainWrapper = document.getElementById("ContentById");
+      const mainWrapper = document.getElementById(CONTENT_BY_ID_ID);
       dispatch(setWidth(getWindowWidth(mainWrapper)));
       window.addEventListener("resize", () => {
         dispatch(setWidth(getWindowWidth(mainWrapper)));
@@ -69,7 +72,7 @@ const ContentById = ({
 
   return (
     <div
-      id={"ContentById"}
+      id={CONTENT_BY_ID_ID}
       className={`${styles.wrapper}`}>
       <div className={`${styles.header_box}`}>
         <div className={`${styles.meta_box}`}>
@@ -79,19 +82,19 @@ const ContentById = ({
           </div>
           <div>
             <div className={`${styles.author}`}>
-              <div>작성자</div>
+              <div>{contentMetaColumns.author}</div>
               <div>{author}</div>
             </div>
             <div className={`${styles.updated}`}>
-              <div>작성일</div>
+              <div>{contentMetaColumns.created}</div>
               <div>{getDateAsString(updated)}</div>
             </div>
             <div className={`${styles.views}`}>
-              <div>조회수</div>
+              <div>{contentMetaColumns.views}</div>
               <div>{views}</div>
             </div>
             <div className={`${styles.likes}`}>
-              <div>좋아요</div>
+              <div>{contentMetaColumns.likes}</div>
               <div>{likeSWR.data ? likeSWR.data : likes}</div>
             </div>
           </div>
@@ -110,7 +113,7 @@ const ContentById = ({
             />
           </div>
         ) : (
-          <></>
+          <Empty />
         )}
       </div>
       <div className={`${styles.content_box}`}>

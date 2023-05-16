@@ -8,7 +8,7 @@ import {
 } from "@src/components/fetcher/IndexPageFetecher";
 
 import ContentViewList from "@src/components/module/board/content/edit/ContentViewList";
-import { titlesOnIndexPage } from "@src/static/data/stringSet";
+import { titlesOnIndexPage } from "@src/static/strings/stringSet";
 import styles from "@src/styles/index.module.scss";
 import { Inter } from "next/font/google";
 import { useMemo } from "react";

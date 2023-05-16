@@ -1,6 +1,7 @@
 import { getDateAsShortString } from "@src/components/func/DateParser";
 import { convertNumberToUnitK } from "@src/components/func/stringTools";
-import { sizes } from "@src/static/data/stringSet";
+import { VIEW_SVG } from "@src/static/strings/IconSrc";
+import { SIZES } from "@src/static/strings/stringSet";
 import { ContentType } from "@src/static/types/ContentType";
 import styles from "@src/styles/board/content/ContentBar.module.scss";
 import { DateTime } from "luxon";
@@ -24,10 +25,10 @@ const ContentBar = ({
           <div className={`${styles.views}`}>
             <div className={`${styles.icon}`}>
               <Image
-                src={"/view.svg"}
-                alt={"No icon"}
+                src={VIEW_SVG.src}
+                alt={VIEW_SVG.alt}
                 fill
-                sizes={sizes}
+                sizes={SIZES}
               />
             </div>
             <div className={`${styles.count}`}>
@@ -40,7 +41,7 @@ const ContentBar = ({
                 src={"/like.svg"}
                 alt={"No icon"}
                 fill
-                sizes={sizes}
+                sizes={SIZES}
               />
             </div>
             <div className={`${styles.count}`}>

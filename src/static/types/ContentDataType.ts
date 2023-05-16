@@ -3,7 +3,7 @@ export interface ContentBarDataType {
   content: string;
   image: string;
 }
-const ContentType = {
+export const ContentType = {
   text: "text",
   image: "image",
 } as const;

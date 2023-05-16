@@ -13,7 +13,7 @@ import {
 } from "@src/redux/features/pageIndex";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 
-import { OneToTen } from "@src/static/data/stringSet";
+import { OneToTen } from "@src/static/strings/stringSet";
 import styles from "@src/styles/board/PaginationBar.module.scss";
 
 import { useMemo } from "react";

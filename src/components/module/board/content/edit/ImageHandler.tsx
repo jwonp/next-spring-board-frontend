@@ -10,7 +10,8 @@ import {
   setVisible,
 } from "@src/redux/features/imageHandler";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
-import { sizes } from "@src/static/data/stringSet";
+import { DELETE_SVG } from "@src/static/strings/IconSrc";
+import { SIZES } from "@src/static/strings/stringSet";
 import styles from "@src/styles/board/content/edit/ImageHandler.module.scss";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
@@ -48,10 +49,10 @@ const ImageHandler = () => {
         <div className={`${styles.button}`}>
           <Image
             onClick={onImageClickEvent}
-            src={"/delete.svg"}
-            alt={"No close"}
+            src={DELETE_SVG.src}
+            alt={DELETE_SVG.alt}
             fill
-            sizes={sizes}
+            sizes={SIZES}
           />
         </div>
       </div>

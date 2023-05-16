@@ -8,6 +8,7 @@ import {
 import { useRouter } from "next/router";
 import { deleteContent } from "@src/components/func/requestFuncs";
 import { useSession } from "next-auth/react";
+import Empty from "@src/components/module/Empty";
 const ContentDeleteButton = ({
   board,
   contentId,
@@ -32,7 +33,7 @@ const ContentDeleteButton = ({
       </div>
     );
   } else {
-    return <></>;
+    return <Empty />;
   }
 };
 

@@ -2,6 +2,7 @@ import styles from "@src/styles/board/content/edit/ContentEdit.module.scss";
 import {
   ContentBarAddType,
   ContentBarDataType,
+  ContentType,
 } from "@src/static/types/ContentDataType";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -26,7 +27,14 @@ import {
   setControlInvisible,
   swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
-import { KeySet, sizes } from "@src/static/data/stringSet";
+import {
+  CONTENT_INPUT_PLACEHOLDER,
+  EMPTY_STRING,
+  KeySet,
+  SIZES,
+  SUBMIT,
+  inputType,
+} from "@src/static/strings/stringSet";
 import AddTypeModel from "@src/components/module/board/content/edit/AddTypeModal";
 import ContentEditBar from "@src/components/module/board/content/edit/ContentEditBar";
 import { SaveContentType } from "@src/static/types/SaveContentType";
@@ -53,6 +61,19 @@ import {
   resetContent,
   getImages,
 } from "@src/redux/features/content";
+import { DOTS_SVG, PLUS_SVG } from "@src/static/strings/IconSrc";
+import {
+  ADD_BTN_ID,
+  CONTENT_CONTAINER_ID,
+  CONTENT_TITLE_ID,
+  CONTENT_WRAPPER_ID,
+  CONTROL_ID,
+  DRAGGED_TARGET_ID,
+  HANDLE_BTN_ID,
+} from "@src/static/strings/HttpElementId";
+import { addOne, subjectOne } from "@src/components/func/oneFunc";
+import { __Not_Applicated, __One, __Zero } from "@src/static/numbers/numberSet";
+import { defaultLocation } from "@src/components/objects/defaultValues";
 
 const ContentEdit = ({
   preTitle,
@@ -71,19 +92,19 @@ const ContentEdit = ({
   const $handleBtn = useRef<HTMLDivElement>(null);
   const $selection = useRef<Selection>(null);
   const $range = useRef<Range>(null);
-  const $scrollLocation = useRef<number>(0);
-  const $mouseOnIndex = useRef<number>(-1);
-  const $focusIndex = useRef<number>(-1);
-  const $moveToIndex = useRef<number>(-1);
-  const $onDragIndex = useRef<number>(-1);
+  const $scrollLocation = useRef<number>(__Zero);
+  const $mouseOnIndex = useRef<number>(__Not_Applicated);
+  const $focusIndex = useRef<number>(__Not_Applicated);
+  const $moveToIndex = useRef<number>(__Not_Applicated);
+  const $onDragIndex = useRef<number>(__Not_Applicated);
   const $targetDivBefore = useRef<HTMLDivElement>(null);
-  const $caretLocation = useRef<number>(0);
+  const $caretLocation = useRef<number>(__Zero);
   const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
-  const $mouseLocation = useRef<LocationType>({ x: 0, y: 0 });
-  const $lastIndex = useRef<number>(0);
+  const $mouseLocation = useRef<LocationType>(defaultLocation);
+  const $lastIndex = useRef<number>(__Zero);
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState<boolean>(false);
   const [AddTypeModalLocation, setAddTypeModalLocation] =
-    useState<LocationType>({ x: 0, y: 0 });
+    useState<LocationType>(defaultLocation);
   const contents = useAppSelector(getContents);
   const images = useAppSelector(getImages);
   const dispatch = useAppDispatch();
@@ -99,8 +120,7 @@ const ContentEdit = ({
   }, []);
 
   const ContentEditBarList = useMemo(() => {
-    console.log("changed");
-    $lastIndex.current = contents.length - 1;
+    $lastIndex.current = subjectOne(contents.length);
     return contents.map((value, index) => (
       <ContentEditBar
         key={index}
@@ -147,7 +167,7 @@ const ContentEdit = ({
       $variationFlag.current,
       contents.length
     );
-    if (_focusTarget === -1) return;
+    if (_focusTarget === __Not_Applicated) return;
     const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
     targetDiv.click();
     if (isVariationFlagDecrease($variationFlag.current)) {
@@ -176,7 +196,7 @@ const ContentEdit = ({
     contentToMerged: string
   ) => {
     const originContent = contents[originIndex].content;
-    const targetIndex = originIndex + 1;
+    const targetIndex = addOne(originIndex);
     return contents
       .map((value, index) => {
         if (index === originIndex) {
@@ -213,10 +233,10 @@ const ContentEdit = ({
   };
 
   const handleHandleBtnMouseUp = () => {
-    $draggedTarget.current.innerText = "";
+    $draggedTarget.current.innerText = EMPTY_STRING;
     $draggedTarget.current.classList.toggle(styles.invisible, true);
 
-    if ($onDragIndex.current < 0) return;
+    if ($onDragIndex.current < __Zero) return;
 
     const tempContents = swapElementsSequenceInContents(
       $onDragIndex.current,
@@ -225,7 +245,7 @@ const ContentEdit = ({
     );
     dispatch(setContents(tempContents));
 
-    $onDragIndex.current = -1;
+    $onDragIndex.current = __Not_Applicated;
   };
 
   const handleContentContainerMouseMove = (
@@ -250,27 +270,27 @@ const ContentEdit = ({
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
     if (e.key === KeySet.ArrowUp) {
-      if ($focusIndex.current <= 0) {
+      if ($focusIndex.current <= __Zero) {
         return;
       }
-      let _focusTarget = $focusIndex.current - 1;
+      let _focusTarget = subjectOne($focusIndex.current);
       const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
 
       const len = targetDiv.innerText.length;
-      const offset = len > 0 ? 1 : 0;
+      const offset = len > __Zero ? __One : __Zero;
 
       $selection.current.collapse(targetDiv, offset);
       return;
     }
     if (e.key === KeySet.ArrowDown) {
-      if ($focusIndex.current >= contents.length - 1) {
+      if ($focusIndex.current >= subjectOne(contents.length)) {
         return;
       }
-      let _focusTarget = $focusIndex.current + 1;
+      let _focusTarget = addOne($focusIndex.current);
       const targetDiv = getTargetFirstChildDivByIndex(_focusTarget);
 
       const len = targetDiv.innerText.length;
-      const offset = len > 0 ? 1 : 0;
+      const offset = len > __Zero ? __One : __Zero;
 
       $selection.current.collapse(targetDiv, offset);
       return;
@@ -279,10 +299,10 @@ const ContentEdit = ({
       const targetDiv = getTargetFirstChildDivByIndex($focusIndex.current);
       const anchorOffset = $selection.current.anchorOffset;
 
-      let textBefore: string = "";
-      let textAfter: string = "";
+      let textBefore: string = EMPTY_STRING;
+      let textAfter: string = EMPTY_STRING;
       if ($selection.current.isCollapsed) {
-        textBefore = targetDiv.innerText.substring(0, anchorOffset);
+        textBefore = targetDiv.innerText.substring(__Zero, anchorOffset);
         textAfter = targetDiv.innerText.substring(anchorOffset);
       }
       const modifyData: ModifyDataType = {
@@ -294,7 +314,7 @@ const ContentEdit = ({
       const newContentData: ContentBarAddType = {
         target: $focusIndex.current,
         content: textAfter,
-        type: "text",
+        type: ContentType.text,
       };
       dispatch(addNewContent(newContentData));
       $variationFlag.current = VariationFlag.increase;
@@ -311,7 +331,7 @@ const ContentEdit = ({
     if (
       ((isCaretOnFront(anchorOffset, focusOffset) &&
         isFocusOnFirstEditBar($focusIndex.current)) ||
-        isContentEmpty(contents.length, contents[0].content)) &&
+        isContentEmpty(contents.length, contents[__Zero].content)) &&
       e.key === KeySet.Backspace
     ) {
       e.preventDefault();
@@ -327,7 +347,7 @@ const ContentEdit = ({
     ) {
       e.preventDefault();
       $targetDivBefore.current = getTargetFirstChildDivByIndex(
-        $focusIndex.current - 1
+        subjectOne($focusIndex.current)
       );
       $caretLocation.current = $targetDivBefore.current.innerText.length;
 
@@ -338,7 +358,7 @@ const ContentEdit = ({
         isFocusOnFirstEditBar(focusOffset)
       ) {
         const contentToMerged = targetDiv.innerText;
-        const originIndex = $focusIndex.current - 1;
+        const originIndex = subjectOne($focusIndex.current);
         dispatch(
           setContents(getMergedContents(contents, originIndex, contentToMerged))
         );
@@ -390,16 +410,16 @@ const ContentEdit = ({
         <div className={`${styles.title_box}`}>
           <div className={`${styles.content_title}`}>
             <input
-              id="content-title"
+              id={CONTENT_TITLE_ID}
               ref={$title}
-              type="text"
-              placeholder="제목을 입력해주세요."
+              type={inputType.text}
+              placeholder={CONTENT_INPUT_PLACEHOLDER}
             />
           </div>
           <div className={`${styles.submit_btn}`}>
             <input
-              type="submit"
-              value={"저장"}
+              type={inputType.submit}
+              value={SUBMIT}
               onClick={handleClickSubmit}
             />
           </div>
@@ -407,12 +427,12 @@ const ContentEdit = ({
       </div>
 
       <div
-        id="content-wrapper"
+        id={CONTENT_WRAPPER_ID}
         ref={$contentWrapper}
         className={`${styles.content_container} `}
         onMouseMove={handleContentContainerMouseMove}>
         <div
-          id="content-container"
+          id={CONTENT_CONTAINER_ID}
           ref={$contentContainer}
           onKeyUp={handleContentContainerKeyUp}
           onKeyDown={handleContentContainerKeyDown}>
@@ -421,35 +441,35 @@ const ContentEdit = ({
       </div>
 
       <div
-        id="control"
+        id={CONTROL_ID}
         ref={$control}
         className={`${styles.control} ${styles.invisible}`}>
         <div
-          id="add-btn"
+          id={ADD_BTN_ID}
           ref={$addBtn}
           className={`${styles.add}`}
           onClick={handleAddBtn}>
           <div>
             <Image
-              src={"/plus.svg"}
-              alt={"No plus"}
+              src={PLUS_SVG.src}
+              alt={PLUS_SVG.alt}
               fill
-              sizes={sizes}
+              sizes={SIZES}
               draggable={false}
             />
           </div>
         </div>
         <div
-          id="handle-btn"
+          id={HANDLE_BTN_ID}
           ref={$handleBtn}
           className={`${styles.handle}`}
           onMouseDown={handleHandleBtnMouseDown}>
           <div>
             <Image
-              src={"/dots.svg"}
-              alt={"No dots"}
+              src={DOTS_SVG.src}
+              alt={DOTS_SVG.alt}
               fill
-              sizes={sizes}
+              sizes={SIZES}
               draggable={false}
             />
           </div>
@@ -463,7 +483,7 @@ const ContentEdit = ({
       />
       <ImageHandler />
       <div
-        id="dragged-target"
+        id={DRAGGED_TARGET_ID}
         ref={$draggedTarget}
         className={`${styles.mouse} ${styles.invisible}`}></div>
     </div>

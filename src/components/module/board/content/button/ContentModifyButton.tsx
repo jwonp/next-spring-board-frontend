@@ -6,6 +6,7 @@ import {
   isAuthorByContentIdFetcher,
 } from "@src/components/fetcher/IsAuthorFetcher";
 import { useRouter } from "next/router";
+import Empty from "@src/components/module/Empty";
 const ContentModifyButton = ({
   board,
   contentId,
@@ -29,7 +30,7 @@ const ContentModifyButton = ({
       </div>
     );
   } else {
-    <></>;
+    <Empty />;
   }
 };
 

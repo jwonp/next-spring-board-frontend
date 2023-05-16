@@ -1,4 +1,5 @@
 import { counterGenerator } from "@src/components/func/errorCounter";
+import { getExceptionWarning } from "@src/static/strings/stringSet";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -24,7 +25,7 @@ const Error = () => {
       router.push("/");
     }, 5000);
   }, []);
-  return <p>잘못된 접근입니다. {count} 초 후 로비로 돌아갑니다</p>;
+  return <p>{getExceptionWarning(count)}</p>;
 };
 
 export default Error;

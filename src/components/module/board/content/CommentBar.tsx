@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { useAppSelector } from "@src/redux/hooks";
 import { getModifyIndex } from "@src/redux/features/commentModify";
 import { DateTime } from "luxon";
+import Empty from "../../Empty";
 
 const CommentBar = ({ comment, userId, mutate }: CommentBarType) => {
   const $textarea = useRef<HTMLTextAreaElement>(null);
@@ -46,7 +47,7 @@ const CommentBar = ({ comment, userId, mutate }: CommentBarType) => {
             />
           </div>
         ) : (
-          <></>
+          <Empty />
         )}
       </div>
     </div>

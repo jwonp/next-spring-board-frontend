@@ -1,4 +1,4 @@
-import { HeaderRightMenu, sizes } from "@src/static/data/stringSet";
+import { HeaderRightMenu, SIZES } from "@src/static/strings/stringSet";
 import { useSession, signIn, signOut } from "next-auth/react";
 import styles from "@src/styles/frame/Header.module.scss";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import { isUserRegisted } from "@src/components/func/requestFuncs";
 import BoardMenu from "./menu/BoardMenu";
 import { useAppDispatch } from "@src/redux/hooks";
 import { toggleIsAppDrawerOpened } from "@src/redux/features/menuToggle";
+import Empty from "../Empty";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -20,7 +21,7 @@ const Header = () => {
         </div>
       );
     } else {
-      <></>;
+      <Empty />;
     }
   }, [session]);
   useEffect(() => {
@@ -46,7 +47,7 @@ const Header = () => {
               src={"/favicon.png"}
               alt={"No Logo"}
               fill
-              sizes={sizes}
+              sizes={SIZES}
             />
           </div>
           <div>

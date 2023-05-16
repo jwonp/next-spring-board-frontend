@@ -9,6 +9,7 @@ import Head from "next/head";
 import { Session } from "next-auth";
 import { Provider } from "react-redux";
 import store from "@src/redux/store";
+import { HTML_HEAD_TITLE } from "@src/static/strings/stringSet";
 
 const App = ({
   Component,
@@ -22,7 +23,7 @@ const App = ({
       <SWRConfig value={{ provider: () => new Map() }}>
         <Provider store={store}>
           <Head>
-            <title>Collabo Board</title>
+            <title>{HTML_HEAD_TITLE}</title>
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
