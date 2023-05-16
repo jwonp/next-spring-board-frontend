@@ -1,6 +1,8 @@
 paths:
   /api/user/register:
     post:
+      tags:
+        - user
       description: Oauth2로 로그인 한 유저의 정보를 Backend를 통해 DB에 저장함
       requestBody:
         content:

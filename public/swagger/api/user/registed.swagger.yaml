@@ -1,6 +1,8 @@
 paths:
   /api/user/registed:
     get:
+      tags:
+        - user
       description: Provider ID와 Provider로 DB에 등록되어 있는지 확인함. 추가로 응답으로 CSRF 토큰을 발급 받음
       parameters:
         - name: id
@@ -21,4 +23,4 @@ paths:
         200:
           description: 응답으로 Backend Server에서 발급한 CSRF 토큰을 httpOnly Cookie로 받음.
         400:
-          description: 요청 정보에 맞는 유저 정보가 DB에 저장되어 있지 않음.
+          description: 요청 정보에 맞는 유저 정보가 DB에 저장되어 있지 않음

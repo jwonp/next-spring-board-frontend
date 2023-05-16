@@ -1,0 +1,29 @@
+paths:
+  /api/file/upload:
+    post:
+      tags:
+        - file
+      description: 파일 서버에 이미지를 업로드함
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  type: string
+                  contentMediaType: image/*
+                  contentEncoding: base64
+                  description: 업로드 할 1개의 이미지 파일
+                username:
+                  type: string
+                  description: 파일을 업로드하는 유저의 provider ID
+                  example: "123456"
+
+              required:
+                - file
+                - username
+      responses:
+        200:
+          description:
+        400:
+          description:

@@ -1,0 +1,33 @@
+paths:
+  /api/board/search:
+    get:
+      tags:
+        - board
+      description: Board 이름와 Pagination을 위한 index에 맞는 게시글의 메타 데이터 10개를 받음
+      parameters:
+        - name: index
+          in: query
+          description: Pagination에 사용할 index
+          required: true
+          schema:
+            type: string
+            default: "0"
+        - name: board
+          in: query
+          description: 게시글을 불러들이고자 하는 Board 이름
+          required: true
+          schema:
+            type: string
+            default: board one
+        - name: query
+          in: query
+          description: 검색하고자 하는 키워드
+          required: true
+          schema:
+            type: string
+            default: test
+      responses:
+        200:
+          description: 검색하고자 하는 키워드에 대한 게시글 메타 데이터를 Pagination index에 맞게 10개씩 받음
+        400:
+          description: 모종의 이유로 요청에 대한 응답을 제대로 받지 못함
