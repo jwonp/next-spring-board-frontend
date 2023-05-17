@@ -1,0 +1,38 @@
+paths:
+  /api/content/modify:
+    patch:
+      tags:
+        - content
+      description: 게시글에 등록된 댓글의 내용을 수정함
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contentId:
+                  type: number
+                  description: 수정할 게시글의 고유 ID
+                  example: 5
+                title:
+                  type: string
+                  description: 게시글의 수정할 제목
+                  example: test
+                contents: 수정한 게시글 내용, content object가 stringify된 형식
+                  type: string
+                  example: "0%5Btype%5D=text&0%5Bcontent%5D=content&0%5Bimage%5D="
+                author: 게시글을 수정한 유저의 Provider ID
+                  type: string
+                  example: "123456"
+              required:
+                - contentId
+                - title
+                - contents
+                - author
+      responses:
+        200:
+          description: 정상적으로 게시글을 수정함
+        400:
+          description: 게시글 수정에 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: 게시글 수정에 대해 인가되지 않음

@@ -1,0 +1,34 @@
+paths:
+  /api/comment/modify:
+    patch:
+      tags:
+        - comment
+      description: 게시글에 등록된 댓글의 내용을 수정함
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                commentId:
+                  type: number
+                  description: 수정할 댓글의 고유 ID
+                  example: 5
+                comment:
+                  type: string
+                  description: 수정한 댓글 내용
+                  example: Modified Comment
+                writer:
+                  type: string
+                  example: "123456"
+              required:
+                - commentId
+                - comment
+                - writer
+      responses:
+        200:
+          description: 정상적으로 댓글을 수정함
+        400:
+          description: 댓글 수정에 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: 댓글 수정에 대해 인가되지 않음

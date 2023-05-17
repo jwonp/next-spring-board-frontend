@@ -1,0 +1,28 @@
+paths:
+  /api/like/delete:
+    delete:
+      tags:
+        - like
+      description: \"like\"를 취소함
+      parameters:
+        - name: content
+          in: query
+          description: \"like\"를 취소하려는 게시글에 할당된 고유 ID
+          required: true
+          schema:
+            type: number
+            default: 1
+        - name: user
+          in: query
+          description: \"like\"를 취소하려는 유저의 Provider ID
+          required: true
+          schema:
+            type: string
+            default: "123456"
+      responses:
+        200:
+          description: 정상적으로 \"like\"가 취소됨
+        400:
+          description: \"like\" 취소 처리가 제대로 이루어지지 않음
+        403:
+          description: \"like\" 취소에 대해 인가되지 않음

@@ -1,0 +1,26 @@
+paths:
+  /api/like/liked:
+    get:
+      tags:
+        - like
+      description: 유저가 해당 게시글에 \"like\" 했는지 여부를 알려줌
+      parameters:
+        - name: content
+          in: query
+          description: \"like\" 했는지 확인할 게시글의 고유 ID
+          required: true
+          schema:
+            type: number
+            default: 5
+        - name: user
+          in: query
+          description: 현재 로그인 되어 있는 유저의 Provider ID
+          required: true
+          schema:
+            type: string
+            default: "123456"
+      responses:
+        200:
+          description: 게시글에 요청한 유저가 \"like\" 했는지에 맞춰 true 또는 false의 응답을 받음
+        400:
+          description: 응답이 제대로 처리되지 않음

@@ -8,4 +8,4 @@ paths:
         200:
           description: 가장 Like를 많이 받은 10개의 게시글에 대한 메타 데이터를 받음
         400:
-          description: 모종의 이유로 요청에 대한 응답이 제대로 이루어지지 않음
+          description: 가장 Like를 많이 받은 게시글을 불러오지 못함

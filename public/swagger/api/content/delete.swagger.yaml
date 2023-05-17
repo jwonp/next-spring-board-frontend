@@ -1,0 +1,28 @@
+paths:
+  /api/content/delete:
+    delete:
+      tags:
+        - content
+      description: 해당 게시글을 삭제함
+      parameters:
+        - name: content
+          in: query
+          description: 삭제하고자 하는 게시글에 할당된 고유 ID
+          required: true
+          schema:
+            type: number
+            default: 5
+        - name: user
+          in: query
+          description: 게시글을 삭제하려는 유저의 Provider ID
+          required: true
+          schema:
+            type: string
+            default: "123456"
+      responses:
+        200:
+          description: 정상적으로 게시글이 삭제됨
+        400:
+          description: 게시글 삭제 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: 게시글 삭제에 대해 인가되지 않음

@@ -1,0 +1,30 @@
+paths:
+  /api/like/add:
+    post:
+      tags:
+        - like
+      description:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contentId:
+                  type: number
+                  description: \"like\" 한 게시글의 고유 ID
+                  example: 1
+                user:
+                  type: string
+                  description: 게시글에 \"like\" 한 유저
+                  example: "123456"
+              required:
+                - contentId
+                - user
+      responses:
+        200:
+          description: 정상적으로 \"like\"가 처리됨
+        400:
+          description: \"like\" 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: \"like\" 등록에 대해 인가되지 않음

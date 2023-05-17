@@ -1,0 +1,28 @@
+paths:
+  /api/comment/delete:
+    delete:
+      tags:
+        - comment
+      description: 해당 댓글을 삭제함
+      parameters:
+        - name: comment
+          in: query
+          description: 삭제하고자 하는 댓글에 할당된 고유 ID
+          required: true
+          schema:
+            type: number
+            default: 5
+        - name: user
+          in: query
+          description: 댓글을 작성한 유저의 Provider ID
+          required: true
+          schema:
+            type: string
+            default: "123456"
+      responses:
+        200:
+          description: 정상적으로 댓글이 삭제됨
+        400:
+          description: 댓글 삭제 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: 댓글 삭제에 대해 인가되지 않음

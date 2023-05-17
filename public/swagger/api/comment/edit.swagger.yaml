@@ -1,0 +1,35 @@
+paths:
+  /api/comment/edit:
+    post:
+      tags:
+        - comment
+      description: 특정 게시글에 작성한 댓글을 등록함
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  description: 작성한 댓글 내용
+                  example: Example Comment
+                contentId:
+                  type: number
+                  description: 댓글이 작성된 게시글의 고유 ID
+                  example: 5
+                user:
+                  type: string
+                  description: 댓글을 작성한 유저의 Provider ID
+                  example: "123456"
+              required:
+                - comment
+                - contentId
+                - user
+      responses:
+        200:
+          description: 정상적으로 댓글이 등록됨
+        400:
+          description: 댓글 등록에 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: 댓글 작성에 대해 인가되지 않음

@@ -1,0 +1,40 @@
+paths:
+  /api/content/edit:
+    post:
+      tags:
+        - content
+      description: 해당되는 Board에 게시글을 등록함
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 등록할 게시글의 제목
+                  example: TEST content
+                contents:
+                  type: string
+                  description: 등록할 게시글 내용, content object가 stringify된 형식
+                  example: "0%5Btype%5D=text&0%5Bcontent%5D=content&0%5Bimage%5D="
+                author:
+                  type: string
+                  description: 게시글의 작성자
+                  example: "123456"
+                board:
+                  type: string
+                  description: 게시글을 등록할 Board의 이름
+                  example: "Board One"
+              required:
+                - title
+                - contents
+                - author
+                - board
+      responses:
+        200:
+          description: 정상적으로 게시글이 등록됨
+        400:
+          description: 게시글 등록에 대한 처리가 제대로 이루어지지 않음
+        403:
+          description: 게시글 등록에 대해 인가되지 않음

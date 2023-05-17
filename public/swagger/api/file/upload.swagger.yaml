@@ -18,7 +18,6 @@ paths:
                   type: string
                   description: 파일을 업로드하는 유저의 provider ID
                   example: "123456"
-
               required:
                 - file
                 - username

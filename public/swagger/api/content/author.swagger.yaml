@@ -1,0 +1,26 @@
+paths:
+  /api/content/author:
+    get:
+      tags:
+        - content
+      description: 특정 게시글에 대해 로그인 한 유저가 작성했는지 판별해서 알려줌
+      parameters:
+        - name: content
+          in: query
+          description: 확인하고자 하는 게시글의 고유 ID
+          required: true
+          schema:
+            type: number
+            default: 5
+        - name: author
+          in: query
+          description: 현재 로그인 되어 있는 유저의 Provider ID
+          required: true
+          schema:
+            type: string
+            default: "123456"
+      responses:
+        200:
+          description: 게시글이 요청한 유저가 작성했지는 지에 맞춰 true 또는 false의 응답을 받음
+        400:
+          description: 응답이 제대로 처리되지 않음

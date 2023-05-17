@@ -1,0 +1,19 @@
+paths:
+  /api/like/count:
+    get:
+      tags:
+        - like
+      description:
+      parameters:
+        - name: id
+          in: query
+          description: \"like\" 수를 불러 올 게시글의 고유 ID
+          required: true
+          schema:
+            type: number
+            default: 1
+      responses:
+        200:
+          description: 정상적으로 \"like\" 수를 불러옴
+        400:
+          description: \"like\" 수를 불러오지 못함
