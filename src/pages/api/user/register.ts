@@ -1,4 +1,4 @@
-import { isUserRegistedForServer } from "@src/components/func/requestFuncs";
+import { isUserRegistedForServer } from "@src/components/func/RequestFuncs";
 import { UserType } from "@src/static/types/UserType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";

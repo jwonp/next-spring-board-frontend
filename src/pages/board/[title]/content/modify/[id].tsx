@@ -3,7 +3,7 @@ import styles from "@src/styles/board/content/Modify.module.scss";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import ContentEdit from "../edit";
 import { ModifyContentType } from "@src/static/types/ModifyContentType";
-import { getContentShortById } from "@src/components/func/requestFuncs";
+import { getContentShortById } from "@src/components/func/RequestFuncs";
 import qs from "qs";
 import { ParsedContentType } from "@src/static/types/ParsedContentType";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";

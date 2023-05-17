@@ -1,7 +1,7 @@
 import { signOut } from "next-auth/react";
 import router from "next/router";
 import { KeyedMutator } from "swr";
-import { saveCommentByContentId } from "./requestFuncs";
+import { saveCommentByContentId } from "./RequestFuncs";
 import { CommentType } from "@src/static/types/CommentType";
 import { MutableRefObject } from "react";
 

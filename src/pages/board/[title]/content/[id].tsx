@@ -1,5 +1,5 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
-import { getContentById } from "@src/components/func/requestFuncs";
+import { getContentById } from "@src/components/func/RequestFuncs";
 import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";

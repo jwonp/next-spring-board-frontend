@@ -1,7 +1,7 @@
 import {
   addLikeByContentAndUser,
   deleteLikeByContentAndUser,
-} from "@src/components/func/requestFuncs";
+} from "@src/components/func/RequestFuncs";
 import { LikeButtonPropsType } from "@src/static/types/ButtonPropsType";
 import styles from "@src/styles/board/content/button/LikeButton.module.scss";
 import Image from "next/image";

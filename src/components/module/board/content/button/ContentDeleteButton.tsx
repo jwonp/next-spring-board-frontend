@@ -6,7 +6,7 @@ import {
   isAuthorByContentIdFetcher,
 } from "@src/components/fetcher/IsAuthorFetcher";
 import { useRouter } from "next/router";
-import { deleteContent } from "@src/components/func/requestFuncs";
+import { deleteContent } from "@src/components/func/RequestFuncs";
 import { useSession } from "next-auth/react";
 import Empty from "@src/components/module/Empty";
 const ContentDeleteButton = ({

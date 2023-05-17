@@ -1,4 +1,4 @@
-import { modifyComment } from "@src/components/func/requestFuncs";
+import { modifyComment } from "@src/components/func/RequestFuncs";
 import {
   getModifyIndex,
   resetModifyIndex,

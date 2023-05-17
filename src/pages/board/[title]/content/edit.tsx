@@ -43,7 +43,7 @@ import {
   confirmImages,
   modifyContents,
   saveContents,
-} from "@src/components/func/requestFuncs";
+} from "@src/components/func/RequestFuncs";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import qs from "qs";
 import {
@@ -71,7 +71,7 @@ import {
   DRAGGED_TARGET_ID,
   HANDLE_BTN_ID,
 } from "@src/static/strings/HttpElementId";
-import { addOne, subjectOne } from "@src/components/func/oneFunc";
+import { addOne, subjectOne } from "@src/components/func/OneFunc";
 import { __Not_Applicated, __One, __Zero } from "@src/static/numbers/numberSet";
 import { defaultLocation } from "@src/components/objects/defaultValues";
 

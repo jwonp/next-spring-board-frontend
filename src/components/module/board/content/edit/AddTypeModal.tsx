@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
 import { useAppDispatch } from "@src/redux/hooks";
 import { addImage, addNewContent } from "@src/redux/features/content";
-import { sendFile } from "@src/components/func/requestFuncs";
+import { sendFile } from "@src/components/func/RequestFuncs";
 
 const AddTypeModel = ({
   isOpen,
