@@ -5,6 +5,8 @@ import {
   ContentBarDataType,
 } from "@src/static/types/ContentDataType";
 import { createNewContent } from "@src/components/func/ContentEditFuncs";
+import { SwapContentsType } from "@src/static/types/SwapContentsType";
+import { __One, __Zero } from "@src/static/numbers/numberSet";
 interface ContentState {
   contents: ContentBarDataType[];
   images: string[];
@@ -35,11 +37,11 @@ type ModifyByIndexActionType = {
   type: string;
 };
 
-type addWithIndexActionType = {
+type AddWithIndexActionType = {
   payload: AddDataType;
   type: string;
 };
-type addNewContentActionType = {
+type AddNewContentActionType = {
   payload: ContentBarAddType;
   type: string;
 };
@@ -47,11 +49,14 @@ type DeleteByIndexActionType = {
   payload: number;
   type: string;
 };
-type indexActionType = {
+type IndexActionType = {
   payload: number;
   type: string;
 };
-
+type SwapActionsType = {
+  payload: SwapContentsType;
+  type: string;
+};
 export const content = createSlice({
   name: "content",
   initialState,
@@ -65,7 +70,7 @@ export const content = createSlice({
     addContent: (state, actions: ContentActionType) => {
       state.contents = [...state.contents, actions.payload];
     },
-    addContentByIndex: (state, actions: addWithIndexActionType) => {
+    addContentByIndex: (state, actions: AddWithIndexActionType) => {
       const tempContents = [...state.contents];
       tempContents.splice(
         actions.payload.index + 1,
@@ -78,7 +83,7 @@ export const content = createSlice({
       state.contents = tempContents;
     },
 
-    addNewContent: (state, actions: addNewContentActionType) => {
+    addNewContent: (state, actions: AddNewContentActionType) => {
       const newContent = createNewContent(
         actions.payload.content,
         actions.payload.type
@@ -106,6 +111,7 @@ export const content = createSlice({
         content: actions.payload.content,
         image: "",
       };
+
       state.contents[actions.payload.index] = { ...modifiedContent };
     },
     removeContentByIndex: (state, actions: DeleteByIndexActionType) => {
@@ -118,7 +124,17 @@ export const content = createSlice({
     resetContents: (state) => {
       state.contents = [{ type: "text", content: "", image: "" }];
     },
+    swapElementsSequenceInContents: (state, actions: SwapActionsType) => {
+      const { target, moveTo } = actions.payload;
 
+      if (target < __Zero || moveTo < __Zero || target === moveTo) return;
+
+      const tempContents = [...state.contents];
+      const tempContent = tempContents.splice(target, __One)[__Zero];
+      tempContents.splice(moveTo, __Zero, tempContent);
+
+      state.contents = tempContents;
+    },
     addImage: (state, actions) => {
       state.images.push(actions.payload);
     },
@@ -127,7 +143,7 @@ export const content = createSlice({
         (_, index) => actions.payload != index
       );
     },
-    setImageFocusIndex: (state, actions: indexActionType) => {
+    setImageFocusIndex: (state, actions: IndexActionType) => {
       state.imageFocusIdnex = actions.payload;
     },
     resetImages: (state) => {
@@ -150,6 +166,7 @@ export const {
   addNewContent,
   modifyContentByIndex,
   removeContentByIndex,
+  swapElementsSequenceInContents,
   resetContents,
   addImage,
   removeImageByIndex,

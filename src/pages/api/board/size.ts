@@ -1,3 +1,4 @@
+import { __Not_Applicated } from "@src/static/numbers/numberSet";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -15,13 +16,12 @@ export default function handler(
   res: NextApiResponse<number>
 ) {
   const { board, search } = req.query;
-  try {
-    getBoardSize(board as BoardMenuType, search as string | undefined).then(
-      (_res) => {
-        res.status(200).send(_res.data);
-      }
-    );
-  } catch (err) {
-    res.status(201).send(-1);
-  }
+
+  getBoardSize(board as BoardMenuType, search as string | undefined)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(400).send(__Not_Applicated);
+    });
 }

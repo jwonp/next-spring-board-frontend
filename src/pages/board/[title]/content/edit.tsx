@@ -25,7 +25,7 @@ import {
   pointEndOfBeforeTheTarget,
   relocateDraggedTarget,
   setControlInvisible,
-  swapElementsSequenceInContents,
+  // swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
 import {
   CONTENT_INPUT_PLACEHOLDER,
@@ -41,8 +41,8 @@ import { SaveContentType } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
 import {
   confirmImages,
-  modifyContents,
-  saveContents,
+  modifyContent,
+  saveContent,
 } from "@src/components/func/RequestFuncs";
 import { BoardMenuType } from "@src/static/types/BoardMenuType";
 import qs from "qs";
@@ -56,6 +56,7 @@ import {
   ModifyDataType,
   getContents,
   modifyContentByIndex,
+  swapElementsSequenceInContents,
   setContents,
   addNewContent,
   resetContent,
@@ -238,12 +239,11 @@ const ContentEdit = ({
 
     if ($onDragIndex.current < __Zero) return;
 
-    const tempContents = swapElementsSequenceInContents(
-      $onDragIndex.current,
-      $moveToIndex.current,
-      [...contents]
-    );
-    dispatch(setContents(tempContents));
+    const swapIndexs = {
+      target: $onDragIndex.current,
+      moveTo: $moveToIndex.current,
+    };
+    dispatch(swapElementsSequenceInContents(swapIndexs));
 
     $onDragIndex.current = __Not_Applicated;
   };
@@ -380,19 +380,19 @@ const ContentEdit = ({
         contentId: contentId,
         title: $title.current.value,
         contents: qs.stringify(contents),
-        writer: session.user.id,
+        author: session.user.id,
       };
-      modifyContents(data).then((res) => {
+      modifyContent(data).then((res) => {
         confirmImages(res.data, images, session.user.id);
       });
     } else {
       const data: SaveContentType = {
         title: $title.current.value,
         contents: qs.stringify(contents),
-        writer: session.user.id,
+        author: session.user.id,
         board: board as BoardMenuType,
       };
-      saveContents(data).then((res) => {
+      saveContent(data).then((res) => {
         confirmImages(res.data, images, session.user.id);
       });
     }

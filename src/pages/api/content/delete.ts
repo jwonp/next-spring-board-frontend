@@ -25,7 +25,11 @@ export default function handler(
     id: user as string,
     csrfToken: csrfToken,
   };
-  deleteContent(content as string, user as string, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  deleteContent(content as string, user as string, csrf)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(null);
+    });
 }

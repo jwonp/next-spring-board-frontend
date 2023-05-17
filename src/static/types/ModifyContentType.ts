@@ -9,5 +9,5 @@ export interface ModifyContentRequestType {
   contentId: number;
   title: string;
   contents: string;
-  writer: string;
+  author: string;
 }

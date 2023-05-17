@@ -12,6 +12,8 @@ import {
   ContentTypeType,
 } from "@src/static/types/ContentDataType";
 import { MouseLocationCheckType } from "@src/static/types/MouseLocationCheckType";
+import { __Zero } from "@src/static/numbers/numberSet";
+import { __One } from "@src/static/numbers/numberSet";
 
 export const pointEndOfBeforeTheTarget = (
   beforeTheTarget: Node,
@@ -176,10 +178,10 @@ export const swapElementsSequenceInContents = (
   moveTo: number,
   contents: ContentBarDataType[]
 ) => {
-  if (target < 0 || moveTo < 0 || target === moveTo) return contents;
+  if (target < __Zero || moveTo < __Zero || target === moveTo) return contents;
   const tempContents = [...contents];
-  const tempContent = tempContents.splice(target, 1)[0];
-  tempContents.splice(moveTo, 0, tempContent);
+  const tempContent = tempContents.splice(target, __One)[__Zero];
+  tempContents.splice(moveTo, __Zero, tempContent);
 
   return tempContents;
 };

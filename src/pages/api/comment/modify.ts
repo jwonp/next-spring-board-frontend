@@ -31,7 +31,11 @@ export default function handler(
     id: writer,
     csrfToken: csrfToken,
   };
-  modifyComment(commentId.toString(), comment, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  modifyComment(commentId.toString(), comment, csrf)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(null);
+    });
 }

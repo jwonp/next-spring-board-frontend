@@ -32,9 +32,13 @@ const handler = (req: NextApiRequest, res: NextApiResponse<boolean>) => {
     writer: user,
   };
 
-  saveComment(data, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  saveComment(data, csrf)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.respons.status).send(null);
+    });
 };
 
 export default handler;

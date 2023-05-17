@@ -1,4 +1,4 @@
-import { counterGenerator } from "@src/components/func/errorCounter";
+import { counterGenerator } from "@src/components/func/ErrorCounter";
 import { getExceptionWarning } from "@src/static/strings/stringSet";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

@@ -1,5 +1,5 @@
 import { getDateAsShortString } from "@src/components/func/DateParser";
-import { convertNumberToUnitK } from "@src/components/func/stringTools";
+import { convertNumberToUnitK } from "@src/components/func/NumberShortFunc";
 import { VIEW_SVG } from "@src/static/strings/IconSrc";
 import { SIZES } from "@src/static/strings/stringSet";
 import { ContentType } from "@src/static/types/ContentType";

@@ -20,12 +20,12 @@ export const addUser = async (data: UserType) => {
   await axios.post(`${process.env.FRONTEND_URL}/api/user/register`, data);
 };
 
-export const saveContents = async (data: SaveContentType) => {
+export const saveContent = async (data: SaveContentType) => {
   return await axios.post(`/api/content/edit`, data);
 };
 
-export const modifyContents = async (data: ModifyContentRequestType) => {
-  return await axios.post(`/api/content/modify`, data);
+export const modifyContent = async (data: ModifyContentRequestType) => {
+  return await axios.patch(`/api/content/modify`, data);
 };
 
 export const confirmImages = async (
@@ -38,7 +38,7 @@ export const confirmImages = async (
     contentId: contentId,
     author: author,
   };
-  return await axios.post(`/api/file/images`, data);
+  return await axios.patch(`/api/file/images`, data);
 };
 
 export const getContentById = async (contentId: string) => {
@@ -80,23 +80,23 @@ export const deleteLikeByContentAndUser = async (
   userId: String
 ) => {
   if (!userId) return;
-  return await axios.get(
+  return await axios.delete(
     `/api/like/delete?content=${contentId}&user=${userId}`
   );
 };
 
 export const deleteContent = async (contentId: number, userId: string) => {
   if (!userId) return;
-  return await axios.get(
+  return await axios.delete(
     `/api/content/delete?content=${contentId}&user=${userId}`
   );
 };
 
 export const modifyComment = async (data: ModifyCommentRequestType) => {
-  return await axios.post(`/api/comment/modify`, data);
+  return await axios.patch(`/api/comment/modify`, data);
 };
 export const deleteComment = async (commentId: number, userId: string) => {
-  return await axios.get(
+  return await axios.delete(
     `/api/comment/delete?comment=${commentId}&user=${userId}`
   );
 };

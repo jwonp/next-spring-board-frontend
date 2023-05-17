@@ -12,6 +12,8 @@ import { useRef } from "react";
 import TextBar from "./TextBar";
 import ImageBar from "./ImageBar";
 import { MouseLocationCheckType } from "@src/static/types/MouseLocationCheckType";
+import { __Zero } from "@src/static/numbers/numberSet";
+import { ContentType } from "@src/static/types/ContentDataType";
 
 const ContentEditBar = ({
   index,
@@ -43,7 +45,7 @@ const ContentEditBar = ({
     invisibleBorder($wrapper.current.firstChild as HTMLDivElement);
   };
   const handleMouseUpWrapper = () => {
-    if (onDragIndex.current < 0) return;
+    if (onDragIndex.current < __Zero) return;
 
     const content = $wrapper.current.firstChild as HTMLDivElement;
     if (!content) return;
@@ -93,7 +95,7 @@ const ContentEditBar = ({
     moveToIndex.current = index;
   };
   const getBarByType = (type: string) => {
-    if (type === "text") {
+    if (type === ContentType.text) {
       return (
         <TextBar
           index={index}
@@ -102,7 +104,7 @@ const ContentEditBar = ({
         />
       );
     }
-    if (type === "image") {
+    if (type === ContentType.image) {
       return <ImageBar index={index} />;
     }
   };

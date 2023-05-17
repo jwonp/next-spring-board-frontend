@@ -24,14 +24,18 @@ const sendContent = async (
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { contentId, title, contents, writer }: ModifyContentRequestType =
+  const { contentId, title, contents, author }: ModifyContentRequestType =
     req.body;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
   const csrf: CsrfIdentityType = {
-    id: writer,
+    id: author,
     csrfToken: csrfToken,
   };
-  sendContent(contentId.toString(), title, contents, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  sendContent(contentId.toString(), title, contents, csrf)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(null);
+    });
 }

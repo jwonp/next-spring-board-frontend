@@ -25,7 +25,11 @@ export default function handler(
     id: user as string,
     csrfToken: csrfToken,
   };
-  deleteComment(comment as string, user as string, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  deleteComment(comment as string, user as string, csrf)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(null);
+    });
 }

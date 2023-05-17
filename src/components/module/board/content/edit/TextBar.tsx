@@ -6,6 +6,7 @@ import {
   getContents,
   modifyContentByIndex,
 } from "@src/redux/features/content";
+import { __Not_Applicated, __Zero } from "@src/static/numbers/numberSet";
 
 const TextBar = ({
   index,
@@ -24,7 +25,9 @@ const TextBar = ({
    * ContentEditBar의 위치(index)가 바뀔 떄마다 재랜더링
    */
   useEffect(() => {
-    $content.current.innerText = contents[index].content;
+    if ($content.current.innerText !== contents[index].content) {
+      $content.current.innerText = contents[index].content;
+    }
   }, [contents.length, contents[index]]);
 
   const handleFocus = () => {
@@ -32,7 +35,7 @@ const TextBar = ({
     setPlaceholder("내용을 입력해주세요.");
   };
   const handleBlur = () => {
-    focus.current = -1;
+    focus.current = __Not_Applicated;
     setPlaceholder("");
   };
 
@@ -40,7 +43,7 @@ const TextBar = ({
     // 아무 것도 드래그하지 않을 때만 css: cotent_hover를 적용함
     $content.current.classList.toggle(
       styles.content_hover,
-      onDragIndex.current < 0
+      onDragIndex.current < __Zero
     );
   };
 

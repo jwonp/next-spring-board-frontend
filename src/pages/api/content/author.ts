@@ -13,7 +13,11 @@ export default function handler(
 ) {
   const { content, author } = req.query;
 
-  isAuthorByContentId(content as string, author as string).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  isAuthorByContentId(content as string, author as string)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(400).send(null);
+    });
 }

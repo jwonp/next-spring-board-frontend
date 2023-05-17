@@ -25,13 +25,17 @@ const sendContent = async (
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { title, contents, writer, board }: SaveContentType = req.body;
+  const { title, contents, author, board }: SaveContentType = req.body;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
   const csrf: CsrfIdentityType = {
-    id: writer,
+    id: author,
     csrfToken: csrfToken,
   };
-  sendContent(title, board, contents, csrf).then((_res) => {
-    res.status(200).send(_res.data);
-  });
+  sendContent(title, board, contents, csrf)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(null);
+    });
 }
