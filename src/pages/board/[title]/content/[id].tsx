@@ -35,7 +35,7 @@ const ContentById = ({
   board,
   author,
   authorId,
-  updated,
+  created,
   likes,
   contentId,
   content,
@@ -85,9 +85,9 @@ const ContentById = ({
               <div>{contentMetaColumns.author}</div>
               <div>{author}</div>
             </div>
-            <div className={`${styles.updated}`}>
+            <div className={`${styles.created}`}>
               <div>{contentMetaColumns.created}</div>
-              <div>{getDateAsString(updated)}</div>
+              <div>{getDateAsString(created)}</div>
             </div>
             <div className={`${styles.views}`}>
               <div>{contentMetaColumns.views}</div>

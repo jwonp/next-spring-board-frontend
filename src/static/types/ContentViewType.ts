@@ -4,7 +4,7 @@ export interface ContentViewType {
   board: string;
   author: string;
   authorId: string;
-  updated: string;
+  created: string;
   likes: number;
   contentId: number;
   content: string;
