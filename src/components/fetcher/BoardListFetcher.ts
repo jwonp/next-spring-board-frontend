@@ -7,6 +7,7 @@ export const boardListURLByBoardAndIndex = (
   index: number,
   searchQuery?: string
 ) => {
+  if (!board) return null;
   return searchQuery
     ? `/api/board/search?board=${board}&query=${searchQuery}&index=${index}`
     : `/api/board/list?index=${index}&board=${board}`;
