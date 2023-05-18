@@ -4,12 +4,11 @@ import { ContentBarDataType } from "@src/static/types/ContentDataType";
 import { ContentViewType } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import qs from "qs";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { getDateAsString } from "@src/components/func/DateParser";
 import ContentViewBar from "@src/components/module/board/content/ContentViewBar";
 import useSWR from "swr";
 import Comment from "@src/components/module/board/content/Comment";
-import { useRouter } from "next/router";
 
 import {
   LikeFetcherURLByContentId,
@@ -22,9 +21,7 @@ import LikeButton from "@src/components/module/board/content/button/LikeButton";
 import ContentModifyButton from "@src/components/module/board/content/button/ContentModifyButton";
 import ContentDeleteButton from "@src/components/module/board/content/button/ContentDeleteButton";
 import { ParsedContentType } from "@src/static/types/ParsedContentType";
-import { useAppDispatch } from "@src/redux/hooks";
-import { setWidth } from "@src/redux/features/windowWidth";
-import { getWindowWidth } from "@src/components/func/ContentViewFuncs";
+
 import { CONTENT_BY_ID_ID } from "@src/static/strings/HttpElementId";
 import { contentMetaColumns } from "@src/static/strings/stringSet";
 import Empty from "@src/components/module/Empty";
@@ -40,8 +37,6 @@ const ContentById = ({
   contentId,
   content,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
   const { data: session } = useSession();
   const userId = useMemo(() => {
     return session?.user?.id;
@@ -58,17 +53,6 @@ const ContentById = ({
     }) as unknown as ParsedContentType;
     return Object.values(parsedData) as ContentBarDataType[];
   }, [content]);
-
-  useEffect(() => {
-    if (router.isReady) {
-      if (!document) return;
-      const mainWrapper = document.getElementById(CONTENT_BY_ID_ID);
-      dispatch(setWidth(getWindowWidth(mainWrapper)));
-      window.addEventListener("resize", () => {
-        dispatch(setWidth(getWindowWidth(mainWrapper)));
-      });
-    }
-  }, [router.isReady]);
 
   return (
     <div

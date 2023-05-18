@@ -6,3 +6,4 @@ export const CONTENT_CONTAINER_ID = "content-container";
 export const CONTROL_ID = "control";
 export const ADD_BTN_ID = "add-btn";
 export const CONTENT_BY_ID_ID = "ContentById";
+export const MAIN_ID = "main";

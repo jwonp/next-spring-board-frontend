@@ -1,7 +1,7 @@
 import styles from "@src/styles/board/content/edit/ImageBar.module.scss";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
   setPosition,
@@ -10,42 +10,62 @@ import {
 } from "@src/redux/features/imageHandler";
 import { getContents, setImageFocusIndex } from "@src/redux/features/content";
 import { useSession } from "next-auth/react";
-import { resizeImage } from "@src/components/func/ContentViewFuncs";
 
 import { SizeType } from "@src/static/types/SizeType";
+import {
+  getNaturalImageSize,
+  getImageSrc,
+  getResizedImageSize,
+} from "@src/components/func/ImageHandler";
+import { getWidth } from "@src/redux/features/windowWidth";
+import { NO_IMAGE } from "@src/static/strings/stringSet";
+import { IMAGE_SVG } from "@src/static/strings/IconSrc";
+import { LocationType } from "@src/static/types/LocationType";
 const ImageBar = ({ index }: { index: number }) => {
   const $image = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
   const content = useAppSelector(getContents)[index];
-
+  const windowWidth = useAppSelector(getWidth);
   const dispatch = useAppDispatch();
+  const [naturalImageSize, setNaturalImageSize] = useState<SizeType>({
+    width: 0,
+    height: 0,
+  });
   const [imageSize, setImageSize] = useState<SizeType>({
-    width: 100,
-    height: 100,
+    width: 0,
+    height: 0,
   });
 
   const mouseEnterEvent = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
-    dispatch(
-      setSize({
-        width: e.currentTarget.offsetWidth,
-        height: e.currentTarget.offsetHeight,
-      })
-    );
-    dispatch(
-      setPosition({
-        x: e.currentTarget.getBoundingClientRect().left,
-        y: e.currentTarget.getBoundingClientRect().top,
-      })
-    );
+    const imageHandlerSize: SizeType = {
+      width: e.currentTarget.offsetWidth,
+      height: e.currentTarget.offsetHeight,
+    };
+    const imageHandlerPosition: LocationType = {
+      x: e.currentTarget.getBoundingClientRect().left,
+      y: e.currentTarget.getBoundingClientRect().top,
+    };
+
+    dispatch(setSize(imageHandlerSize));
+    dispatch(setPosition(imageHandlerPosition));
     dispatch(setImageFocusIndex(index));
     dispatch(setVisible(true));
   };
 
-  const onLoadingCompleteHandler = () => {
-    const imageUrl = `/${session.user.id}/${content.image}`;
-    resizeImage(imageUrl, $image.current.offsetWidth, setImageSize);
+  useEffect(() => {
+    const resizedImageSize = getResizedImageSize(
+      naturalImageSize,
+      $image.current.offsetWidth
+    );
+
+    setImageSize(resizedImageSize);
+  }, [content.image, windowWidth, naturalImageSize]);
+
+  const onLoadingCompleteHandler = async (img: HTMLImageElement) => {
+    const naturalImageSize: SizeType = getNaturalImageSize(img);
+    setNaturalImageSize(naturalImageSize);
   };
 
   return (
@@ -55,12 +75,12 @@ const ImageBar = ({ index }: { index: number }) => {
       <Image
         onMouseEnter={mouseEnterEvent}
         onLoadingComplete={onLoadingCompleteHandler}
-        src={`${process.env.NEXT_PUBLIC_FILE_SERVER_END_POINT}/files/display/${session.user.id}/${content.image}`}
-        alt={"No Image"}
+        src={getImageSrc(session?.user?.id, content.image)}
+        alt={NO_IMAGE}
         width={imageSize.width}
         height={imageSize.height}
-        placeholder="blur"
-        blurDataURL="/image.svg"
+        blurDataURL={IMAGE_SVG.src}
+        unoptimized={true}
         priority={true}
         draggable={false}
       />
