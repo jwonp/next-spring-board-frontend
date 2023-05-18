@@ -28,3 +28,8 @@ export const PLUS_SVG: IconSrc = {
   src: "/plus.svg",
   alt: "NO PLUS SVG",
 };
+
+export const IMAGE_SVG: IconSrc = {
+  src: "/image.svg",
+  alt: "",
+};

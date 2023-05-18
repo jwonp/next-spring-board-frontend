@@ -57,3 +57,5 @@ export const NO_CONTENT = "No Content";
 export const CONTENT_INPUT_PLACEHOLDER = "제목을 입력해주세요.";
 
 export const SUBMIT = "submit";
+
+export const NO_IMAGE = "No Image";
