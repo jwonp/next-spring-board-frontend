@@ -1,16 +1,10 @@
 @use "@src/styles/vars.scss" as vars;
-.wrapper {
-  position: relative;
-  padding: 0 0.2em;
-  padding-left: 3em;
-  display: flex;
-  width: calc(100% - 3.4em);
-}
+
 .image_box {
   border: 2px solid rgb(50, 50, 50);
   width: 100%;
   height: auto;
-  padding: 0.1em 0.2em;
+  padding: 0;
   position: relative;
 
   & img {
