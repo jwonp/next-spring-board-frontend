@@ -44,7 +44,7 @@ const Header = () => {
         <div className={`${styles.box}`}>
           <div className={`${styles.logo}`}>
             <Image
-              src={"/favicon.png"}
+              src={"/favicon.jpeg"}
               alt={"No Logo"}
               fill
               sizes={SIZES}

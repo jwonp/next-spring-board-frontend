@@ -1,7 +1,6 @@
 import { BoardMenu as BoardMenuList } from "@src/static/strings/stringSet";
 import styles from "@src/styles/frame/menu/BoardMenu.module.scss";
 import Link from "next/link";
-import { useRef } from "react";
 
 const BoardMenu = () => {
   return (

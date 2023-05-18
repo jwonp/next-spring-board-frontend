@@ -11,13 +11,13 @@ import {
 import { getContents, setImageFocusIndex } from "@src/redux/features/content";
 import { useSession } from "next-auth/react";
 import { resizeImage } from "@src/components/func/ContentViewFuncs";
-import { getWidth } from "@src/redux/features/windowWidth";
+
 import { SizeType } from "@src/static/types/SizeType";
 const ImageBar = ({ index }: { index: number }) => {
   const $image = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
   const content = useAppSelector(getContents)[index];
-  const windowWidth = useAppSelector(getWidth);
+
   const dispatch = useAppDispatch();
   const [imageSize, setImageSize] = useState<SizeType>({
     width: 100,
@@ -42,20 +42,20 @@ const ImageBar = ({ index }: { index: number }) => {
     dispatch(setImageFocusIndex(index));
     dispatch(setVisible(true));
   };
-  // useEffect(() => {
-  //   if (!content.image) return;
-  // }, [content.image, windowWidth]);
+
+  const onLoadingCompleteHandler = () => {
+    const imageUrl = `/${session.user.id}/${content.image}`;
+    resizeImage(imageUrl, $image.current.offsetWidth, setImageSize);
+  };
+
   return (
     <div
       ref={$image}
       className={`${styles.image_box}`}>
       <Image
         onMouseEnter={mouseEnterEvent}
-        onLoadingComplete={() => {
-          const imageUrl = `/${session.user.id}/${content.image}`;
-          resizeImage(imageUrl, $image.current.offsetWidth, setImageSize);
-        }}
-        src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display/${session.user.id}/${content.image}`}
+        onLoadingComplete={onLoadingCompleteHandler}
+        src={`${process.env.NEXT_PUBLIC_FILE_SERVER_END_POINT}/files/display/${session.user.id}/${content.image}`}
         alt={"No Image"}
         width={imageSize.width}
         height={imageSize.height}
