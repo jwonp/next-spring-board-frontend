@@ -66,7 +66,7 @@ const Header = () => {
         </div>
         <div className={`${styles.box}`}>
           {adminPageLink}
-          <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div>
+          {/* <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div> */}
           <div
             className={`${styles.item}`}
             onClick={signFunc}>
