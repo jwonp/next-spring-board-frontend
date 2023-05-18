@@ -4,7 +4,7 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getRecentlyContents = async () => {
-  return await axios.get(`${process.env.BACKEND_URL}/board/recent`);
+  return await axios.get(`${process.env.BACKEND_END_POINT}/board/recent`);
 };
 
 export default function handler(

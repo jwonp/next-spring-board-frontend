@@ -2,7 +2,7 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 const getLikeCountByContentId = async (contentId: string) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/like/amount?content=${contentId}`
+    `${process.env.BACKEND_END_POINT}/like/amount?content=${contentId}`
   );
 };
 export default function handler(

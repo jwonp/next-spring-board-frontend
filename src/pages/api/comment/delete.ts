@@ -8,7 +8,7 @@ const deleteComment = async (
   csrf: CsrfIdentityType
 ) => {
   return await axios.delete(
-    `${process.env.BACKEND_URL}/comment?comment=${commentId}&user=${userId}`,
+    `${process.env.BACKEND_END_POINT}/comment?comment=${commentId}&user=${userId}`,
     {
       headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
     }

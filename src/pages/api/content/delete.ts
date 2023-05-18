@@ -8,7 +8,7 @@ const deleteContent = async (
   csrf: CsrfIdentityType
 ) => {
   return await axios.delete(
-    `${process.env.BACKEND_URL}/content?content=${contentId}&user=${userId}`,
+    `${process.env.BACKEND_END_POINT}/content?content=${contentId}&user=${userId}`,
     {
       headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
     }

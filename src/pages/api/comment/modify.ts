@@ -9,7 +9,7 @@ const modifyComment = async (
   csrf: CsrfIdentityType
 ) => {
   return await axios.patch(
-    `${process.env.BACKEND_URL}/comment`,
+    `${process.env.BACKEND_END_POINT}/comment`,
     {
       comment: comment,
       commentId: commentId,

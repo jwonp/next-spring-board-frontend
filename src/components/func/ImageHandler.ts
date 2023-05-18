@@ -2,7 +2,7 @@ import { SizeType } from "@src/static/types/SizeType";
 
 export const getImage = async (url: string) => {
   const img = new Image();
-  img.src = `${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display${url}`;
+  img.src = `${process.env.NEXT_PUBLIC_FILE_SERVER_END_POINT}/files/display${url}`;
   await img.decode();
   return img;
 };

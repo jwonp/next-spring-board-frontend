@@ -8,7 +8,7 @@ const searchByQuery = async (
   index: string
 ) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/board/search?search=${query}&board=${board}&index=${index}`
+    `${process.env.BACKEND_END_POINT}/board/search?search=${query}&board=${board}&index=${index}`
   );
 };
 export default function handler(

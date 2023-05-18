@@ -31,7 +31,7 @@ const ContentViewBar = ({
     if (data.type === "image") {
       return (
         <Image
-          src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL}/files/display/${authorId}/${data.image}`}
+          src={`${process.env.NEXT_PUBLIC_FILE_SERVER_END_POINT}/files/display/${authorId}/${data.image}`}
           alt={"No Image"}
           width={size.width}
           height={size.height}

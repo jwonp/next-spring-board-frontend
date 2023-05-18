@@ -11,13 +11,13 @@ export const isUserRegisted = async (id: string, provider: string) => {
 
 export const isUserRegistedForServer = async (id: string, provider: string) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/user/registed?id=${id}&provider=${provider}`,
+    `${process.env.BACKEND_END_POINT}/user/registed?id=${id}&provider=${provider}`,
     { headers: { "X-IDENTIFIER": id } }
   );
 };
 
 export const addUser = async (data: UserType) => {
-  await axios.post(`${process.env.FRONTEND_URL}/api/user/register`, data);
+  await axios.post(`${process.env.FRONTEND_END_POINT}/api/user/register`, data);
 };
 
 export const saveContent = async (data: SaveContentType) => {
@@ -43,13 +43,13 @@ export const confirmImages = async (
 
 export const getContentById = async (contentId: string) => {
   return await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/content?id=${contentId}`
+    `${process.env.NEXT_PUBLIC_BACKEND_END_POINT}/content?id=${contentId}`
   );
 };
 
 export const getContentShortById = async (contentId: string) => {
   return await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/content/short?id=${contentId}`
+    `${process.env.NEXT_PUBLIC_BACKEND_END_POINT}/content/short?id=${contentId}`
   );
 };
 

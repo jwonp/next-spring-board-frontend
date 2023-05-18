@@ -4,7 +4,7 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getMostLikedContents = async () => {
-  return await axios.get(`${process.env.BACKEND_URL}/board/likest`);
+  return await axios.get(`${process.env.BACKEND_END_POINT}/board/likest`);
 };
 
 export default function handler(

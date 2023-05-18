@@ -11,7 +11,9 @@ type CommentResponseType = {
   writerId: string;
 };
 const getCommentListByContentId = async (contentId: string) => {
-  return await axios.get(`${process.env.BACKEND_URL}/comment?id=${contentId}`);
+  return await axios.get(
+    `${process.env.BACKEND_END_POINT}/comment?id=${contentId}`
+  );
 };
 
 export default function handler(

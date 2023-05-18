@@ -4,7 +4,7 @@ import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
 import { ImageConfirmType } from "@src/static/types/ImageUploadType";
 
 const sendContent = async (data: ImageConfirmType, csrf: CsrfIdentityType) => {
-  await axios.patch(`${process.env.FILE_SERVER_URL}/files/images`, data, {
+  await axios.patch(`${process.env.FILE_SERVER_END_POINT}/files/images`, data, {
     headers: { "X-CSRF-TOKEN": csrf.csrfToken, "X-IDENTIFIER": csrf.id },
   });
 };

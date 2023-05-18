@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const isAuthorByContentId = async (contentId: string, author: string) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/content/author?content=${contentId}&author=${author}`
+    `${process.env.BACKEND_END_POINT}/content/author?content=${contentId}&author=${author}`
   );
 };
 

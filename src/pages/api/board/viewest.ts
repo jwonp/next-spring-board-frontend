@@ -4,7 +4,7 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getMostViewedContents = async () => {
-  return await axios.get(`${process.env.BACKEND_URL}/board/viewest`);
+  return await axios.get(`${process.env.BACKEND_END_POINT}/board/viewest`);
 };
 
 export default function handler(

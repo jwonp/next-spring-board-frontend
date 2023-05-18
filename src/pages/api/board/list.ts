@@ -8,7 +8,7 @@ const getContentListByBoardAndIndex = async (
   index: number
 ) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/board/list?index=${index}&board=${board}`
+    `${process.env.BACKEND_END_POINT}/board/list?index=${index}&board=${board}`
   );
 };
 

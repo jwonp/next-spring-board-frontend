@@ -6,8 +6,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const getBoardSize = async (board: BoardMenuType, search?: string) => {
   return await axios.get(
     search
-      ? `${process.env.BACKEND_URL}/board/size?board=${board}&search=${search}`
-      : `${process.env.BACKEND_URL}/board/size?board=${board}`
+      ? `${process.env.BACKEND_END_POINT}/board/size?board=${board}&search=${search}`
+      : `${process.env.BACKEND_END_POINT}/board/size?board=${board}`
   );
 };
 

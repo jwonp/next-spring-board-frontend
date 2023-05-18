@@ -10,7 +10,7 @@ const sendContent = async (
   csrf: CsrfIdentityType
 ) => {
   return await axios.patch(
-    `${process.env.BACKEND_URL}/content/modify`,
+    `${process.env.BACKEND_END_POINT}/content/modify`,
     {
       title: title,
       contentId: contentId,

@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const isUserRegisted = async (id: string, provider: string) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/user/registed?id=${id}&provider=${provider}`,
+    `${process.env.BACKEND_END_POINT}/user/registed?id=${id}&provider=${provider}`,
     { headers: { "X-IDENTIFIER": id } }
   );
 };

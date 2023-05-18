@@ -11,7 +11,7 @@ const sendContent = async (
   csrf: CsrfIdentityType
 ) => {
   return await axios.post(
-    `${process.env.BACKEND_URL}/content/edit`,
+    `${process.env.BACKEND_END_POINT}/content/edit`,
     {
       title: title,
       board: board,

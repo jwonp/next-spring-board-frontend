@@ -5,7 +5,7 @@ const isLikedByContentIdAndUserId = async (
   userId: string
 ) => {
   return await axios.get(
-    `${process.env.BACKEND_URL}/like/liked?content=${contentId}&user=${userId}`
+    `${process.env.BACKEND_END_POINT}/like/liked?content=${contentId}&user=${userId}`
   );
 };
 export default function handler(
