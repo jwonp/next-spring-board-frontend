@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store";
-import { SizeType } from "@src/static/types/SizeType";
-import { LocationType } from "@src/static/types/LocationType";
+import { Size } from "@src/static/types/SizeType";
+import { Location } from "@src/static/types/LocationType";
 interface ImageHandlerState {
-  size: SizeType;
-  position: LocationType;
+  size: Size;
+  position: Location;
   isVisible: boolean;
 }
 
@@ -13,15 +13,15 @@ const initialState: ImageHandlerState = {
   position: { x: 0, y: 0 },
   isVisible: false,
 };
-type SizeActionsType = {
-  payload: SizeType;
+type SizeActions = {
+  payload: Size;
   type: string;
 };
-type PositionActionsType = {
-  payload: LocationType;
+type PositionActions = {
+  payload: Location;
   type: string;
 };
-type VisibleActionsType = {
+type VisibleActions = {
   payload: boolean;
   type: string;
 };
@@ -29,13 +29,13 @@ export const imageHandler = createSlice({
   name: "imageHandler",
   initialState,
   reducers: {
-    setSize: (state, actions: SizeActionsType) => {
+    setSize: (state, actions: SizeActions) => {
       state.size = { ...actions.payload };
     },
-    setVisible: (state, actions: VisibleActionsType) => {
+    setVisible: (state, actions: VisibleActions) => {
       state.isVisible = actions.payload;
     },
-    setPosition: (state, actions: PositionActionsType) => {
+    setPosition: (state, actions: PositionActions) => {
       state.position = { ...actions.payload };
     },
   },
