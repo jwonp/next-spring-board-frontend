@@ -15,12 +15,12 @@ interface ContentState {
 }
 
 const initialState: ContentState = {
-  contents: [{ type: "text", content: "", image: "" }],
+  contents: [{ type: "text", text: "", image: "" }],
   images: [],
   imageFocusIdnex: -1,
 };
 
-export type ModifyData = { index: number; content: string };
+export type ModifyData = { index: number; text: string };
 export type NewData = { index: number; content: ContentBarData };
 
 type ContentsActions = {
@@ -86,7 +86,7 @@ export const content = createSlice({
 
     addNewContent: (state, actions: AddNewContentActions) => {
       const newContent = createNewContent(
-        actions.payload.content,
+        actions.payload.text,
         actions.payload.type
       );
 
@@ -109,7 +109,7 @@ export const content = createSlice({
     modifyContentByIndex: (state, actions: ModifyByIndexActions) => {
       const modifiedContent: ContentBarData = {
         type: "text",
-        content: actions.payload.content,
+        text: actions.payload.text,
         image: "",
       };
 
@@ -123,7 +123,7 @@ export const content = createSlice({
       state.images = state.images.filter((value) => value !== image);
     },
     resetContents: (state) => {
-      state.contents = [{ type: "text", content: "", image: "" }];
+      state.contents = [{ type: "text", text: "", image: "" }];
     },
     swapElementsSequenceInContents: (state, actions: SwapActions) => {
       const { target, moveTo } = actions.payload;
@@ -151,7 +151,7 @@ export const content = createSlice({
       state.images = [];
     },
     resetContent: (state) => {
-      state.contents = [{ type: "text", content: "", image: "" }];
+      state.contents = [{ type: "text", text: "", image: "" }];
       state.images = [];
     },
     resetImageFocusIndex: (state) => {

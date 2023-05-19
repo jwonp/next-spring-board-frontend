@@ -195,11 +195,11 @@ export const createNewContent = (
 ) => {
   const newContent: ContentBarData = {
     type: type,
-    content: "",
+    text: "",
     image: "",
   };
   if (newContent.type === ("text" as ContentType)) {
-    newContent.content = content;
+    newContent.text = content;
   }
 
   if (newContent.type === ("image" as ContentType)) {

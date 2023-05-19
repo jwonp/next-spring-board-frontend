@@ -1,6 +1,6 @@
 export interface ContentBarData {
   type: ContentType;
-  content: string;
+  text: string;
   image: string;
 }
 export const ContentTypes = {
@@ -12,6 +12,6 @@ export type ContentType = (typeof ContentTypes)[keyof typeof ContentTypes];
 
 export interface NewContentBar {
   target: number;
-  content: string;
+  text: string;
   type: ContentType;
 }

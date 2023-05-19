@@ -191,12 +191,12 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
     originIndex: number,
     contentToMerged: string
   ) => {
-    const originContent = contents[originIndex].content;
+    const originContent = contents[originIndex].text;
     const targetIndex = addOne(originIndex);
     return contents
       .map((value, index) => {
         if (index === originIndex) {
-          value.content = `${originContent}${contentToMerged}`;
+          value.text = `${originContent}${contentToMerged}`;
         }
         if (index !== targetIndex) {
           return value;
@@ -224,7 +224,7 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
 
   const handleHandleBtnMouseDown = () => {
     $onDragIndex.current = $mouseOnIndex.current;
-    $draggedTarget.current.innerHTML = contents[$mouseOnIndex.current].content;
+    $draggedTarget.current.innerHTML = contents[$mouseOnIndex.current].text;
     $draggedTarget.current.classList.toggle(styles.invisible, false);
   };
 
@@ -302,13 +302,13 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
       }
       const modifyData: ModifyData = {
         index: $focusIndex.current,
-        content: textBefore,
+        text: textBefore,
       };
       dispatch(modifyContentByIndex(modifyData));
 
       const newContentData: NewContentBar = {
         target: $focusIndex.current,
-        content: textAfter,
+        text: textAfter,
         type: ContentTypes.text,
       };
       dispatch(addNewContent(newContentData));
@@ -326,7 +326,7 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
     if (
       ((isCaretOnFront(anchorOffset, focusOffset) &&
         isFocusOnFirstEditBar($focusIndex.current)) ||
-        isContentEmpty(contents.length, contents[__Zero].content)) &&
+        isContentEmpty(contents.length, contents[__Zero].text)) &&
       e.key === KeySet.Backspace
     ) {
       e.preventDefault();
@@ -369,8 +369,7 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log(contents);
-    // return;
+
     if (contentId) {
       const data: ModifyContentRequest = {
         contentId: contentId,
