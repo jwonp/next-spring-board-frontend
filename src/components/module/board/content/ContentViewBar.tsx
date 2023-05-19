@@ -20,7 +20,7 @@ const ContentViewBar = ({
         />
       );
     }
-    return <div>{data.content}</div>;
+    return <div>{data.text}</div>;
   }, [data]);
 
   return ViewBar;

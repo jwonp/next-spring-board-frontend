@@ -42,7 +42,7 @@ const AddTypeModel = ({
   const handleClickText = (e: React.MouseEvent<HTMLDivElement>) => {
     const newContentData: NewContentBar = {
       target: mouseOnIndex,
-      content: "",
+      text: "",
       type: e.currentTarget.getAttribute("data-value") as ContentType,
     };
     dispatch(addNewContent(newContentData));
@@ -66,7 +66,7 @@ const AddTypeModel = ({
 
       const newContentData: NewContentBar = {
         target: $mouseOnIndex.current,
-        content: imageMeta.fileNameOnStoarge,
+        text: imageMeta.fileNameOnStoarge,
         type: "image" as ContentType,
       };
 
