@@ -1,4 +1,4 @@
-export interface CsrfIdentityType {
+export interface CsrfIdentity {
   id: string;
   csrfToken: string;
 }

@@ -1,11 +1,11 @@
-import { ContentBarDataType } from "./ContentDataType";
+import { ContentBarData } from "./ContentDataType";
 
-export interface ModifyContentType {
+export interface ModifyContent {
   contentId?: number;
   preTitle?: string;
-  preContents?: ContentBarDataType[];
+  preContents?: ContentBarData[];
 }
-export interface ModifyContentRequestType {
+export interface ModifyContentRequest {
   contentId: number;
   title: string;
   contents: string;

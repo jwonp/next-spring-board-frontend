@@ -1,4 +1,4 @@
-import { CommentType } from "@src/static/types/CommentType";
+import { CommentData } from "@src/static/types/CommentType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 type CommentResponseType = {
@@ -18,12 +18,12 @@ const getCommentListByContentId = async (contentId: string) => {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<CommentType[] | null>
+  res: NextApiResponse<CommentData[] | null>
 ) {
   const { id } = req.query;
   getCommentListByContentId(id as string).then((_res) => {
     const commentResponseList = _res.data as CommentResponseType[];
-    const commentList: CommentType[] = commentResponseList.map((value) => {
+    const commentList: CommentData[] = commentResponseList.map((value) => {
       return {
         commentId: value.commentId,
         contentId: value.contentId,

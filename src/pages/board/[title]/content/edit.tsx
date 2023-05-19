@@ -1,8 +1,8 @@
 import styles from "@src/styles/board/content/edit/ContentEdit.module.scss";
 import {
-  ContentBarAddType,
-  ContentBarDataType,
-  ContentType,
+  ContentBarData,
+  ContentTypes,
+  NewContentBar,
 } from "@src/static/types/ContentDataType";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -10,11 +10,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import Image from "next/image";
 import {
+  VariationFlags,
   VariationFlag,
-  VariationFlagType,
 } from "@src/static/types/VariationFlagType";
 
-import { LocationType } from "@src/static/types/LocationType";
+import { Location } from "@src/static/types/LocationType";
 import {
   getFocusTarget,
   isCaretOnFront,
@@ -25,7 +25,6 @@ import {
   pointEndOfBeforeTheTarget,
   relocateDraggedTarget,
   setControlInvisible,
-  // swapElementsSequenceInContents,
 } from "@src/components/func/ContentEditFuncs";
 import {
   CONTENT_INPUT_PLACEHOLDER,
@@ -37,23 +36,23 @@ import {
 } from "@src/static/strings/stringSet";
 import AddTypeModel from "@src/components/module/board/content/edit/AddTypeModal";
 import ContentEditBar from "@src/components/module/board/content/edit/ContentEditBar";
-import { SaveContentType } from "@src/static/types/SaveContentType";
+import { ContentSaveData } from "@src/static/types/SaveContentType";
 import { useSession } from "next-auth/react";
 import {
   confirmImages,
   modifyContent,
   saveContent,
 } from "@src/components/func/RequestFuncs";
-import { BoardMenuType } from "@src/static/types/BoardMenuType";
+import { BoardMenu } from "@src/static/types/BoardMenuType";
 import qs from "qs";
 import {
-  ModifyContentRequestType,
-  ModifyContentType,
+  ModifyContent,
+  ModifyContentRequest,
 } from "@src/static/types/ModifyContentType";
 import ImageHandler from "@src/components/module/board/content/edit/ImageHandler";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
-  ModifyDataType,
+  ModifyData,
   getContents,
   modifyContentByIndex,
   swapElementsSequenceInContents,
@@ -76,11 +75,7 @@ import { addOne, subjectOne } from "@src/components/func/OneFunc";
 import { __Not_Applicated, __One, __Zero } from "@src/static/numbers/numberSet";
 import { defaultLocation } from "@src/components/objects/defaultValues";
 
-const ContentEdit = ({
-  preTitle,
-  preContents,
-  contentId,
-}: ModifyContentType) => {
+const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -100,12 +95,12 @@ const ContentEdit = ({
   const $onDragIndex = useRef<number>(__Not_Applicated);
   const $targetDivBefore = useRef<HTMLDivElement>(null);
   const $caretLocation = useRef<number>(__Zero);
-  const $variationFlag = useRef<VariationFlagType>(VariationFlag.default);
-  const $mouseLocation = useRef<LocationType>(defaultLocation);
+  const $variationFlag = useRef<VariationFlag>(VariationFlags.default);
+  const $mouseLocation = useRef<Location>(defaultLocation);
   const $lastIndex = useRef<number>(__Zero);
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState<boolean>(false);
   const [AddTypeModalLocation, setAddTypeModalLocation] =
-    useState<LocationType>(defaultLocation);
+    useState<Location>(defaultLocation);
   const contents = useAppSelector(getContents);
   const images = useAppSelector(getImages);
   const dispatch = useAppDispatch();
@@ -159,7 +154,7 @@ const ContentEdit = ({
     $range.current = document.createRange();
   };
   const handleEventOnContentEditBarList = () => {
-    if ($variationFlag.current === VariationFlag.default) {
+    if ($variationFlag.current === VariationFlags.default) {
       return;
     }
 
@@ -179,7 +174,7 @@ const ContentEdit = ({
         $caretLocation.current
       );
     }
-    $variationFlag.current = VariationFlag.default;
+    $variationFlag.current = VariationFlags.default;
   };
 
   const getTargetDivByIndex = (index: number) => {
@@ -192,7 +187,7 @@ const ContentEdit = ({
   };
 
   const getMergedContents = (
-    contents: ContentBarDataType[],
+    contents: ContentBarData[],
     originIndex: number,
     contentToMerged: string
   ) => {
@@ -221,7 +216,7 @@ const ContentEdit = ({
 
     const _top = _targetWrapper.offsetTop + _targetWrapper.offsetHeight;
     const _left = _targetWrapper.offsetLeft + _targetChild.offsetLeft;
-    const _location: LocationType = { x: _left, y: _top };
+    const _location: Location = { x: _left, y: _top };
 
     setAddTypeModalLocation(_location);
     setIsOpenAddTypeModal(true);
@@ -305,19 +300,19 @@ const ContentEdit = ({
         textBefore = targetDiv.innerText.substring(__Zero, anchorOffset);
         textAfter = targetDiv.innerText.substring(anchorOffset);
       }
-      const modifyData: ModifyDataType = {
+      const modifyData: ModifyData = {
         index: $focusIndex.current,
         content: textBefore,
       };
       dispatch(modifyContentByIndex(modifyData));
 
-      const newContentData: ContentBarAddType = {
+      const newContentData: NewContentBar = {
         target: $focusIndex.current,
         content: textAfter,
-        type: ContentType.text,
+        type: ContentTypes.text,
       };
       dispatch(addNewContent(newContentData));
-      $variationFlag.current = VariationFlag.increase;
+      $variationFlag.current = VariationFlags.increase;
 
       setControlInvisible($control.current, true);
     }
@@ -363,7 +358,7 @@ const ContentEdit = ({
           setContents(getMergedContents(contents, originIndex, contentToMerged))
         );
 
-        $variationFlag.current = VariationFlag.decrease;
+        $variationFlag.current = VariationFlags.decrease;
       }
 
       setControlInvisible($control.current, true);
@@ -374,9 +369,10 @@ const ContentEdit = ({
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
-
+    console.log(contents);
+    // return;
     if (contentId) {
-      const data: ModifyContentRequestType = {
+      const data: ModifyContentRequest = {
         contentId: contentId,
         title: $title.current.value,
         contents: qs.stringify(contents),
@@ -386,11 +382,11 @@ const ContentEdit = ({
         confirmImages(res.data, images, session.user.id);
       });
     } else {
-      const data: SaveContentType = {
+      const data: ContentSaveData = {
         title: $title.current.value,
         contents: qs.stringify(contents),
         author: session.user.id,
-        board: board as BoardMenuType,
+        board: board as BoardMenu,
       };
       saveContent(data).then((res) => {
         confirmImages(res.data, images, session.user.id);

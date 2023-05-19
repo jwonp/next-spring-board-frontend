@@ -1,9 +1,9 @@
 import { __Not_Applicated } from "@src/static/numbers/numberSet";
-import { BoardMenuType } from "@src/static/types/BoardMenuType";
+import { BoardMenu } from "@src/static/types/BoardMenuType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const getBoardSize = async (board: BoardMenuType, search?: string) => {
+const getBoardSize = async (board: BoardMenu, search?: string) => {
   return await axios.get(
     search
       ? `${process.env.BACKEND_END_POINT}/board/size?board=${board}&search=${search}`
@@ -17,7 +17,7 @@ export default function handler(
 ) {
   const { board, search } = req.query;
 
-  getBoardSize(board as BoardMenuType, search as string | undefined)
+  getBoardSize(board as BoardMenu, search as string | undefined)
     .then((_res) => {
       res.status(200).send(_res.data);
     })

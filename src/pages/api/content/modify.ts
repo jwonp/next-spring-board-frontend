@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
-import { ModifyContentRequestType } from "@src/static/types/ModifyContentType";
+import { CsrfIdentity } from "@src/static/types/CsrfIdentityType";
+import { ModifyContentRequest } from "@src/static/types/ModifyContentType";
 
 const sendContent = async (
   contentId: string,
   title: string,
   content: string,
-  csrf: CsrfIdentityType
+  csrf: CsrfIdentity
 ) => {
   return await axios.patch(
     `${process.env.BACKEND_END_POINT}/content/modify`,
@@ -24,10 +24,9 @@ const sendContent = async (
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { contentId, title, contents, author }: ModifyContentRequestType =
-    req.body;
+  const { contentId, title, contents, author }: ModifyContentRequest = req.body;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
-  const csrf: CsrfIdentityType = {
+  const csrf: CsrfIdentity = {
     id: author,
     csrfToken: csrfToken,
   };

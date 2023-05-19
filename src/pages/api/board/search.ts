@@ -1,10 +1,10 @@
-import { BoardMenuType } from "@src/static/types/BoardMenuType";
-import { ContentType } from "@src/static/types/ContentType";
+import { BoardMenu } from "@src/static/types/BoardMenuType";
+import { ContentData } from "@src/static/types/ContentType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 const searchByQuery = async (
   query: string,
-  board: BoardMenuType,
+  board: BoardMenu,
   index: string
 ) => {
   return await axios.get(
@@ -13,11 +13,11 @@ const searchByQuery = async (
 };
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ContentType[] | null>
+  res: NextApiResponse<ContentData[] | null>
 ) {
   const { query, board, index } = req.query;
 
-  searchByQuery(query as string, board as BoardMenuType, index as string)
+  searchByQuery(query as string, board as BoardMenu, index as string)
     .then((response) => {
       res.status(200).send(response.data);
     })

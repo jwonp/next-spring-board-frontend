@@ -1,4 +1,4 @@
-export interface UserType {
+export interface User {
   provider: string;
   id: string;
   name?: string;
@@ -6,7 +6,7 @@ export interface UserType {
   image?: string;
 }
 
-export interface IdentifyType {
+export interface Identify {
   id: string;
   provider: string;
 }

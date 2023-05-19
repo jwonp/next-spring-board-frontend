@@ -1,17 +1,17 @@
-export interface ContentBarDataType {
-  type: ContentTypeType;
+export interface ContentBarData {
+  type: ContentType;
   content: string;
   image: string;
 }
-export const ContentType = {
+export const ContentTypes = {
   text: "text",
   image: "image",
 } as const;
 
-export type ContentTypeType = (typeof ContentType)[keyof typeof ContentType];
+export type ContentType = (typeof ContentTypes)[keyof typeof ContentTypes];
 
-export interface ContentBarAddType {
+export interface NewContentBar {
   target: number;
   content: string;
-  type: ContentTypeType;
+  type: ContentType;
 }

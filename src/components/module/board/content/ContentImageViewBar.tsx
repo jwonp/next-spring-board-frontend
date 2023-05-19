@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getWidth } from "@src/redux/features/windowWidth";
 import { useAppSelector } from "@src/redux/hooks";
 import { useEffect, useRef, useState } from "react";
-import { SizeType } from "@src/static/types/SizeType";
+import { Size } from "@src/static/types/SizeType";
 import {
   getNaturalImageSize,
   getImageSrc,
@@ -19,11 +19,11 @@ const ContentImageViewBar = ({
 }) => {
   const $image = useRef<HTMLDivElement>(null);
   const windowWidth = useAppSelector(getWidth);
-  const [naturalImageSize, setNaturalImageSize] = useState<SizeType>({
+  const [naturalImageSize, setNaturalImageSize] = useState<Size>({
     width: 0,
     height: 0,
   });
-  const [imageSize, setImageSize] = useState<SizeType>({
+  const [imageSize, setImageSize] = useState<Size>({
     width: 0,
     height: 0,
   });

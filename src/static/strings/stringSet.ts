@@ -1,11 +1,11 @@
-import { BoardMenuType } from "@src/static/types/BoardMenuType";
+import { BoardMenu } from "@src/static/types/BoardMenuType";
 export const getExceptionWarning = (count: number) => {
   return `잘못된 접근입니다. ${count} 초 후 로비로 돌아갑니다`;
 };
 
 export const HTML_HEAD_TITLE = "Collabo Board";
 
-export const BoardMenu: BoardMenuType[] = [
+export const BoardMenuList: BoardMenu[] = [
   "Board One",
   "Board Two",
   "Board Three",

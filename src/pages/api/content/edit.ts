@@ -1,14 +1,14 @@
-import { SaveContentType } from "@src/static/types/SaveContentType";
+import { ContentSaveData } from "@src/static/types/SaveContentType";
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
-import { BoardMenuType } from "@src/static/types/BoardMenuType";
+import { CsrfIdentity } from "@src/static/types/CsrfIdentityType";
+import { BoardMenu } from "@src/static/types/BoardMenuType";
 
 const sendContent = async (
   title: string,
-  board: BoardMenuType,
+  board: BoardMenu,
   content: string,
-  csrf: CsrfIdentityType
+  csrf: CsrfIdentity
 ) => {
   return await axios.post(
     `${process.env.BACKEND_END_POINT}/content/edit`,
@@ -25,9 +25,9 @@ const sendContent = async (
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { title, contents, author, board }: SaveContentType = req.body;
+  const { title, contents, author, board }: ContentSaveData = req.body;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
-  const csrf: CsrfIdentityType = {
+  const csrf: CsrfIdentity = {
     id: author,
     csrfToken: csrfToken,
   };

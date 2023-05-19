@@ -5,15 +5,15 @@ import {
   invisibleBorder,
   displayBorderOnTarget,
 } from "@src/components/func/ContentEditFuncs";
-import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
+import { ContainerSize } from "@src/static/types/ContainerSizeType";
 
-import { LocationType } from "@src/static/types/LocationType";
+import { Location } from "@src/static/types/LocationType";
 import { useRef } from "react";
 import TextBar from "./TextBar";
 import ImageBar from "./ImageBar";
-import { MouseLocationCheckType } from "@src/static/types/MouseLocationCheckType";
+import { MouseLocationCheck } from "@src/static/types/MouseLocationCheckType";
 import { __Zero } from "@src/static/numbers/numberSet";
-import { ContentType } from "@src/static/types/ContentDataType";
+import { ContentTypes } from "@src/static/types/ContentDataType";
 
 const ContentEditBar = ({
   index,
@@ -29,7 +29,7 @@ const ContentEditBar = ({
   index: number;
   type: string;
   mouseOnIndex: React.MutableRefObject<number>;
-  mouseLocation: React.MutableRefObject<LocationType>;
+  mouseLocation: React.MutableRefObject<Location>;
   scroll: React.MutableRefObject<number>;
   control: React.MutableRefObject<HTMLDivElement>;
   focus: React.MutableRefObject<number>;
@@ -56,14 +56,14 @@ const ContentEditBar = ({
   const handleMouseMoveWrapper = () => {
     if (!$wrapper.current) return;
 
-    const _wrapperSizes: ContainerSizeType = {
+    const _wrapperSizes: ContainerSize = {
       left: $wrapper.current.offsetLeft,
       top: $wrapper.current.offsetTop,
       width: $wrapper.current.offsetWidth,
       height: $wrapper.current.offsetHeight,
     };
 
-    const _locations: MouseLocationCheckType = {
+    const _locations: MouseLocationCheck = {
       mouseY: mouseLocation.current.y,
       wrapperTop: _wrapperSizes.top,
       wrapperHeight: _wrapperSizes.height,
@@ -86,7 +86,7 @@ const ContentEditBar = ({
     if (_isMouseOnTarget) {
       mouseOnIndex.current = index;
 
-      const _targetLocation: LocationType = {
+      const _targetLocation: Location = {
         x: _wrapperSizes.left,
         y: _wrapperSizes.top - scroll.current,
       };
@@ -95,7 +95,7 @@ const ContentEditBar = ({
     moveToIndex.current = index;
   };
   const getBarByType = (type: string) => {
-    if (type === ContentType.text) {
+    if (type === ContentTypes.text) {
       return (
         <TextBar
           index={index}
@@ -104,7 +104,7 @@ const ContentEditBar = ({
         />
       );
     }
-    if (type === ContentType.image) {
+    if (type === ContentTypes.image) {
       return <ImageBar index={index} />;
     }
   };

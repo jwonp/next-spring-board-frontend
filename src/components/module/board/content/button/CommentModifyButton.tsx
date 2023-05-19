@@ -6,8 +6,8 @@ import {
 } from "@src/redux/features/commentModify";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
-  ModifyCommentRequestType,
-  ModifyCommentType,
+  ModifyCommentRequest,
+  CommentModifyData,
 } from "@src/static/types/CommentType";
 
 import styles from "@src/styles/board/content/button/CommentModifyButton.module.scss";
@@ -16,7 +16,7 @@ const CommentModifyButton = ({
   writer,
   $textarea,
   mutate,
-}: ModifyCommentType) => {
+}: CommentModifyData) => {
   const dispatch = useAppDispatch();
 
   const modifyIndex = useAppSelector(getModifyIndex);
@@ -26,7 +26,7 @@ const CommentModifyButton = ({
         <>
           <div
             onClick={() => {
-              const ModifiedData: ModifyCommentRequestType = {
+              const ModifiedData: ModifyCommentRequest = {
                 commentId: commentId,
                 comment: $textarea.current.value,
                 writer: writer,

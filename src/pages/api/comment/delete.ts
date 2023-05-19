@@ -1,11 +1,11 @@
-import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
+import { CsrfIdentity } from "@src/static/types/CsrfIdentityType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const deleteComment = async (
   commentId: string,
   userId: string,
-  csrf: CsrfIdentityType
+  csrf: CsrfIdentity
 ) => {
   return await axios.delete(
     `${process.env.BACKEND_END_POINT}/comment?comment=${commentId}&user=${userId}`,
@@ -21,7 +21,7 @@ export default function handler(
 ) {
   const { comment, user } = req.query;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
-  const csrf: CsrfIdentityType = {
+  const csrf: CsrfIdentity = {
     id: user as string,
     csrfToken: csrfToken,
   };

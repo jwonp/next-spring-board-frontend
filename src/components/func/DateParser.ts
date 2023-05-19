@@ -1,4 +1,4 @@
-import { DateType } from "@src/static/types/DateType";
+import { ParsedDate } from "@src/static/types/DateType";
 import { DateTime } from "luxon";
 
 /**
@@ -6,7 +6,10 @@ import { DateTime } from "luxon";
  * @param row ex) 2023-04-18T13:04:50.935+00:00
  * @returns DateType
  */
-export const getDiffDateAsObject = (from: string, now: DateTime): DateType => {
+export const getDiffDateAsObject = (
+  from: string,
+  now: DateTime
+): ParsedDate => {
   const targetDate = DateTime.fromISO(from.split(".")[0].replace(" ", "T"));
 
   const diffSeconds = now
@@ -18,7 +21,7 @@ export const getDiffDateAsObject = (from: string, now: DateTime): DateType => {
       "minutes",
       "seconds",
     ])
-    .toObject() as DateType;
+    .toObject() as ParsedDate;
 
   return diffSeconds;
 };

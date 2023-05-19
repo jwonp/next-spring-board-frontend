@@ -1,7 +1,7 @@
 import styles from "@src/styles/board/content/ContentById.module.scss";
 import { getContentById } from "@src/components/func/RequestFuncs";
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
-import { ContentViewType } from "@src/static/types/ContentViewType";
+import { ContentBarData } from "@src/static/types/ContentDataType";
+import { ContentViewData } from "@src/static/types/ContentViewType";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import qs from "qs";
 import { useMemo } from "react";
@@ -20,7 +20,7 @@ import { useSession } from "next-auth/react";
 import LikeButton from "@src/components/module/board/content/button/LikeButton";
 import ContentModifyButton from "@src/components/module/board/content/button/ContentModifyButton";
 import ContentDeleteButton from "@src/components/module/board/content/button/ContentDeleteButton";
-import { ParsedContentType } from "@src/static/types/ParsedContentType";
+import { ParsedContent } from "@src/static/types/ParsedContentType";
 
 import { CONTENT_BY_ID_ID } from "@src/static/strings/HttpElementId";
 import { contentMetaColumns } from "@src/static/strings/stringSet";
@@ -50,8 +50,8 @@ const ContentById = ({
   const parsedContent = useMemo(() => {
     const parsedData = qs.parse(content, {
       parseArrays: true,
-    }) as unknown as ParsedContentType;
-    return Object.values(parsedData) as ContentBarDataType[];
+    }) as unknown as ParsedContent;
+    return Object.values(parsedData) as ContentBarData[];
   }, [content]);
 
   return (
@@ -127,7 +127,7 @@ const ContentById = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<ContentViewType> = async (
+export const getServerSideProps: GetServerSideProps<ContentViewData> = async (
   context
 ) => {
   const { id } = context.query;

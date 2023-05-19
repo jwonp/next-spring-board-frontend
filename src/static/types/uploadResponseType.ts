@@ -1,4 +1,4 @@
-export type uploadResponseType = {
+export type uploadResponse = {
   message: string;
   imageLocation: string;
   imageLocations: string;

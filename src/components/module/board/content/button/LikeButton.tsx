@@ -2,7 +2,7 @@ import {
   addLikeByContentAndUser,
   deleteLikeByContentAndUser,
 } from "@src/components/func/RequestFuncs";
-import { LikeButtonPropsType } from "@src/static/types/ButtonPropsType";
+import { LikeButtonProps } from "@src/static/types/ButtonPropsType";
 import styles from "@src/styles/board/content/button/LikeButton.module.scss";
 import Image from "next/image";
 const LikeButton = ({
@@ -12,7 +12,7 @@ const LikeButton = ({
   userId,
   likeCountMutate,
   isLikedMutate,
-}: LikeButtonPropsType) => {
+}: LikeButtonProps) => {
   return (
     <div className={`${styles.like}`}>
       <div>

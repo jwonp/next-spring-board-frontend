@@ -1,8 +1,8 @@
-import { ModifyCommentRequestType } from "@src/static/types/CommentType";
-import { ImageConfirmType } from "@src/static/types/ImageUploadType";
-import { ModifyContentRequestType } from "@src/static/types/ModifyContentType";
-import { SaveContentType } from "@src/static/types/SaveContentType";
-import { UserType } from "@src/static/types/UserType";
+import { ModifyCommentRequest } from "@src/static/types/CommentType";
+import { ImageConfirm } from "@src/static/types/ImageUploadType";
+import { ModifyContentRequest } from "@src/static/types/ModifyContentType";
+import { ContentSaveData } from "@src/static/types/SaveContentType";
+import { User } from "@src/static/types/UserType";
 import axios from "axios";
 
 export const isUserRegisted = async (id: string, provider: string) => {
@@ -16,15 +16,15 @@ export const isUserRegistedForServer = async (id: string, provider: string) => {
   );
 };
 
-export const addUser = async (data: UserType) => {
+export const addUser = async (data: User) => {
   await axios.post(`${process.env.FRONTEND_END_POINT}/api/user/register`, data);
 };
 
-export const saveContent = async (data: SaveContentType) => {
+export const saveContent = async (data: ContentSaveData) => {
   return await axios.post(`/api/content/edit`, data);
 };
 
-export const modifyContent = async (data: ModifyContentRequestType) => {
+export const modifyContent = async (data: ModifyContentRequest) => {
   return await axios.patch(`/api/content/modify`, data);
 };
 
@@ -33,7 +33,7 @@ export const confirmImages = async (
   images: string[],
   author: string
 ) => {
-  const data: ImageConfirmType = {
+  const data: ImageConfirm = {
     images: images,
     contentId: contentId,
     author: author,
@@ -92,7 +92,7 @@ export const deleteContent = async (contentId: number, userId: string) => {
   );
 };
 
-export const modifyComment = async (data: ModifyCommentRequestType) => {
+export const modifyComment = async (data: ModifyCommentRequest) => {
   return await axios.patch(`/api/comment/modify`, data);
 };
 export const deleteComment = async (commentId: number, userId: string) => {

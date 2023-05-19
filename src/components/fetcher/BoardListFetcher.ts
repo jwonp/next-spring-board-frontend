@@ -1,6 +1,6 @@
-import { ContentType } from "@src/static/types/ContentType";
+import { ContentData } from "@src/static/types/ContentType";
 import axios from "axios";
-export const boardListFetcher = (url: string): Promise<ContentType[]> =>
+export const boardListFetcher = (url: string): Promise<ContentData[]> =>
   axios.get(url).then((res) => res.data);
 export const boardListURLByBoardAndIndex = (
   board: string,

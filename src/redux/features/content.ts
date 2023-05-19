@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../store";
 import {
-  ContentBarAddType,
-  ContentBarDataType,
+  NewContentBar,
+  ContentBarData,
 } from "@src/static/types/ContentDataType";
 import { createNewContent } from "@src/components/func/ContentEditFuncs";
-import { SwapContentsType } from "@src/static/types/SwapContentsType";
+import { ContentSwapIndexs } from "@src/static/types/SwapContentsType";
 import { __One, __Zero } from "@src/static/numbers/numberSet";
+
 interface ContentState {
-  contents: ContentBarDataType[];
+  contents: ContentBarData[];
   images: string[];
   imageFocusIdnex: number;
 }
@@ -19,58 +20,58 @@ const initialState: ContentState = {
   imageFocusIdnex: -1,
 };
 
-export type ModifyDataType = { index: number; content: string };
-export type AddDataType = { index: number; content: ContentBarDataType };
+export type ModifyData = { index: number; content: string };
+export type NewData = { index: number; content: ContentBarData };
 
-type ContentsActionType = {
-  payload: ContentBarDataType[];
-  type: string;
-};
-
-type ContentActionType = {
-  payload: ContentBarDataType;
+type ContentsActions = {
+  payload: ContentBarData[];
   type: string;
 };
 
-type ModifyByIndexActionType = {
-  payload: ModifyDataType;
+type ContentActions = {
+  payload: ContentBarData;
   type: string;
 };
 
-type AddWithIndexActionType = {
-  payload: AddDataType;
+type ModifyByIndexActions = {
+  payload: ModifyData;
   type: string;
 };
-type AddNewContentActionType = {
-  payload: ContentBarAddType;
+
+type AddWithIndexActions = {
+  payload: NewData;
   type: string;
 };
-type DeleteByIndexActionType = {
+type AddNewContentActions = {
+  payload: NewContentBar;
+  type: string;
+};
+type DeleteByIndexActions = {
   payload: number;
   type: string;
 };
-type IndexActionType = {
+type IndexActions = {
   payload: number;
   type: string;
 };
-type SwapActionsType = {
-  payload: SwapContentsType;
+type SwapActions = {
+  payload: ContentSwapIndexs;
   type: string;
 };
 export const content = createSlice({
   name: "content",
   initialState,
   reducers: {
-    setContents: (state, actions: ContentsActionType) => {
+    setContents: (state, actions: ContentsActions) => {
       if (actions.payload.length === 0) {
         return;
       }
       state.contents = [...actions.payload];
     },
-    addContent: (state, actions: ContentActionType) => {
+    addContent: (state, actions: ContentActions) => {
       state.contents = [...state.contents, actions.payload];
     },
-    addContentByIndex: (state, actions: AddWithIndexActionType) => {
+    addContentByIndex: (state, actions: AddWithIndexActions) => {
       const tempContents = [...state.contents];
       tempContents.splice(
         actions.payload.index + 1,
@@ -83,7 +84,7 @@ export const content = createSlice({
       state.contents = tempContents;
     },
 
-    addNewContent: (state, actions: AddNewContentActionType) => {
+    addNewContent: (state, actions: AddNewContentActions) => {
       const newContent = createNewContent(
         actions.payload.content,
         actions.payload.type
@@ -105,8 +106,8 @@ export const content = createSlice({
       }
       state.contents = tempContents;
     },
-    modifyContentByIndex: (state, actions: ModifyByIndexActionType) => {
-      const modifiedContent: ContentBarDataType = {
+    modifyContentByIndex: (state, actions: ModifyByIndexActions) => {
+      const modifiedContent: ContentBarData = {
         type: "text",
         content: actions.payload.content,
         image: "",
@@ -114,7 +115,7 @@ export const content = createSlice({
 
       state.contents[actions.payload.index] = { ...modifiedContent };
     },
-    removeContentByIndex: (state, actions: DeleteByIndexActionType) => {
+    removeContentByIndex: (state, actions: DeleteByIndexActions) => {
       const image = state.contents[actions.payload].image;
       state.contents = state.contents.filter(
         (_, index) => index != actions.payload
@@ -124,7 +125,7 @@ export const content = createSlice({
     resetContents: (state) => {
       state.contents = [{ type: "text", content: "", image: "" }];
     },
-    swapElementsSequenceInContents: (state, actions: SwapActionsType) => {
+    swapElementsSequenceInContents: (state, actions: SwapActions) => {
       const { target, moveTo } = actions.payload;
 
       if (target < __Zero || moveTo < __Zero || target === moveTo) return;
@@ -138,12 +139,12 @@ export const content = createSlice({
     addImage: (state, actions) => {
       state.images.push(actions.payload);
     },
-    removeImageByIndex: (state, actions: DeleteByIndexActionType) => {
+    removeImageByIndex: (state, actions: DeleteByIndexActions) => {
       state.images = state.images.filter(
         (_, index) => actions.payload != index
       );
     },
-    setImageFocusIndex: (state, actions: IndexActionType) => {
+    setImageFocusIndex: (state, actions: IndexActions) => {
       state.imageFocusIdnex = actions.payload;
     },
     resetImages: (state) => {

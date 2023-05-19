@@ -1,4 +1,4 @@
-export interface SwapContentsType {
+export interface ContentSwapIndexs {
   target: number;
   moveTo: number;
 }

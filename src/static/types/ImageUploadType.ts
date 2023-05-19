@@ -5,7 +5,7 @@ export interface ImageUploadResponse {
   success: boolean;
 }
 
-export interface ImageConfirmType {
+export interface ImageConfirm {
   images: string[];
   contentId: number;
   author: string;

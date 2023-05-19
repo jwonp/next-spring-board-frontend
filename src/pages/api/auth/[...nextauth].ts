@@ -2,7 +2,7 @@ import NextAuth, { AuthOptions } from "next-auth";
 import TwitchProvider from "next-auth/providers/twitch";
 import GoogleProvider from "next-auth/providers/google";
 import { addUser } from "@src/components/func/RequestFuncs";
-import { UserType } from "@src/static/types/UserType";
+import { User } from "@src/static/types/UserType";
 import { randomBytes, randomUUID } from "crypto";
 
 export const authOptions: AuthOptions = {
@@ -61,7 +61,7 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       const provider = account?.provider;
-      const userData: UserType = { ...user, provider: provider };
+      const userData: User = { ...user, provider: provider };
 
       addUser(userData);
 

@@ -1,4 +1,4 @@
-export interface SizeType {
+export interface Size {
   width: number;
   height: number;
 }

@@ -2,16 +2,13 @@ import ContentEditStyles from "@src/styles/board/content/edit/ContentEdit.module
 import TextBarStyles from "@src/styles/board/content/edit/TextBar.module.scss";
 import ContentEditBarStyles from "@src/styles/board/content/edit/ContentEditBar.module.scss";
 import {
+  VariationFlags,
   VariationFlag,
-  VariationFlagType,
 } from "@src/static/types/VariationFlagType";
-import { LocationType } from "@src/static/types/LocationType";
-import { ContainerSizeType } from "@src/static/types/ContainerSizeType";
-import {
-  ContentBarDataType,
-  ContentTypeType,
-} from "@src/static/types/ContentDataType";
-import { MouseLocationCheckType } from "@src/static/types/MouseLocationCheckType";
+import { Location } from "@src/static/types/LocationType";
+import { ContainerSize } from "@src/static/types/ContainerSizeType";
+import { ContentBarData, ContentType } from "@src/static/types/ContentDataType";
+import { MouseLocationCheck } from "@src/static/types/MouseLocationCheckType";
 import { __Zero } from "@src/static/numbers/numberSet";
 import { __One } from "@src/static/numbers/numberSet";
 
@@ -28,8 +25,8 @@ export const pointEndOfBeforeTheTarget = (
   selection.addRange(range);
 };
 
-export const isVariationFlagDecrease = (variationFlag: VariationFlagType) => {
-  return variationFlag === VariationFlag.decrease;
+export const isVariationFlagDecrease = (variationFlag: VariationFlag) => {
+  return variationFlag === VariationFlags.decrease;
 };
 
 /**
@@ -43,7 +40,7 @@ export const isVariationFlagDecrease = (variationFlag: VariationFlagType) => {
  */
 export const getFocusTarget = (
   focusTargetIndex: number,
-  variationFlag: VariationFlagType,
+  variationFlag: VariationFlag,
   contentsLength: number
 ) => {
   const focusTarget = focusTargetIndex + variationFlag;
@@ -73,8 +70,8 @@ export const isLoactionYOnTarget = (
   return top - scroll < y && y < top + height - scroll;
 };
 export const isMouseOnTarget = (
-  mouseLocation: LocationType,
-  containerSizes: ContainerSizeType,
+  mouseLocation: Location,
+  containerSizes: ContainerSize,
   scroll: number
 ) => {
   if (!mouseLocation || !containerSizes) {
@@ -100,7 +97,7 @@ export const isLoactionYOnBottomOfTarget = ({
   wrapperTop,
   wrapperHeight,
   scroll,
-}: MouseLocationCheckType) => {
+}: MouseLocationCheck) => {
   return (
     wrapperTop + wrapperHeight / 2 - scroll < mouseY &&
     mouseY < wrapperTop + wrapperHeight - scroll
@@ -112,7 +109,7 @@ export const isLoactionYOnTopOfTarget = ({
   wrapperTop,
   wrapperHeight,
   scroll,
-}: MouseLocationCheckType) => {
+}: MouseLocationCheck) => {
   return (
     wrapperTop - scroll < mouseY &&
     mouseY < wrapperTop + wrapperHeight / 2 - scroll
@@ -121,10 +118,10 @@ export const isLoactionYOnTopOfTarget = ({
 
 export const isOutOfContendEditBars = (
   container: HTMLDivElement,
-  mouseLocation: LocationType,
+  mouseLocation: Location,
   scroll: number
 ) => {
-  const sizes: ContainerSizeType = {
+  const sizes: ContainerSize = {
     left: container.offsetLeft,
     top: container.offsetTop,
     width: container.offsetWidth,
@@ -161,7 +158,7 @@ export const setControlInvisible = (
 };
 
 export const relocateControl = (
-  targetLocation: LocationType,
+  targetLocation: Location,
   controlDiv: HTMLDivElement,
   onDragIndex: number
 ) => {
@@ -176,7 +173,7 @@ export const relocateControl = (
 export const swapElementsSequenceInContents = (
   target: number,
   moveTo: number,
-  contents: ContentBarDataType[]
+  contents: ContentBarData[]
 ) => {
   if (target < __Zero || moveTo < __Zero || target === moveTo) return contents;
   const tempContents = [...contents];
@@ -194,18 +191,18 @@ export const invisibleBorder = (target: HTMLDivElement) => {
 
 export const createNewContent = (
   content: string = "",
-  type: ContentTypeType = "text"
+  type: ContentType = "text"
 ) => {
-  const newContent: ContentBarDataType = {
+  const newContent: ContentBarData = {
     type: type,
     content: "",
     image: "",
   };
-  if (newContent.type === ("text" as ContentTypeType)) {
+  if (newContent.type === ("text" as ContentType)) {
     newContent.content = content;
   }
 
-  if (newContent.type === ("image" as ContentTypeType)) {
+  if (newContent.type === ("image" as ContentType)) {
     newContent.image = content;
   }
 
@@ -214,7 +211,7 @@ export const createNewContent = (
 
 export const relocateDraggedTarget = (
   draggedTarget: HTMLDivElement,
-  mouseLocation: LocationType
+  mouseLocation: Location
 ) => {
   if (draggedTarget.classList.contains(ContentEditStyles.invisible)) return;
   draggedTarget.style.left = mouseLocation.x + 60 + "px";
@@ -226,7 +223,7 @@ export const displayBorderOnTarget = (
   wrapperDiv: HTMLDivElement,
   dragIndex: number,
   targetIndex: number,
-  locations: MouseLocationCheckType
+  locations: MouseLocationCheck
 ) => {
   const isMouseOnTargetBefore =
     dragIndex >= targetIndex && isLoactionYOnTopOfTarget(locations);

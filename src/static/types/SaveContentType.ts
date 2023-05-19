@@ -1,9 +1,8 @@
-import { ContentBarDataType } from "./ContentDataType";
-import { BoardMenuType } from "./BoardMenuType";
+import { BoardMenu } from "./BoardMenuType";
 
-export interface SaveContentType {
+export interface ContentSaveData {
   title: string;
   contents: string;
   author: string;
-  board: BoardMenuType;
+  board: BoardMenu;
 }

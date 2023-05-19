@@ -1,5 +1,5 @@
-import { ContentBarDataType } from "./ContentDataType";
+import { ContentBarData } from "./ContentDataType";
 
-export type ParsedContentType = {
-  [key: number]: ContentBarDataType;
+export type ParsedContent = {
+  [key: number]: ContentBarData;
 };

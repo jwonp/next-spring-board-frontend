@@ -1,10 +1,10 @@
-import { ContentType } from "@src/static/types/ContentType";
-import { BoardMenuType } from "@src/static/types/BoardMenuType";
+import { ContentData } from "@src/static/types/ContentType";
+import { BoardMenu } from "@src/static/types/BoardMenuType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getContentListByBoardAndIndex = async (
-  board: BoardMenuType,
+  board: BoardMenu,
   index: number
 ) => {
   return await axios.get(
@@ -14,13 +14,13 @@ const getContentListByBoardAndIndex = async (
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ContentType[] | null>
+  res: NextApiResponse<ContentData[] | null>
 ) {
   const { index, board } = req.query;
 
-  getContentListByBoardAndIndex(board as BoardMenuType, Number(index))
+  getContentListByBoardAndIndex(board as BoardMenu, Number(index))
     .then((_res) => {
-      const responseData: ContentType[] = _res.data;
+      const responseData: ContentData[] = _res.data;
 
       res.status(200).send(responseData);
     })

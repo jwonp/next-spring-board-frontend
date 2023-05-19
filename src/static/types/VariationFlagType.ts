@@ -1,8 +1,8 @@
-export const VariationFlag = {
+export const VariationFlags = {
   default: 0,
   increase: 1,
   decrease: -1,
 } as const;
 
-export type VariationFlagType =
-  typeof VariationFlag[keyof typeof VariationFlag];
+export type VariationFlag =
+  (typeof VariationFlags)[keyof typeof VariationFlags];

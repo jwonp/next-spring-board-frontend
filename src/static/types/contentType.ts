@@ -1,4 +1,4 @@
-export interface ContentType {
+export interface ContentData {
   contentMetaId: number;
   title: string;
   views: number;

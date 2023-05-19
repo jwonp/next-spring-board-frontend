@@ -1,4 +1,4 @@
-import { ContentType } from "@src/static/types/ContentType";
+import { ContentData } from "@src/static/types/ContentType";
 
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -9,11 +9,11 @@ const getMostViewedContents = async () => {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ContentType[] | null>
+  res: NextApiResponse<ContentData[] | null>
 ) {
   getMostViewedContents()
     .then((_res) => {
-      const responseData: ContentType[] = _res.data;
+      const responseData: ContentData[] = _res.data;
 
       res.status(200).send(responseData);
     })

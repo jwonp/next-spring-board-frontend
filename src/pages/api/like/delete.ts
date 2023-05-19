@@ -1,11 +1,11 @@
-import { CsrfIdentityType } from "@src/static/types/CsrfIdentityType";
+import { CsrfIdentity } from "@src/static/types/CsrfIdentityType";
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const deleteLikeByContentAndUser = async (
   contentId: string,
   user: string,
-  csrf: CsrfIdentityType
+  csrf: CsrfIdentity
 ) => {
   return await axios.delete(
     `${process.env.BACKEND_END_POINT}/like?content=${contentId}&user=${user}`,
@@ -18,7 +18,7 @@ const deleteLikeByContentAndUser = async (
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { content, user } = req.query;
   const csrfToken = req.cookies["X-CSRF-TOKEN"];
-  const csrf: CsrfIdentityType = {
+  const csrf: CsrfIdentity = {
     id: user as string,
     csrfToken: csrfToken,
   };

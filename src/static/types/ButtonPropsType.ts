@@ -1,4 +1,4 @@
-export interface LikeButtonPropsType {
+export interface LikeButtonProps {
   likeCount: number;
   isLiked: boolean;
   contentId: number;
@@ -7,12 +7,12 @@ export interface LikeButtonPropsType {
   isLikedMutate: any;
 }
 
-export interface ModifyButtonPropsType {
+export interface ModifyButtonProps {
   board: string;
   contentId: number;
   author: string;
 }
-export interface DeleteButtonPropsType {
+export interface DeleteButtonProps {
   board: string;
   contentId: number;
   author: string;

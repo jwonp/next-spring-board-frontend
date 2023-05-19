@@ -1,4 +1,4 @@
-export interface ContentViewType {
+export interface ContentViewData {
   views: number;
   title: string;
   board: string;

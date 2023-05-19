@@ -1,5 +1,5 @@
 import styles from "@src/styles/board/content/button/ContentDeleteButton.module.scss";
-import { DeleteButtonPropsType } from "@src/static/types/ButtonPropsType";
+import { DeleteButtonProps } from "@src/static/types/ButtonPropsType";
 import useSWR from "swr";
 import {
   isAuthorURLByContentId,
@@ -13,7 +13,7 @@ const ContentDeleteButton = ({
   board,
   contentId,
   author,
-}: DeleteButtonPropsType) => {
+}: DeleteButtonProps) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { data, mutate } = useSWR(

@@ -1,4 +1,4 @@
-import { ContentType } from "@src/static/types/ContentType";
+import { ContentData } from "@src/static/types/ContentType";
 import ContentBar from "../../ContentBar";
 import { useMemo } from "react";
 
@@ -6,7 +6,7 @@ const ContentViewList = ({
   contentList,
   boardTitle,
 }: {
-  contentList: ContentType[];
+  contentList: ContentData[];
   boardTitle?: string;
 }) => {
   const contentBarList = useMemo(() => {

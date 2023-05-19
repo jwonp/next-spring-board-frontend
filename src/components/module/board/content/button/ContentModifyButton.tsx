@@ -1,5 +1,5 @@
 import styles from "@src/styles/board/content/button/ContentModifyButton.module.scss";
-import { ModifyButtonPropsType } from "@src/static/types/ButtonPropsType";
+import { ModifyButtonProps } from "@src/static/types/ButtonPropsType";
 import useSWR from "swr";
 import {
   isAuthorURLByContentId,
@@ -11,7 +11,7 @@ const ContentModifyButton = ({
   board,
   contentId,
   author,
-}: ModifyButtonPropsType) => {
+}: ModifyButtonProps) => {
   const router = useRouter();
   const { data, mutate } = useSWR(
     isAuthorURLByContentId(contentId, author),

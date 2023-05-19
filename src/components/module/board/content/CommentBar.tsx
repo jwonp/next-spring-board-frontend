@@ -1,4 +1,4 @@
-import { CommentBarType } from "@src/static/types/CommentType";
+import { CommentBarData } from "@src/static/types/CommentType";
 import styles from "@src/styles/board/content/CommentBar.module.scss";
 import CommentModifyButton from "./button/CommentModifyButton";
 import CommentDeleteButton from "./button/CommentDeleteButton";
@@ -9,7 +9,7 @@ import { getModifyIndex } from "@src/redux/features/commentModify";
 import { DateTime } from "luxon";
 import Empty from "../../Empty";
 
-const CommentBar = ({ comment, userId, mutate }: CommentBarType) => {
+const CommentBar = ({ comment, userId, mutate }: CommentBarData) => {
   const $textarea = useRef<HTMLTextAreaElement>(null);
   const modifyIndex = useAppSelector(getModifyIndex);
 

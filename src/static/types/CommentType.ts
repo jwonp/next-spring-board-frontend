@@ -1,12 +1,12 @@
 import { KeyedMutator } from "swr";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
-export interface CommentRequestType {
+import { MutableRefObject } from "react";
+export interface CommentRequest {
   comment: string;
   contentId: number;
   user: string;
 }
 
-export interface CommentType {
+export interface CommentData {
   commentId: number;
   contentId: number;
   comment: string;
@@ -15,25 +15,25 @@ export interface CommentType {
   created: string;
   updated: string;
 }
-export interface CommentBarType {
+export interface CommentBarData {
   key: number;
-  comment: CommentType;
+  comment: CommentData;
   userId: string;
-  mutate: KeyedMutator<CommentType[]>;
+  mutate: KeyedMutator<CommentData[]>;
 }
-export interface ModifyCommentRequestType {
+export interface ModifyCommentRequest {
   commentId: number;
   comment: string;
   writer: string;
 }
-export interface ModifyCommentType {
+export interface CommentModifyData {
   commentId: number;
   writer: string;
   $textarea: MutableRefObject<HTMLTextAreaElement>;
-  mutate: KeyedMutator<CommentType[]>;
+  mutate: KeyedMutator<CommentData[]>;
 }
-export interface DeleteCommentType {
+export interface CommentDeleteData {
   commentId: number;
   userId: string;
-  mutate: KeyedMutator<CommentType[]>;
+  mutate: KeyedMutator<CommentData[]>;
 }

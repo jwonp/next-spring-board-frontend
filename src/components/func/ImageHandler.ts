@@ -1,5 +1,5 @@
 import { IMAGE_SVG } from "@src/static/strings/IconSrc";
-import { SizeType } from "@src/static/types/SizeType";
+import { Size } from "@src/static/types/SizeType";
 
 export const getWindowWidth = (mainWrapper: HTMLElement) => {
   try {
@@ -17,14 +17,14 @@ export const getWindowWidth = (mainWrapper: HTMLElement) => {
   }
 };
 export const getNaturalImageSize = (img: HTMLImageElement) => {
-  const size: SizeType = { width: img.naturalWidth, height: img.naturalHeight };
+  const size: Size = { width: img.naturalWidth, height: img.naturalHeight };
   return size;
 };
 
 export const getResizedImageSize = (
-  naturalSize: SizeType,
+  naturalSize: Size,
   windowWidth: number
-): SizeType => {
+): Size => {
   if (naturalSize.width <= windowWidth) {
     return { width: naturalSize.width, height: naturalSize.height };
   }

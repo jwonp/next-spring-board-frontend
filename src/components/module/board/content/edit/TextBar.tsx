@@ -2,7 +2,7 @@ import styles from "@src/styles/board/content/edit/TextBar.module.scss";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import {
-  ModifyDataType,
+  ModifyData,
   getContents,
   modifyContentByIndex,
 } from "@src/redux/features/content";
@@ -48,7 +48,7 @@ const TextBar = ({
   };
 
   const handleInput = (e: FormEvent<HTMLDivElement>) => {
-    const modifyData: ModifyDataType = {
+    const modifyData: ModifyData = {
       index: index,
       content: e.currentTarget.innerText,
     };

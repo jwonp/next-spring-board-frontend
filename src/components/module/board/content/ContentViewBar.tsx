@@ -1,6 +1,6 @@
 import styles from "@src/styles/board/content/ContentViewBar.module.scss";
 
-import { ContentBarDataType } from "@src/static/types/ContentDataType";
+import { ContentBarData } from "@src/static/types/ContentDataType";
 import ContentImageViewBar from "./ContentImageViewBar";
 import { useMemo } from "react";
 
@@ -8,7 +8,7 @@ const ContentViewBar = ({
   data,
   authorId,
 }: {
-  data: ContentBarDataType;
+  data: ContentBarData;
   authorId: string;
 }) => {
   const ViewBar = useMemo(() => {

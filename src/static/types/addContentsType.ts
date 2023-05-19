@@ -1,7 +1,7 @@
-import { ContentTypeType } from "./ContentDataType";
+import { ContentViewData } from "./ContentViewType";
 
-export type AddContentType = (
+export type ContentAddData = (
   target: number,
   content?: string,
-  type?: ContentTypeType
+  type?: ContentViewData
 ) => void;

@@ -11,7 +11,7 @@ import {
 import { getContents, setImageFocusIndex } from "@src/redux/features/content";
 import { useSession } from "next-auth/react";
 
-import { SizeType } from "@src/static/types/SizeType";
+import { Size } from "@src/static/types/SizeType";
 import {
   getNaturalImageSize,
   getImageSrc,
@@ -20,18 +20,18 @@ import {
 import { getWidth } from "@src/redux/features/windowWidth";
 import { NO_IMAGE } from "@src/static/strings/stringSet";
 import { IMAGE_SVG } from "@src/static/strings/IconSrc";
-import { LocationType } from "@src/static/types/LocationType";
+import { Location } from "@src/static/types/LocationType";
 const ImageBar = ({ index }: { index: number }) => {
   const $image = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
   const content = useAppSelector(getContents)[index];
   const windowWidth = useAppSelector(getWidth);
   const dispatch = useAppDispatch();
-  const [naturalImageSize, setNaturalImageSize] = useState<SizeType>({
+  const [naturalImageSize, setNaturalImageSize] = useState<Size>({
     width: 0,
     height: 0,
   });
-  const [imageSize, setImageSize] = useState<SizeType>({
+  const [imageSize, setImageSize] = useState<Size>({
     width: 0,
     height: 0,
   });
@@ -39,11 +39,11 @@ const ImageBar = ({ index }: { index: number }) => {
   const mouseEnterEvent = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
-    const imageHandlerSize: SizeType = {
+    const imageHandlerSize: Size = {
       width: e.currentTarget.offsetWidth,
       height: e.currentTarget.offsetHeight,
     };
-    const imageHandlerPosition: LocationType = {
+    const imageHandlerPosition: Location = {
       x: e.currentTarget.getBoundingClientRect().left,
       y: e.currentTarget.getBoundingClientRect().top,
     };
@@ -64,7 +64,7 @@ const ImageBar = ({ index }: { index: number }) => {
   }, [content.image, windowWidth, naturalImageSize]);
 
   const onLoadingCompleteHandler = async (img: HTMLImageElement) => {
-    const naturalImageSize: SizeType = getNaturalImageSize(img);
+    const naturalImageSize: Size = getNaturalImageSize(img);
     setNaturalImageSize(naturalImageSize);
   };
 
