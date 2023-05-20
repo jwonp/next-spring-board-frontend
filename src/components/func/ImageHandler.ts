@@ -1,7 +1,7 @@
 import { IMAGE_SVG } from "@src/static/strings/IconSrc";
 import { Size } from "@src/static/types/SizeType";
 
-export const getWindowWidth = (mainWrapper: HTMLElement) => {
+export const getWindowWidth = (mainWrapper: HTMLElement): number => {
   try {
     const paddingWidth =
       Number(
@@ -16,7 +16,7 @@ export const getWindowWidth = (mainWrapper: HTMLElement) => {
     return;
   }
 };
-export const getNaturalImageSize = (img: HTMLImageElement) => {
+export const getNaturalImageSize = (img: HTMLImageElement): Size => {
   const size: Size = { width: img.naturalWidth, height: img.naturalHeight };
   return size;
 };
@@ -33,7 +33,7 @@ export const getResizedImageSize = (
   return { width: windowWidth, height: naturalSize.height * rate };
 };
 
-export const getImageSrc = (userId: string, imageId: string) => {
+export const getImageSrc = (userId: string, imageId: string): string => {
   if (!userId || !imageId) {
     return IMAGE_SVG.src;
   }

@@ -10,7 +10,7 @@ export const uploadComment = (
   contentId: number,
   userId: string,
   mutate: KeyedMutator<CommentData[]>
-) => {
+): void => {
   saveCommentByContentId($textarea.current.value, contentId, userId).then(
     (_res) => {
       if (_res.data === false) {

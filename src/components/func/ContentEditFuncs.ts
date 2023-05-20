@@ -17,7 +17,7 @@ export const pointEndOfBeforeTheTarget = (
   range: Range,
   selection: Selection,
   caretLocation: number
-) => {
+): void => {
   if (!beforeTheTarget) return;
   range.setStart(beforeTheTarget, caretLocation);
   range.collapse(true);
@@ -25,7 +25,9 @@ export const pointEndOfBeforeTheTarget = (
   selection.addRange(range);
 };
 
-export const isVariationFlagDecrease = (variationFlag: VariationFlag) => {
+export const isVariationFlagDecrease = (
+  variationFlag: VariationFlag
+): boolean => {
   return variationFlag === VariationFlags.decrease;
 };
 
@@ -42,7 +44,7 @@ export const getFocusTarget = (
   focusTargetIndex: number,
   variationFlag: VariationFlag,
   contentsLength: number
-) => {
+): number => {
   const focusTarget = focusTargetIndex + variationFlag;
 
   if (focusTarget >= contentsLength) {
@@ -54,11 +56,18 @@ export const getFocusTarget = (
   return focusTarget;
 };
 
-export const isCaretOnFront = (anchorOffset: number, focusOffset: number) => {
+export const isCaretOnFront = (
+  anchorOffset: number,
+  focusOffset: number
+): boolean => {
   return anchorOffset === focusOffset && focusOffset === 0;
 };
 
-export const isLoactionXOnTarget = (x: number, left: number, width: number) => {
+export const isLoactionXOnTarget = (
+  x: number,
+  left: number,
+  width: number
+): boolean => {
   return left < x && x < left + width;
 };
 export const isLoactionYOnTarget = (
@@ -66,14 +75,14 @@ export const isLoactionYOnTarget = (
   top: number,
   height: number,
   scroll: number
-) => {
+): boolean => {
   return top - scroll < y && y < top + height - scroll;
 };
 export const isMouseOnTarget = (
   mouseLocation: Location,
   containerSizes: ContainerSize,
   scroll: number
-) => {
+): boolean => {
   if (!mouseLocation || !containerSizes) {
     return false;
   }
@@ -97,7 +106,7 @@ export const isLoactionYOnBottomOfTarget = ({
   wrapperTop,
   wrapperHeight,
   scroll,
-}: MouseLocationCheck) => {
+}: MouseLocationCheck): boolean => {
   return (
     wrapperTop + wrapperHeight / 2 - scroll < mouseY &&
     mouseY < wrapperTop + wrapperHeight - scroll
@@ -109,7 +118,7 @@ export const isLoactionYOnTopOfTarget = ({
   wrapperTop,
   wrapperHeight,
   scroll,
-}: MouseLocationCheck) => {
+}: MouseLocationCheck): boolean => {
   return (
     wrapperTop - scroll < mouseY &&
     mouseY < wrapperTop + wrapperHeight / 2 - scroll
@@ -120,7 +129,7 @@ export const isOutOfContendEditBars = (
   container: HTMLDivElement,
   mouseLocation: Location,
   scroll: number
-) => {
+): boolean => {
   const sizes: ContainerSize = {
     left: container.offsetLeft,
     top: container.offsetTop,
@@ -136,20 +145,20 @@ export const isOutOfContendEditBars = (
   return true;
 };
 
-export const isFocusOnFirstEditBar = (focusTarget: number) => {
+export const isFocusOnFirstEditBar = (focusTarget: number): boolean => {
   return focusTarget === 0;
 };
 export const isContentEmpty = (
   contentsLength: number,
   contentOnFirst: string
-) => {
+): boolean => {
   return contentsLength === 1 && contentOnFirst === "";
 };
 
 export const setControlInvisible = (
   controlDiv: HTMLDivElement,
   bool: boolean
-) => {
+): void => {
   controlDiv.classList.toggle(ContentEditStyles.fadein, !bool);
   controlDiv.classList.toggle(ContentEditStyles.fadeout, bool);
   setTimeout(() => {
@@ -161,7 +170,7 @@ export const relocateControl = (
   targetLocation: Location,
   controlDiv: HTMLDivElement,
   onDragIndex: number
-) => {
+): void => {
   if (onDragIndex > -1) return;
 
   controlDiv.style.left = `${targetLocation.x}px`;
@@ -174,7 +183,7 @@ export const swapElementsSequenceInContents = (
   target: number,
   moveTo: number,
   contents: ContentBarData[]
-) => {
+): ContentBarData[] => {
   if (target < __Zero || moveTo < __Zero || target === moveTo) return contents;
   const tempContents = [...contents];
   const tempContent = tempContents.splice(target, __One)[__Zero];
@@ -183,7 +192,7 @@ export const swapElementsSequenceInContents = (
   return tempContents;
 };
 
-export const invisibleBorder = (target: HTMLDivElement) => {
+export const invisibleBorder = (target: HTMLDivElement): void => {
   target.classList.toggle(TextBarStyles.content_hover, false);
   target.classList.toggle(ContentEditBarStyles.border_bottom, false);
   target.classList.toggle(ContentEditBarStyles.border_top, false);
@@ -192,31 +201,21 @@ export const invisibleBorder = (target: HTMLDivElement) => {
 export const createNewContent = (
   content: string = "",
   type: ContentType = "text"
-) => {
+): ContentBarData => {
   const newContent: ContentBarData = {
     type: type,
-    text: "",
-    image: "",
+    content: content,
   };
-  if (newContent.type === ("text" as ContentType)) {
-    newContent.text = content;
-  }
-
-  if (newContent.type === ("image" as ContentType)) {
-    newContent.image = content;
-  }
-
   return newContent;
 };
 
 export const relocateDraggedTarget = (
   draggedTarget: HTMLDivElement,
   mouseLocation: Location
-) => {
+): void => {
   if (draggedTarget.classList.contains(ContentEditStyles.invisible)) return;
   draggedTarget.style.left = mouseLocation.x + 60 + "px";
   draggedTarget.style.top = mouseLocation.y + "px";
-  draggedTarget;
 };
 
 export const displayBorderOnTarget = (
@@ -224,7 +223,7 @@ export const displayBorderOnTarget = (
   dragIndex: number,
   targetIndex: number,
   locations: MouseLocationCheck
-) => {
+): void => {
   const isMouseOnTargetBefore =
     dragIndex >= targetIndex && isLoactionYOnTopOfTarget(locations);
   const isMouseOnTargetAfter =
