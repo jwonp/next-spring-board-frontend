@@ -61,7 +61,7 @@ const ImageBar = ({ index }: { index: number }) => {
     );
 
     setImageSize(resizedImageSize);
-  }, [content.image, windowWidth, naturalImageSize]);
+  }, [content.content, windowWidth, naturalImageSize]);
 
   const onLoadingCompleteHandler = async (img: HTMLImageElement) => {
     const naturalImageSize: Size = getNaturalImageSize(img);
@@ -75,7 +75,7 @@ const ImageBar = ({ index }: { index: number }) => {
       <Image
         onMouseEnter={mouseEnterEvent}
         onLoadingComplete={onLoadingCompleteHandler}
-        src={getImageSrc(session?.user?.id, content.image)}
+        src={getImageSrc(session?.user?.id, content.content)}
         alt={NO_IMAGE}
         width={imageSize.width}
         height={imageSize.height}

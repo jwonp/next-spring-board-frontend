@@ -25,8 +25,8 @@ const TextBar = ({
    * ContentEditBar의 위치(index)가 바뀔 떄마다 재랜더링
    */
   useEffect(() => {
-    if ($content.current.innerText !== contents[index].text) {
-      $content.current.innerText = contents[index].text;
+    if ($content.current.innerText !== contents[index].content) {
+      $content.current.innerText = contents[index].content;
     }
   }, [contents.length, contents[index]]);
 
@@ -50,7 +50,7 @@ const TextBar = ({
   const handleInput = (e: FormEvent<HTMLDivElement>) => {
     const modifyData: ModifyData = {
       index: index,
-      text: e.currentTarget.innerText,
+      content: e.currentTarget.innerText,
     };
     dispatch(modifyContentByIndex(modifyData));
   };

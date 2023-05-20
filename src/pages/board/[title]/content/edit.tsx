@@ -191,12 +191,12 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
     originIndex: number,
     contentToMerged: string
   ) => {
-    const originContent = contents[originIndex].text;
+    const originContent = contents[originIndex].content;
     const targetIndex = addOne(originIndex);
     return contents
       .map((value, index) => {
         if (index === originIndex) {
-          value.text = `${originContent}${contentToMerged}`;
+          value.content = `${originContent}${contentToMerged}`;
         }
         if (index !== targetIndex) {
           return value;
@@ -224,7 +224,7 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
 
   const handleHandleBtnMouseDown = () => {
     $onDragIndex.current = $mouseOnIndex.current;
-    $draggedTarget.current.innerHTML = contents[$mouseOnIndex.current].text;
+    $draggedTarget.current.innerHTML = contents[$mouseOnIndex.current].content;
     $draggedTarget.current.classList.toggle(styles.invisible, false);
   };
 
@@ -302,16 +302,19 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
       }
       const modifyData: ModifyData = {
         index: $focusIndex.current,
-        text: textBefore,
+        content: textBefore,
       };
       dispatch(modifyContentByIndex(modifyData));
 
-      const newContentData: NewContentBar = {
-        target: $focusIndex.current,
-        text: textAfter,
-        type: ContentTypes.text,
+      const newContentData: ContentBarData = {
+        type: "text",
+        content: textAfter,
       };
-      dispatch(addNewContent(newContentData));
+      const newContent: NewContentBar = {
+        target: $focusIndex.current,
+        content: newContentData,
+      };
+      dispatch(addNewContent(newContent));
       $variationFlag.current = VariationFlags.increase;
 
       setControlInvisible($control.current, true);
@@ -326,7 +329,7 @@ const ContentEdit = ({ preTitle, preContents, contentId }: ModifyContent) => {
     if (
       ((isCaretOnFront(anchorOffset, focusOffset) &&
         isFocusOnFirstEditBar($focusIndex.current)) ||
-        isContentEmpty(contents.length, contents[__Zero].text)) &&
+        isContentEmpty(contents.length, contents[__Zero].content)) &&
       e.key === KeySet.Backspace
     ) {
       e.preventDefault();

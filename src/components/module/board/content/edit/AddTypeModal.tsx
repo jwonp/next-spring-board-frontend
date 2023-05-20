@@ -2,7 +2,11 @@ import styles from "@src/styles/board/content/edit/AddTypeModel.module.scss";
 import Image from "next/image";
 import { Location } from "@src/static/types/LocationType";
 import { useEffect, useRef } from "react";
-import { NewContentBar, ContentType } from "@src/static/types/ContentDataType";
+import {
+  NewContentBar,
+  ContentType,
+  ContentBarData,
+} from "@src/static/types/ContentDataType";
 import { useSession } from "next-auth/react";
 import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
 import { useAppDispatch } from "@src/redux/hooks";
@@ -40,12 +44,15 @@ const AddTypeModel = ({
   };
 
   const handleClickText = (e: React.MouseEvent<HTMLDivElement>) => {
-    const newContentData: NewContentBar = {
-      target: mouseOnIndex,
-      text: "",
+    const newContentData: ContentBarData = {
+      content: "",
       type: e.currentTarget.getAttribute("data-value") as ContentType,
     };
-    dispatch(addNewContent(newContentData));
+    const newContent: NewContentBar = {
+      target: mouseOnIndex,
+      content: newContentData,
+    };
+    dispatch(addNewContent(newContent));
   };
 
   const handleClickImage = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -64,13 +71,16 @@ const AddTypeModel = ({
       const imageMeta = res.data as ImageUploadResponse;
       dispatch(addImage(imageMeta.fileNameOnStoarge));
 
-      const newContentData: NewContentBar = {
-        target: $mouseOnIndex.current,
-        text: imageMeta.fileNameOnStoarge,
+      const newContentData: ContentBarData = {
+        content: imageMeta.fileNameOnStoarge,
         type: "image" as ContentType,
       };
-
-      dispatch(addNewContent(newContentData));
+      const newContent: NewContentBar = {
+        target: $mouseOnIndex.current,
+        content: newContentData,
+      };
+      console.log(newContent);
+      dispatch(addNewContent(newContent));
     });
   };
 
