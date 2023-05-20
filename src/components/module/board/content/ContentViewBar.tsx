@@ -16,11 +16,11 @@ const ContentViewBar = ({
       return (
         <ContentImageViewBar
           authorId={authorId}
-          image={data.image}
+          image={data.content}
         />
       );
     }
-    return <div>{data.text}</div>;
+    return <div>{data.content}</div>;
   }, [data]);
 
   return ViewBar;
