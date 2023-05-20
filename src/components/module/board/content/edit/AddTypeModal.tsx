@@ -31,7 +31,7 @@ const AddTypeModel = ({
   const $mouseOnIndex = useRef<number>(null);
   const dispatch = useAppDispatch();
   const iconSize = { width: 32, height: 32 };
-  const IMAGE_ACCEPT = "image/*";
+  const IMAGE_ACCEPT = "image/png, image/jpg, image/jpeg";
   const { data: session } = useSession();
   useEffect(() => {
     if (!location) return;
