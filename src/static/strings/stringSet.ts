@@ -14,6 +14,7 @@ export const BoardMenuList: BoardMenu[] = [
 
 export const HeaderRightMenu = {
   alert: "alert",
+  myPage: "my page",
   login: "login",
   logout: "logout",
 } as const;

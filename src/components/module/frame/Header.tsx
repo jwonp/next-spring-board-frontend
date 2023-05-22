@@ -66,6 +66,9 @@ const Header = () => {
         </div>
         <div className={`${styles.box}`}>
           {adminPageLink}
+          <div className={`${styles.item}`}>
+            <Link href={"/mypage"}>{HeaderRightMenu.myPage}</Link>
+          </div>
           {/* <div className={`${styles.item}`}>{HeaderRightMenu.alert}</div> */}
           <div
             className={`${styles.item}`}

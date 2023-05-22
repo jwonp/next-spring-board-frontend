@@ -1,0 +1,42 @@
+.wrapper {
+  padding: 0.5em;
+}
+
+.container {
+  padding: 0.5em;
+}
+
+.container:nth-child(1) {
+  background-color: #3c3c88;
+  margin-bottom: 2em;
+
+  & fieldset {
+    border: none;
+  }
+  & legend {
+    font-size: 24px;
+  }
+  & input {
+    display: none;
+    &:checked + label {
+      color: red;
+    }
+  }
+  & label {
+    margin-right: 2em;
+    font-size: 22px;
+  }
+}
+.container:nth-child(2) {
+  background-color: #3c3c11;
+  & .box:nth-child(1) {
+    font-size: 28px;
+    margin-bottom: 1em;
+  }
+  & .box:nth-child(2) {
+    & .card {
+      font-size: 20px;
+      margin-bottom: 0.5em;
+    }
+  }
+}
