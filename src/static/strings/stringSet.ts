@@ -13,10 +13,10 @@ export const BoardMenuList: BoardMenu[] = [
 ];
 
 export const HeaderRightMenu = {
-  alert: "alert",
-  myPage: "my page",
-  login: "login",
-  logout: "logout",
+  alert: "Alert",
+  myPage: "MyPage",
+  login: "Login",
+  logout: "Logout",
 } as const;
 
 export const KeySet = {
