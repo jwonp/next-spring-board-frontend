@@ -45,3 +45,4 @@ src/redux/features/init.ts
 src/pages/login.tsx
 src/pages/api/hello.ts
 src/pages/api/hello.ts
+.env.production
