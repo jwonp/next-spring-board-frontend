@@ -46,3 +46,4 @@ src/pages/login.tsx
 src/pages/api/hello.ts
 src/pages/api/hello.ts
 .env.production
+.config/nextjs.conf
