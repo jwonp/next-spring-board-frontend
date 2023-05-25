@@ -67,7 +67,10 @@ export const authOptions: AuthOptions = {
 
       return true;
     },
-    // async redirect({ url, baseUrl }) { return baseUrl },
+    async redirect({ url, baseUrl }) {
+      console.log(`url origin is ${new URL(url).origin} baseUrl is ${baseUrl}`);
+      return baseUrl;
+    },
     async session({ session, token, user }) {
       session.user.id = token.sub;
       if (token.picture.includes("lh3.googleusercontent.com"))
