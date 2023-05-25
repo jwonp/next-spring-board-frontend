@@ -68,8 +68,7 @@ export const authOptions: AuthOptions = {
       return true;
     },
     async redirect({ url, baseUrl }) {
-      console.log(`url origin is ${new URL(url).origin} baseUrl is ${baseUrl}`);
-      return baseUrl;
+      return process.env.FRONTEND_END_POINT;
     },
     async session({ session, token, user }) {
       session.user.id = token.sub;
