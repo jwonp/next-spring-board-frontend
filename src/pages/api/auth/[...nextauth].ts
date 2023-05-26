@@ -63,7 +63,9 @@ export const authOptions: AuthOptions = {
       const provider = account?.provider;
       const userData: User = { ...user, provider: provider };
 
-      addUser(userData);
+      addUser(userData).catch((_err) => {
+        console.log(`${user.id} is registed`);
+      });
 
       return true;
     },

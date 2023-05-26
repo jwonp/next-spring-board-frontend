@@ -35,10 +35,7 @@ const Header = () => {
       return { signFunc: () => signOut(), signStr: HeaderRightMenu.logout };
     } else {
       return {
-        signFunc: () =>
-          signIn(undefined, {
-            callbackUrl: process.env.NEXT_PUBLIC_FRONTEND_END_POINT,
-          }),
+        signFunc: () => signIn(),
         signStr: HeaderRightMenu.login,
       };
     }
