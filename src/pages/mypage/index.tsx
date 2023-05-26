@@ -54,6 +54,9 @@ const MyPageIndex = () => {
           <div className={`${styles.card}`}>
             {typeof data === "string" ? data : "No"}
           </div>
+          {data?.map((value, index) => {
+            return <div className={`${styles.card}`}>{value.title}</div>;
+          })}
           <div className={`${styles.card}`}>{1}</div>
           <div className={`${styles.card}`}>{2}</div>
           <div className={`${styles.card}`}>{3}</div>

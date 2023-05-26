@@ -11,8 +11,7 @@ export default function handler(
   res: NextApiResponse<ContentData[] | undefined | string>
 ) {
   const { user } = req.query;
-  res.status(200).send(`${user as string} called liked contents`);
-  //   getLikedContents(user as string).then((_res) => {
-
-  //   });
+  getLikedContents(user as string).then((_res) => {
+    res.status(200).send(_res.data);
+  });
 }
