@@ -51,7 +51,8 @@ export const replaceBold = (
     innerHTMLs += _child.outerHTML;
   });
   console.log(`inner HTMLs is ${innerHTMLs}`);
-  console.log(`editable innerhtml is ${$editable.current.innerHTML}`);
+  console.log(`editable innerhtml
+   is ${$editable.current.innerHTML}`);
   //   console.log(innerHTML);
   /*
    
