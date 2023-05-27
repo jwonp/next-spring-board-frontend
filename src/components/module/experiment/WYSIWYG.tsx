@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import styles from "./WYSIWYG.module.scss";
 import { useRouter } from "next/router";
 import EditableBar from "./EditableBar";
+import { keepFirstDiv, replaceBold } from "./WYSIWYGfunc";
 const WYSIWYG = () => {
   const router = useRouter();
   const $editable = useRef<HTMLDivElement>(null);
@@ -11,10 +12,11 @@ const WYSIWYG = () => {
     if (router.isReady === false) return;
     selection.current = document.getSelection();
     range.current = document.createRange();
+
     document.onselectionchange = () => {
       if (selection.current.isCollapsed) {
       }
-      console.log(selection.current.focusNode.parentElement.tagName);
+      // console.log(selection.current.focusNode.parentElement.tagName);
     };
   }, [router.isReady]);
   return (
@@ -24,71 +26,16 @@ const WYSIWYG = () => {
         <div className={`${styles.box}`}>
           <div
             className={`${styles.button}`}
-            onClick={() => {
-              const focusNode = selection.current.focusNode.parentNode;
-              const anchorNode = selection.current.anchorNode.parentNode;
-              const childNodes = $editable.current.childNodes;
-              const children = $editable.current.children;
-              console.log(childNodes);
-              childNodes.forEach((value, index) => {
-                if (focusNode.isSameNode(value)) {
-                  console.log(`focus node's index is ${index}`);
-                  const child = children[index];
-                  const _surplusString = child.textContent.substring(
-                    0,
-                    selection.current.focusOffset
-                  );
-                  const _targetString = child.textContent.substring(
-                    selection.current.focusOffset
-                  );
-
-                  child.innerHTML = child.innerHTML.replace(
-                    child.textContent,
-                    `${_surplusString}<strong>${_targetString}<strong>`
-                  );
-
-                  return;
-                }
-                if (anchorNode.isSameNode(value)) {
-                  console.log(`anchor node's index is ${index}`);
-                  const child = children[index];
-                  const _targetString = child.textContent.substring(
-                    0,
-                    selection.current.anchorOffset
-                  );
-                  const _surplusString = child.textContent.substring(
-                    selection.current.anchorOffset
-                  );
-
-                  child.innerHTML = child.innerHTML.replace(
-                    child.textContent,
-                    `<strong>${_targetString}<strong>${_surplusString}`
-                  );
-
-                  return;
-                }
-                if (selection.current.containsNode(value)) {
-                  console.log(`${index}'s node is contained in selection`);
-                  const child = children[index];
-                  const childNode = childNodes[index];
-                  console.log(child.tagName);
-                  child.innerHTML = child.innerHTML.replace(
-                    child.textContent,
-                    `<strong>${child.textContent}<strong>`
-                  );
-                }
-                // console.log(index);
-              });
-
-              //   console.log($editable.current.innerHTML);
-            }}>
+            onClick={() => {}}>
             TEST
           </div>
         </div>
         <div className={`${styles.box}`}>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              replaceBold($editable, selection);
+            }}>
             굵게
           </div>
           <div
@@ -167,7 +114,10 @@ const WYSIWYG = () => {
       <div
         ref={$editable}
         contentEditable={true}
-        suppressContentEditableWarning={true}>
+        suppressContentEditableWarning={true}
+        onInput={(e) => {
+          keepFirstDiv(e, selection);
+        }}>
         <EditableBar>hi</EditableBar>
       </div>
     </div>
