@@ -8,12 +8,15 @@ const getWrittenContents = async (userId: string) => {
 };
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ContentData[] | undefined | string>
+  res: NextApiResponse<ContentData[] | undefined>
 ) {
   const { user } = req.query;
 
-  res.status(200).send(`${user as string} called written contents`);
-  //   getWrittenContents(user as string).then((_res) => {
-
-  //   });
+  getWrittenContents(user as string)
+    .then((_res) => {
+      res.status(200).send(_res.data);
+    })
+    .catch((_err) => {
+      res.status(_err.response.status).send(undefined);
+    });
 }
