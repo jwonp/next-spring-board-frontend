@@ -1,4 +1,58 @@
 import { MutableRefObject } from "react";
+class ContainedInSelectionNode {
+  $editable: MutableRefObject<HTMLDivElement>;
+  selection: MutableRefObject<Selection>;
+
+  focusFunc: (...params: any) => any;
+  anchorFunc: (...params: any) => any;
+  containsFunc: (...params: any) => any;
+
+  instructor(
+    $editable: MutableRefObject<HTMLDivElement>,
+    selection: MutableRefObject<Selection>,
+    focusFunc: (...params: any) => any,
+    anchorFunc: (...params: any) => any,
+    containsFunc: (...params: any) => any
+  ) {
+    this.$editable = $editable;
+    this.selection = selection;
+
+    this.focusFunc = focusFunc;
+    this.anchorFunc = anchorFunc;
+    this.containsFunc = containsFunc;
+  }
+
+  runFromFocusToAnchor() {
+    const focusNode = this.selection.current.focusNode.parentNode;
+    const anchorNode = this.selection.current.anchorNode.parentNode;
+    const childNodes = this.$editable.current.childNodes;
+    const children = this.$editable.current.children;
+    childNodes.forEach((value, index) => {
+      if (this.selection.current.containsNode(value, true) === false) {
+        this.focusFunc();
+        return;
+      }
+
+      if (focusNode.isSameNode(value)) {
+        this.anchorFunc();
+        return;
+      }
+      if (anchorNode.isSameNode(value)) {
+        this.containsFunc();
+        return;
+      }
+    });
+  }
+}
+
+export const testEditable = (
+  $editable: MutableRefObject<HTMLDivElement>,
+  selection: MutableRefObject<Selection>
+) => {
+  console.log($editable.current);
+  console.log(selection.current);
+};
+
 export const keepFirstDiv = (
   e: React.FormEvent<HTMLDivElement>,
   selection: MutableRefObject<Selection>

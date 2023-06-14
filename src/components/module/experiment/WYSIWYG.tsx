@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import styles from "./WYSIWYG.module.scss";
 import { useRouter } from "next/router";
 import EditableBar from "./EditableBar";
-import { keepFirstDiv, replaceBold } from "./WYSIWYGfunc";
+import { keepFirstDiv, replaceBold, testEditable } from "./WYSIWYGfunc";
 const WYSIWYG = () => {
   const router = useRouter();
   const $editable = useRef<HTMLDivElement>(null);
@@ -26,7 +26,9 @@ const WYSIWYG = () => {
         <div className={`${styles.box}`}>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              testEditable($editable, selection);
+            }}>
             TEST
           </div>
         </div>
@@ -34,40 +36,59 @@ const WYSIWYG = () => {
           <div
             className={`${styles.button}`}
             onClick={() => {
+              //<strong>
               replaceBold($editable, selection);
             }}>
             굵게
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<em>
+            }}>
             기울임
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<s>
+            }}>
             취소선
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<a>
+            }}>
             링크
           </div>
         </div>
         <div className={`${styles.box}`}>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<code>
+            }}>
             코드
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<pre>
+              //  <code></code>
+              //</pre>
+            }}>
             코드블럭
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<blockquote>
+              //  :before
+              //  <p></p>
+              //  :after
+              //</blockquote>
+            }}>
             인용구
           </div>
           <div
@@ -79,34 +100,46 @@ const WYSIWYG = () => {
         <div className={`${styles.box}`}>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<h1>
+            }}>
             H1
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<h2>
+            }}>
             H2
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<h3>
+            }}>
             H3
           </div>
         </div>
         <div className={`${styles.box}`}>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<ul>
+            }}>
             글머리
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<ol>
+            }}>
             번호 목록
           </div>
           <div
             className={`${styles.button}`}
-            onClick={() => {}}>
+            onClick={() => {
+              //<hr>
+            }}>
             구분선
           </div>
         </div>
@@ -118,7 +151,13 @@ const WYSIWYG = () => {
         onInput={(e) => {
           keepFirstDiv(e, selection);
         }}>
-        <EditableBar>hi</EditableBar>
+        <p>
+          A B C D <strong>E F G</strong> H I
+        </p>
+        <p>
+          A B C <em>D E</em> F G
+        </p>
+        <div>A B C D E F G</div>
       </div>
     </div>
   );
