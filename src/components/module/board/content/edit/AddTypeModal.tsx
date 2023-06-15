@@ -13,7 +13,7 @@ import { useAppDispatch } from "@src/redux/hooks";
 import { addImage, addNewContent } from "@src/redux/features/content";
 import { sendFile } from "@src/components/func/RequestFuncs";
 
-const AddTypeModel = ({
+const AddTypeModal = ({
   isOpen,
   mouseOnIndex,
   location,
@@ -130,4 +130,4 @@ const AddTypeModel = ({
   );
 };
 
-export default AddTypeModel;
+export default AddTypeModal;
