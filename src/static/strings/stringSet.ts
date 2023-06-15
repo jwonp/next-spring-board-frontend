@@ -60,3 +60,9 @@ export const CONTENT_INPUT_PLACEHOLDER = "제목을 입력해주세요.";
 export const SUBMIT = "submit";
 
 export const NO_IMAGE = "No Image";
+
+
+export const ADD_TYPE_MODAL = {
+  text:"텍스트",
+  image:"이미지"
+}

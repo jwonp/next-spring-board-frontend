@@ -12,6 +12,7 @@ import { ImageUploadResponse } from "@src/static/types/ImageUploadType";
 import { useAppDispatch } from "@src/redux/hooks";
 import { addImage, addNewContent } from "@src/redux/features/content";
 import { sendFile } from "@src/components/func/RequestFuncs";
+import { ADD_TYPE_MODAL } from "@src/static/strings/stringSet";
 
 const AddTypeModal = ({
   isOpen,
@@ -103,7 +104,7 @@ const AddTypeModal = ({
             width={iconSize.width}
             height={iconSize.height}
           />
-          <div>텍스트</div>
+          <div>{ADD_TYPE_MODAL.text}</div>
         </div>
         <div
           className={`${styles.item}`}
@@ -115,7 +116,7 @@ const AddTypeModal = ({
             width={iconSize.width}
             height={iconSize.height}
           />
-          <div>이미지</div>
+          <div>{ADD_TYPE_MODAL.image}</div>
         </div>
       </div>
       <input
