@@ -70,7 +70,7 @@ import {
   CONTROL_ID,
   DRAGGED_TARGET_ID,
   HANDLE_BTN_ID,
-} from "@src/static/strings/HttpElementId";
+} from "@src/static/strings/HtmlElementId";
 import { addOne, subjectOne } from "@src/components/func/OneFunc";
 import { __Not_Applicated, __One, __Zero } from "@src/static/numbers/numberSet";
 import { defaultLocation } from "@src/components/objects/defaultValues";

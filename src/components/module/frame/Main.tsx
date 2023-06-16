@@ -1,7 +1,7 @@
 import { getWindowWidth } from "@src/components/func/ImageHandler";
 import { setWidth } from "@src/redux/features/windowWidth";
 import { useAppDispatch } from "@src/redux/hooks";
-import { MAIN_ID } from "@src/static/strings/HttpElementId";
+import { MAIN_ID } from "@src/static/strings/HtmlElementId";
 import styles from "@src/styles/frame/Main.module.scss";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

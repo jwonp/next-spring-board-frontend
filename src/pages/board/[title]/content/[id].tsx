@@ -22,7 +22,7 @@ import ContentModifyButton from "@src/components/module/board/content/button/Con
 import ContentDeleteButton from "@src/components/module/board/content/button/ContentDeleteButton";
 import { ParsedContent } from "@src/static/types/ParsedContentType";
 
-import { CONTENT_BY_ID_ID } from "@src/static/strings/HttpElementId";
+import { CONTENT_BY_ID_ID } from "@src/static/strings/HtmlElementId";
 import { contentMetaColumns } from "@src/static/strings/stringSet";
 import Empty from "@src/components/module/Empty";
 
