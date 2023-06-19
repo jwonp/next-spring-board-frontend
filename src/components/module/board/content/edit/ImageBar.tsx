@@ -7,8 +7,9 @@ import {
   setPosition,
   setSize,
   setVisible,
+  setImageFocusIndex,
 } from "@src/redux/features/imageHandler";
-import { getContents, setImageFocusIndex } from "@src/redux/features/content";
+import { getContents } from "@src/redux/features/content";
 import { useSession } from "next-auth/react";
 
 import { Size } from "@src/static/types/SizeType";

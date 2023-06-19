@@ -1,9 +1,7 @@
+import { removeContentByIndex } from "@src/redux/features/content";
 import {
   getImageFocusIndex,
-  removeContentByIndex,
   resetImageFocusIndex,
-} from "@src/redux/features/content";
-import {
   getIsVisible,
   getPosition,
   getSize,

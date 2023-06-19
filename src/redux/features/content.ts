@@ -11,13 +11,13 @@ import { __One, __Zero } from "@src/static/numbers/numberSet";
 interface ContentState {
   contents: ContentBarData[];
   images: string[];
-  imageFocusIdnex: number;
+
 }
 
 const initialState: ContentState = {
   contents: [{ type: "text", content: "" }],
   images: [],
-  imageFocusIdnex: -1,
+  
 };
 
 export type ModifyData = { index: number; content: string };
@@ -76,7 +76,10 @@ export const content = createSlice({
     resetContents: (state) => {
       state.contents = [{ type: "text", content: "" }];
     },
-    swapElementsSequenceInContents: (state, actions: PayloadAction<ContentSwapIndexs>) => {
+    swapElementsSequenceInContents: (
+      state,
+      actions: PayloadAction<ContentSwapIndexs>
+    ) => {
       const { target, moveTo } = actions.payload;
 
       if (target < __Zero || moveTo < __Zero || target === moveTo) return;
@@ -95,9 +98,7 @@ export const content = createSlice({
         (_, index) => actions.payload != index
       );
     },
-    setImageFocusIndex: (state, actions: PayloadAction<number>) => {
-      state.imageFocusIdnex = actions.payload;
-    },
+ 
     resetImages: (state) => {
       state.images = [];
     },
@@ -105,9 +106,7 @@ export const content = createSlice({
       state.contents = [{ type: "text", content: "" }];
       state.images = [];
     },
-    resetImageFocusIndex: (state) => {
-      state.imageFocusIdnex = -1;
-    },
+
   },
 });
 
@@ -121,16 +120,15 @@ export const {
   resetContents,
   addImage,
   removeImageByIndex,
-  setImageFocusIndex,
+
   resetImages,
   resetContent,
-  resetImageFocusIndex,
+
 } = content.actions;
 
 export const getContent = (state: AppState) => state.content;
 export const getContents = (state: AppState) => state.content.contents;
 export const getImages = (state: AppState) => state.content.images;
-export const getImageFocusIndex = (state: AppState) =>
-  state.content.imageFocusIdnex;
+
 
 export default content.reducer;
