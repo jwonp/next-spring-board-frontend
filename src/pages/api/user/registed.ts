@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const isUserRegisted = async (id: string, provider: string) => {
@@ -18,7 +18,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       );
       res.status(_res.status).send(true);
     })
-    .catch((_err) => {
+    .catch((_err: AxiosError) => {
+      console.log(_err.response);
       res.status(_err.response.status).send(false);
     });
 }
