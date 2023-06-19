@@ -127,7 +127,10 @@ $fadeout: fadeout 0.3s;
 
 /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
 @media all and (min-width: vars.$windowWidth-mobile) and (max-width: calc(vars.$windowWidth-tablet - 1px)) {
-  /*스타일입력*/
+  .submit_btn input {
+    padding: 0;
+    width: 100%;
+  }
 }
 
 /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
@@ -153,13 +156,11 @@ $fadeout: fadeout 0.3s;
 
   .content_title {
     & input {
-      font-size: 1em;
       height: 100%;
     }
   }
   .submit_btn input {
     width: 100%;
-    font-size: 1em;
   }
   .content_container {
     width: calc(100% - 2em);
