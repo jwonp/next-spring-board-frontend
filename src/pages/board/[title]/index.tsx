@@ -18,7 +18,7 @@ import {
 } from "@src/static/strings/stringSet";
 import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
 import { getIndex, setIndex } from "@src/redux/features/pageIndex";
-import ContentViewList from "@src/components/module/board/content/edit/ContentViewList";
+import ContentList from "@src/components/module/board/ContentList";
 import { SEARCH_SVG } from "@src/static/strings/IconSrc";
 
 const BoardByTitle = () => {
@@ -47,7 +47,7 @@ const BoardByTitle = () => {
     }
 
     return (
-      <ContentViewList
+      <ContentList
         contentList={contentData?.data}
         boardTitle={boardTitle}
       />

@@ -7,7 +7,7 @@ import {
   RecentlyURL,
 } from "@src/components/fetcher/IndexPageFetecher";
 
-import ContentViewList from "@src/components/module/board/content/edit/ContentViewList";
+import ContentList from "@src/components/module/board/ContentList";
 import { titlesOnIndexPage } from "@src/static/strings/stringSet";
 import styles from "@src/styles/index.module.scss";
 import { Inter } from "next/font/google";
@@ -21,15 +21,15 @@ const Home = () => {
   const RecentlySWR = useSWR(RecentlyURL(), RecentlyFetcher);
 
   const MostViewList = useMemo(() => {
-    return <ContentViewList contentList={MostViewSWR?.data} />;
+    return <ContentList contentList={MostViewSWR?.data} />;
   }, [MostViewSWR]);
 
   const MostLikeList = useMemo(() => {
-    return <ContentViewList contentList={MostLikeSWR?.data} />;
+    return <ContentList contentList={MostLikeSWR?.data} />;
   }, [MostLikeSWR]);
 
   const RecentlyList = useMemo(() => {
-    return <ContentViewList contentList={RecentlySWR?.data} />;
+    return <ContentList contentList={RecentlySWR?.data} />;
   }, [RecentlySWR]);
 
   return (

@@ -1,8 +1,8 @@
 import { ContentData } from "@src/static/types/ContentType";
-import ContentBar from "../../ContentBar";
+import ContentBar from "./ContentBar";
 import { useMemo } from "react";
 
-const ContentViewList = ({
+const ContentList = ({
   contentList,
   boardTitle,
 }: {
@@ -24,4 +24,4 @@ const ContentViewList = ({
   return <div>{contentBarList}</div>;
 };
 
-export default ContentViewList;
+export default ContentList;
