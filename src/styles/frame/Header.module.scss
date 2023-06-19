@@ -28,7 +28,9 @@
 .logo {
   position: relative;
   width: vars.$headerHeight * 1.1;
+  min-width: vars.$headerHeight * 1.1;
   height: vars.$headerHeight * 1.1;
+  min-height: vars.$headerHeight * 1.1;
   overflow: hidden;
   border-radius: 15px;
 }
@@ -60,6 +62,9 @@
     font-size: 0.8rem;
   }
   .box:nth-child(2) {
+    display: block;
+  }
+  .toggle_btn {
     display: block;
   }
 }
