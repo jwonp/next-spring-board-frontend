@@ -12,7 +12,7 @@ const handler = (
   res: NextApiResponse<ImageUploadResponse>
 ) => {
   httpProxyMiddleware(req, res, {
-    target: "http://127.0.0.1:8000",
+    target: process.env.FILE_SERVER_END_POINT,
     pathRewrite: [
       {
         patternStr: "^/api/board/file",
