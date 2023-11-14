@@ -46,9 +46,6 @@
 	</tr>
 </table>
 
-
----
-
 ### Database
 <table>
 	<tr>
