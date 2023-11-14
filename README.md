@@ -3,30 +3,79 @@
 ## 기술 스택
 
 ### Frontend
-
-- Next.js
-- Typescript
-- SWR
-- Redux toolkit
-
----
+<table>
+	<tr>
+		<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566879300/noticon/fvty9lnsbjol5lq9u3by.svg" width="80px" height="80px"/>		
+		</td>
+	  	<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566913457/noticon/eh4d0dnic4n1neth3fui.png" width="80px" height="80px"/>			
+		</td>
+	  	<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1691760811/noticon/mj67k1iwrb1vjrrntob2.png" width="80px" height="80px"/>
+		</td>
+	  	<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566919941/noticon/bwij1af50rjj0fiyjtci.png" width="80px" height="80px"/>
+		</td>	
+	</tr>
+	<tr>
+		<td>Next.js</td>
+	  	<td>Typescript</td>
+	  	<td>SWR</td>
+	  	<td>Redux toolkit</td>	
+	</tr>
+</table>
 
 ### Backend
+<table>
+	<tr>
+		<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567008187/noticon/m4oad4rbf65fjszx0did.png" width="80px" height="80px"/>		
+		</td>
+	  	<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1686935854/noticon/r7w1ipwmdmhlfzqfw69h.png" width="80px" height="80px"/>			
+		</td>
+	  	<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1687307488/noticon/o9lxyva5z8zbwyeaxers.png" width="80px" height="80px"/>
+		</td>
+	</tr>
+	<tr>
+		<td>Spring boot</td>
+	  	<td>Spring security</td>
+	  	<td>Spring Data JPA</td>	
+	</tr>
+</table>
 
-- Spring boot
-- Spring security
-- Spring JPA
 
 ---
 
 ### Database
-
-- Mysql
-
----
+<table>
+	<tr>
+		<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566913591/noticon/e2bd9zw78n6zw6his4bd.png" width="80px" height="80px"/>		
+		</td>
+	</tr>
+	<tr>
+		<td>Mysql</td>
+	</tr>
+</table>
 
 ### DevOps
-
+<table>
+	<tr>
+		<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1629987467/noticon/o0ua9qgyuuoazjqwwvas.png" width="80px" height="80px"/>		
+		</td>
+		<td>
+			<image src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1683592944/noticon/plcvyiwmdh4adlt8dxgo.png" width="80px" height="80px"/>		
+		</td>
+	</tr>
+	<tr>
+		<td>AWS EC2</td>
+		<td>AWS RDS</td>
+	</tr>
+</table>
 - AWS EC2
 - RDS
 
