@@ -427,9 +427,11 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 
 > $ git config —global user.email “YOUR_EMAIL”
 
+---
+
 ## 개발 Docs
 
-## 상태 관리 by redux
+### 상태 관리 by redux
 
 - `commentModify`
     
@@ -473,9 +475,9 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
         - `width` : 브라우저의 넓이
 
 
-## Components
+### Components
 
-### Board
+#### Board
 
 - `ContentBar`
     - 게시판의 게시글 목록에서 하나의 게시글의 링크를 가지고 있는 Bar 입니다.
@@ -484,7 +486,7 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `PaginationBar`
     - 게시글을 페이지네이션으로 불러오는 Component 입니다.
 
-### Board Content
+#### Board Content
 
 - `Comment`
     - 댓글 편집기, 목록을 담고 있는 컨테이너 Component 입니다.
@@ -495,7 +497,7 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `ContentViewBar`
     - 게시글에서 텍스트 하나를 표시하는 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)입니다.
 
-### Board Content Button
+#### Board Content Button
 
 - `CommentDeleteButton`
     - 댓글의 작성자에게만 나타나는 댓글 삭제 버튼입니다.
@@ -508,7 +510,7 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `LikeButton`
     - 게시글에 있는 좋아요 버튼입니다.
 
-### Board Content Edit
+#### Board Content Edit
 
 - `AddTypeModal`
     - 게시글 편집 중 블록 추가 시 텍스트, 이미지 중 하나를 추가하기 위한 Modal 입니다.
@@ -521,7 +523,7 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `TextBar`
     - `ContentEditBar`에 포함된 텍스트를 표시하는 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)입니다.
 
-### Frame
+#### Frame
 
 - `Layout`
     - 페이지의 전체적인 구조를 담고 있는 Layout Component 입니다.
@@ -532,7 +534,7 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `Main`
     - 페이지 내용에 대한 컨테이너 Component 입니다.
 
-### Frame Menu
+#### Frame Menu
 
 - `BoardMenu`
     - 게시판 메뉴들을 가지고 있는 Component 입니다. 반응형으로 `Header`나 `AppDrawer`에 표시됩니다.
