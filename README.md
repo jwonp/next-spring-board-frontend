@@ -79,13 +79,13 @@
 ## Overview
 
 대중적인 게시판의 기능들을 제작하는 것이 이번 프로젝트의 목표입니다. 게시글 작성과, 댓글 작성, 게시글 마다 “좋아요”를 할 수 있습니다. 게시글 작성은 Notion의 문서 편집 방식을 모방했습니다.
-
+### 인덱스 페이지
 ![인덱스페이지](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EC%9D%B8%EB%8D%B1%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%A7%80.png)
-
+### 게시글 목록 페이지
 ![게시판](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%80%E1%85%A6%E1%84%89%E1%85%B5%E1%84%91%E1%85%A1%E1%86%AB.png)
-
+### 게시글 작성 페이지
 ![글작성페이지](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%80%E1%85%B3%E1%86%AF%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%89%E1%85%A5%E1%86%BC%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5.png)
-
+### 게시글 댓글
 ![댓글](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%83%E1%85%A2%E1%86%BA%E1%84%80%E1%85%B3%E1%86%AF.png)
 
 ## 개발 Story
@@ -108,8 +108,7 @@ Next auth는 Next.js Server에서 동작하기 때문에 브라우저에서는 �
 로그인 후 API를 요청이 응답을 받기 까지의 과정은 다음과 같습니다.
 
 ![요청이 정상적으로 응답을 받기까지의 과정](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/next+auth+%EC%9D%B8%EC%A6%9D%EC%B2%98%EB%A6%AC/%E1%84%89%E1%85%B5%E1%84%8F%E1%85%AF%E1%86%AB%E1%84%89%E1%85%B3.png)
-
-요청이 정상적으로 응답을 받기까지의 과정
+> 요청이 정상적으로 응답을 받기까지의 과정
 
 ### Notion like 게시글 편집
 #### Why
@@ -138,10 +137,12 @@ interface ContentState {
 //edit.tsx
 const contents = useAppSelector(getContents);
 const ContentEditBarList = useMemo(() => {
-		// ...
+
+// ...
+
     return contents.map((value, index) => (
       <ContentEditBar
-				// {...props}
+	// {...props}
       />
     ));
   }, [contents]);
@@ -162,7 +163,7 @@ const ContentEditBarList = useMemo(() => {
 ### 게시글 작성 중 이미지 저장 관리
 #### Why
 
-_ 게시글 작성 중 이미지를 업로드 하면 이미지 서버에 따로 저장되고, 이미지 서버가 응답으로 보내주는 이미지에 대한 URL 사용하는 방식을 사용하고 있었습니다.
+- 게시글 작성 중 이미지를 업로드 하면 이미지 서버에 따로 저장되고, 이미지 서버가 응답으로 보내주는 이미지에 대한 URL 사용하는 방식을 사용하고 있었습니다.
 - 게시글이 삭제될 때, DB에 저장된 이미지들 정보도 같이 삭제되어야 하는데, 이를 위해서는 게시글의 ID과 이미지의 ID를 JOIN해야 합니다.
 - 하지만 게시글의 ID는 게시글이 저장될 때 정해지기 때문에, 저장 전에 발급받는 이미지 ID와 연관을 짓기 위해 게시글을 저장하고, 생성된 게시글 ID을 저장된 이미지들의 ID와 연동하는 작업을 할 필요가 있었습니다.
 
@@ -175,12 +176,12 @@ _ 게시글 작성 중 이미지를 업로드 하면 이미지 서버에 따로 
 const handleClickSubmit = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
-			// ...
+	// ...
       saveContent(data).then((res) => {
 				// res.data => 등록된 게시글의 ID
         confirmImages(res.data, images, session.user.id);
       });
-			// ...
+	// ...
   };
 ```
 
@@ -195,12 +196,9 @@ const handleClickSubmit = (
 - 하지만 이미지의 width가 너무 큰 경우에는 일부가 화면을 넘어가는 경우가 생기고, X축 스크롤이 생기는 것이 UX의 관점에서 불편하고 생각했습니다.
 
 ![이미지 크기를 따로 조절해주지 않으면 위와 같이 이미지가 화면에 깔끔하게 맞춰지는 것이 아니라, X축에 스크롤이 생깁니다.](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%97%90%EC%84%9C+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%81%AC%EA%B8%B0+%EC%B2%98%EB%A6%AC/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5%E1%84%8F%E1%85%B3%E1%84%80%E1%85%B5.png)
-
-이미지 크기를 따로 조절해주지 않으면 위와 같이 이미지가 화면에 깔끔하게 맞춰지는 것이 아니라, X축에 스크롤이 생깁니다.
+> 이미지 크기를 따로 조절해주지 않으면 위와 같이 이미지가 화면에 깔끔하게 맞춰지는 것이 아니라, X축에 스크롤이 생깁니다.
 
 - 그렇기 때문에 현재 브라우저의 창의 크기를 이벤트 리스너로 감지하면서 이미지의 원본 크기에 맞춰서 적당한 크기로 맞춰주는 작업을 했습니다.
-
----
 
 #### How
 
@@ -211,7 +209,7 @@ const handleClickSubmit = (
 - next/Image에서 src의 이미지를 불러왔을때 onLoadingComplete가 동작합니다.
 
 ```jsx
-		<div
+<div
       ref={$image}
       className={`${styles.image_box}`}>
       <Image
@@ -222,13 +220,13 @@ const handleClickSubmit = (
         height={imageSize.height}
         unoptimized={true}
         priority={true}
-    />
-    </div>
+/>
+</div>
 ```
 
 - onLoadingComplete는 decode된 HTMLImageElement를 넘겨주는데, 이를 가지고 이미지의 원본 크기를 저장합니다.
 
-```
+```tsx
 const onLoadingCompleteHandler = async (img: HTMLImageElement) => {
     const naturalImageSize: SizeType = getNaturalImageSize(img);
     setNaturalImageSize(naturalImageSize);
@@ -238,8 +236,7 @@ const onLoadingCompleteHandler = async (img: HTMLImageElement) => {
 - 이때, Optimized된 경우에는 아래 이미지처럼 “Example Image”라 적혀있는 text bar 한 줄 높이에 맞춰서 크기를 최적화해버리기 때문에 이를 비활성화해서 이미지를 가져옵니다.
 
 ![next/image에서 최적회된 이미지는 natural width, height가 상위 요소의 크기에 맞게 최적화해서 가져오기 때문에 상당히 작게 표시됩니다.](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%97%90%EC%84%9C+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%81%AC%EA%B8%B0+%EC%B2%98%EB%A6%AC/%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%B5%9C%EC%A0%81%ED%99%94+%EC%8B%A4%ED%8C%A8.png)
-
-next/image에서 최적회된 이미지는 natural width, height가 상위 요소의 크기에 맞게 최적화해서 가져오기 때문에 상당히 작게 표시됩니다.
+> next/image에서 최적회된 이미지는 natural width, height가 상위 요소의 크기에 맞게 최적화해서 가져오기 때문에 상당히 작게 표시됩니다.
 
 - 이후 브라우저 창의 크기가 바뀔때마다 화면에 맞는 크기로 이미지가 resize됩니다.
 
@@ -264,7 +261,7 @@ useEffect(() => {
 
 - 게시글을 작성할 때, 입력되는 모든 것은 contents라는 객체에 저장됩니다. contents는 ContentBarData의 객체의 Array 형식입니다.
 
-```jsx
+```tsx
 interface ContentBarData {
   type: ContentType;
   content: string;
@@ -276,34 +273,35 @@ interface ContentBarData {
 - 그렇기 때문에 Props Drilling이 발생했고, 이를 해결하기로 했습니다.
 
 ```jsx
-		<div
+<div
       ref={$wrapper}
       className={`${styles.wrapper}`}
       onClick={handleClickWrapper}
       onMouseMove={handleMouseMoveWrapper}
       onMouseLeave={handleMouseLeave}
-      onMouseUp={handleMouseUpWrapper}>
+      onMouseUp={handleMouseUpWrapper}
+>
       {getBarByType(type)}
-    </div>
+</div>
 ```
 
-```jsx
+```tsx
 const getBarByType = (type: string) => {
     if (type === ContentTypes.text) {
       return (
-				<TextBar
+	<TextBar
           contents={contents}
-					// ... props
+	  // ... props
         />
       );
     }
     if (type === ContentTypes.image) {
       return (
-				<ImageBar 
-					contents={contents}
-					// ... props
-				/>
-			);
+	<ImageBar 
+		contents={contents}
+		// ... props
+	/>
+	);
     }
   };
 ```
@@ -312,15 +310,12 @@ const getBarByType = (type: string) => {
 
 Redux의 공식 문서에서는 Redux Toolkit을 사용하는 것을 권장하고 있습니다. 그렇기에 권장사항을 따라서 RTK의 기본 설정을 했습니다.
 
----
-
 **RTK 폴더 구조**
 
-> ∨ redux ∨ features └ content.ts └ hooks.ts └ reducer.ts └ store.ts
+> / redux / features / content.ts , hooks.ts , reducer.ts , store.ts
 
----
 
-```jsx
+```tsx
 
 interface ContentState {
   contents: ContentBarData[];
@@ -335,25 +330,25 @@ export const content = createSlice({
   initialState,
   reducers: {
     setContents: (state, actions: ContentsActions) => {
-		  // state.contents = {{ NewContents }} 
+	// state.contents = {{ NewContents }} 
     },
     addContent: (state, actions: ContentActions) => {
-      // state.contents = [...state.contents, {{ NewContent }}];
+	// state.contents = [...state.contents, {{ NewContent }}];
     },
     addNewContent: (state, actions: AddNewContentActions) => {
-	    // state.contents = [ ... , state.contents[index] = {{ NewContent }} , ... ]
+	// state.contents = [ ... , state.contents[index] = {{ NewContent }} , ... ]
     },
     modifyContentByIndex: (state, actions: ModifyByIndexActions) => {
-      // state.contents[index] = {{ ModifiedContent }}
+	// state.contents[index] = {{ ModifiedContent }}
     },
     removeContentByIndex: (state, actions: DeleteByIndexActions) => {
-      // state.contents filter index !== targetIndex
+	// state.contents filter index !== targetIndex
     },
     resetContents: (state) => {
-      // state.contents = {{ initContents }};
+	// state.contents = {{ initContents }};
     },
     swapElementsSequenceInContents: (state, actions: SwapActions) => {
-			// swap state.contents[A], state.contents[B]
+	// swap state.contents[A], state.contents[B]
   },
 });
 
@@ -366,16 +361,17 @@ export default content.reducer;
 ```
 
 ### 상수 문자열 관리
-## Why
+#### Why
 
 - 프로젝트 진행 중 Component가 늘어날수록 Component에서 사용하는 상수 문자열이 늘어남에 따라 수정할 때마다 직접 수정하는 것이 번거로워져서 따로 TS 파일에 상수로써 관리할 필요가 있었습니다.
 - 긴 문자열을 입력할 때 오탈자가 생기거나, 시간이 조금 더 걸리는 것을 따로 상수로 export 하면 IDE에서 추적, 관리 되기 떄문에 효율적인 개발이 가능해지는 기대를 할 수 있었습니다.
 
-## How
+#### How
 
 src/static 폴더를 따로 생성한 뒤에 상수의 타입에 맞춰서 numbers, strings의 폴더를 하위 폴더로 생성했습니다.
 
-> ∨ static ∨ numbers └ numberSet.ts ∨ strings └ HtmlElementId.ts └ IconSrc.ts └ requestURI.ts └ stringSet.ts
+> / static / numbers / numberSet.ts
+> 	/ strings / HtmlElementId.ts , IconSrc.ts , requestURI.ts , stringSet.ts
 
 다음과 같이 Component에서 사용할 여러가지 문자열들을 상수로 선언해서 여기저기 흩어져있는 문자열들을 한 곳에서 관리할 수 있게 했습니다.
 
@@ -542,19 +538,7 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `BoardMenu`
     - 게시판 메뉴들을 가지고 있는 Component 입니다. 반응형으로 `Header`나 `AppDrawer`에 표시됩니다.
 
-## Pages
-
-- ## IndexPage
-    
-- BoardPage
-    - 게시글 목록을 보여줍니다.
-    - 페이지네이션을 적용했습니다.
-- ContentPage
-    - 게시글을 볼 수 있습니다.
-    - 작성자의 경우 ModifyPage로 이동할 수 있습니다.
-- ## ContentEditPage
-    
-- ## ModifyPage
+---
 
 ## 백엔드 API Docs (with Postman)
 
