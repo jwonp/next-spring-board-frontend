@@ -493,9 +493,9 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `CommentBar`
     - 하나의 댓글을 표시하는 Bar 입니다.
 - `ContentImageViewBar`
-    - 게시글에서 이미지 하나를 표시하는 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)입니다.
+    - 게시글에서 이미지 하나를 표시하는 블록입니다.
 - `ContentViewBar`
-    - 게시글에서 텍스트 하나를 표시하는 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)입니다.
+    - 게시글에서 텍스트 하나를 표시하는 블록입니다.
 
 #### Board Content Button
 
@@ -515,13 +515,13 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 - `AddTypeModal`
     - 게시글 편집 중 블록 추가 시 텍스트, 이미지 중 하나를 추가하기 위한 Modal 입니다.
 - `ContentEditBar`
-    - 게시글 편집 페이지에서 하나의 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)을 구성하는 최상위 Component 입니다.
+    - 게시글 편집 페이지에서 하나의 블록을 구성하는 최상위 Component 입니다.
 - `ImageBar`
-    - `ContentEditBar`에 포함된 이미지를 표시하는 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)입니다.
+    - `ContentEditBar`에 포함된 이미지를 표시하는 블록입니다.
 - `ImageHandler`
     - `ImageBar`의 이미지를 삭제하기 위한 Modal 입니다.
 - `TextBar`
-    - `ContentEditBar`에 포함된 텍스트를 표시하는 [블록](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)입니다.
+    - `ContentEditBar`에 포함된 텍스트를 표시하는 블록입니다.
 
 #### Frame
 
