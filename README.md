@@ -80,13 +80,13 @@
 
 대중적인 게시판의 기능들을 제작하는 것이 이번 프로젝트의 목표입니다. 게시글 작성과, 댓글 작성, 게시글 마다 “좋아요”를 할 수 있습니다. 게시글 작성은 Notion의 문서 편집 방식을 모방했습니다.
 
-![스크린샷 2023-06-20 00.07.44.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c126515c-c556-46e8-bb41-8294ebc4004f/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-20_00.07.44.png)
+![인덱스페이지](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EC%9D%B8%EB%8D%B1%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%A7%80.png)
 
-![스크린샷 2023-06-20 00.08.02.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dfaee1fb-5ee4-4a79-9632-c736b5cb5c13/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-20_00.08.02.png)
+![게시판](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%80%E1%85%A6%E1%84%89%E1%85%B5%E1%84%91%E1%85%A1%E1%86%AB.png)
 
-![스크린샷 2023-06-20 00.08.35.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aa292f3d-0520-4880-80df-8b760f060e15/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-20_00.08.35.png)
+![글작성페이지](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%80%E1%85%B3%E1%86%AF%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%89%E1%85%A5%E1%86%BC%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5.png)
 
-![스크린샷 2023-06-20 00.08.50.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0feb1f95-55bd-4171-a4c5-73bc8b646566/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-20_00.08.50.png)
+![댓글](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%83%E1%85%A2%E1%86%BA%E1%84%80%E1%85%B3%E1%86%AF.png)
 
 ## 개발 Story
 
