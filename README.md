@@ -91,15 +91,15 @@
 ## 개발 Story
 
 ### Next auth 인증 처리
-## Why
+#### Why
 
 Oauth2 로그인 처리를 Spring boot에서도 할 수 있지만, Next.js에서는 Next auth로 인증 처리를 할 수 있습니다. 백엔드에서 인증처리를 구현해 본 적이 있기 때문에 Next auth를 사용했을 때, 무엇이 다른지 알아보기 위해 Next auth로 인증 처리를 했습니다.
 
-## How
+#### How
 
 Next auth의 공식문서를 보면 pages/api/auth에 […nextauth].ts를 추가해서 사용해야 한다고 나와있습니다.
 
-![스크린샷 2023-06-16 20.39.01.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/75283bcb-1d35-4dc3-8921-3c536c4974b8/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-16_20.39.01.png)
+![공식문서](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/next+auth+%EC%9D%B8%EC%A6%9D%EC%B2%98%EB%A6%AC/%E1%84%80%E1%85%A9%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%89%E1%85%A5.png)
 
 \[…nextauth\].ts는 provider, secret, session, callback 등 여러가지 설정에 대한 정보를 가지고 있는 AuthOptions 객체를 매개변수로 NextAuth라는 함수를 export 합니다.
 
@@ -107,12 +107,12 @@ Next auth는 Next.js Server에서 동작하기 때문에 브라우저에서는 �
 
 로그인 후 API를 요청이 응답을 받기 까지의 과정은 다음과 같습니다.
 
-![요청이 정상적으로 응답을 받기까지의 과정](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/06b99690-cb65-4887-80ec-ef9db927b148/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-16_23.52.54.png)
+![요청이 정상적으로 응답을 받기까지의 과정](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/next+auth+%EC%9D%B8%EC%A6%9D%EC%B2%98%EB%A6%AC/%E1%84%89%E1%85%B5%E1%84%8F%E1%85%AF%E1%86%AB%E1%84%89%E1%85%B3.png)
 
 요청이 정상적으로 응답을 받기까지의 과정
 
 ### Notion like 게시글 편집
-## Why
+#### Why
 
 보통의 게시판의 편집이라하면 WYSIWYG(What You See Is What You Get) Editor 형식을 따르고 있습니다.
 
@@ -120,13 +120,12 @@ Next auth는 Next.js Server에서 동작하기 때문에 브라우저에서는 �
 
 여기서 모든 블록에 대한 DOM 관리에 대해서
 
-## How
+#### How
 
 Notion의 가장 큰 특징이라고 하면 문장 하나가 하나의 블록처럼 관리할 수 있다는 점이라고 생각합니다.
 
-> ∨ pages ∨ board ∨ [title] ∨ content └ edit.ts
+ > / pages / board / [title] / content / edit.ts
 
----
 
 모든 블록의 상태는 Redux의 content라는 객체로 관리하고, content가 업데이트 될 때마다 useMemo를 사용하여 re-rendering합니다.
 
@@ -161,13 +160,13 @@ const ContentEditBarList = useMemo(() => {
 하지만 유의미하게 느려질 정도의 긴 게시글의 비중이 그렇지 높지 않다고 예상하기 때문에 최종적으로 지금의 방식으로 구현했습니다.
 
 ### 게시글 작성 중 이미지 저장 관리
-## Why
+#### Why
 
-- 게시글 작성 중 이미지를 업로드 하면 이미지 서버에 따로 저장되고, 이미지 서버가 응답으로 보내주는 이미지에 대한 URL 사용하는 방식을 사용하고 있었습니다.
+_ 게시글 작성 중 이미지를 업로드 하면 이미지 서버에 따로 저장되고, 이미지 서버가 응답으로 보내주는 이미지에 대한 URL 사용하는 방식을 사용하고 있었습니다.
 - 게시글이 삭제될 때, DB에 저장된 이미지들 정보도 같이 삭제되어야 하는데, 이를 위해서는 게시글의 ID과 이미지의 ID를 JOIN해야 합니다.
 - 하지만 게시글의 ID는 게시글이 저장될 때 정해지기 때문에, 저장 전에 발급받는 이미지 ID와 연관을 짓기 위해 게시글을 저장하고, 생성된 게시글 ID을 저장된 이미지들의 ID와 연동하는 작업을 할 필요가 있었습니다.
 
-## How
+#### How
 
 우선 `saveContent`로 게시글을 저장한 뒤에, `res.data` 로 등록된 게시글의 ID을 받습니다.
 
@@ -190,12 +189,12 @@ const handleClickSubmit = (
 다시 이미지 서버에 전달하고, 이미지 서버에서 이미지를 등록한 사용자와 작성자를 대조한 뒤, 이미지가 저장된 게시글의 ID를 갱신합니다.
 
 ### 게시판에서 이미지 크기 처리
-## Why
+#### Why
 
 - next/image는 Local image는 자동으로 width, height를 맞춰주지만 API를 통해 외부에서 받아온 이미지는 따로 크기를 지정해줘야 했습니다.
 - 하지만 이미지의 width가 너무 큰 경우에는 일부가 화면을 넘어가는 경우가 생기고, X축 스크롤이 생기는 것이 UX의 관점에서 불편하고 생각했습니다.
 
-![이미지 크기를 따로 조절해주지 않으면 위와 같이 이미지가 화면에 깔끔하게 맞춰지는 것이 아니라, X축에 스크롤이 생깁니다.](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ee5997d7-4d47-4583-bfbf-92c3d398a99c/Untitled.png)
+![이미지 크기를 따로 조절해주지 않으면 위와 같이 이미지가 화면에 깔끔하게 맞춰지는 것이 아니라, X축에 스크롤이 생깁니다.](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%97%90%EC%84%9C+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%81%AC%EA%B8%B0+%EC%B2%98%EB%A6%AC/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5%E1%84%8F%E1%85%B3%E1%84%80%E1%85%B5.png)
 
 이미지 크기를 따로 조절해주지 않으면 위와 같이 이미지가 화면에 깔끔하게 맞춰지는 것이 아니라, X축에 스크롤이 생깁니다.
 
@@ -203,11 +202,11 @@ const handleClickSubmit = (
 
 ---
 
-## How
+#### How
 
-- 우선 [이미지 서버에서 받은 URL](https://www.notion.so/04cf62e95dc649d09d5e4ad9203ff468?pvs=21)로 이미지를 불러옵니다.
+- 우선 이미지 서버에서 받은 URL로 이미지를 불러옵니다.
 
-![스크린샷 2023-05-18 19.27.25.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f371570f-9318-4cff-8e9f-a6a1b294528e/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-05-18_19.27.25.png)
+![이미지 최적화 실패](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%97%90%EC%84%9C+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%81%AC%EA%B8%B0+%EC%B2%98%EB%A6%AC/%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0.png)
 
 - next/Image에서 src의 이미지를 불러왔을때 onLoadingComplete가 동작합니다.
 
@@ -238,7 +237,7 @@ const onLoadingCompleteHandler = async (img: HTMLImageElement) => {
 
 - 이때, Optimized된 경우에는 아래 이미지처럼 “Example Image”라 적혀있는 text bar 한 줄 높이에 맞춰서 크기를 최적화해버리기 때문에 이를 비활성화해서 이미지를 가져옵니다.
 
-![next/image에서 최적회된 이미지는 natural width, height가 상위 요소의 크기에 맞게 최적화해서 가져오기 때문에 상당히 작게 표시됩니다.](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9ff6f31c-7fb3-4df9-a125-e90d5da1bc61/Untitled.png)
+![next/image에서 최적회된 이미지는 natural width, height가 상위 요소의 크기에 맞게 최적화해서 가져오기 때문에 상당히 작게 표시됩니다.](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%97%90%EC%84%9C+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%81%AC%EA%B8%B0+%EC%B2%98%EB%A6%AC/%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%B5%9C%EC%A0%81%ED%99%94+%EC%8B%A4%ED%8C%A8.png)
 
 next/image에서 최적회된 이미지는 natural width, height가 상위 요소의 크기에 맞게 최적화해서 가져오기 때문에 상당히 작게 표시됩니다.
 
@@ -261,7 +260,7 @@ useEffect(() => {
 ```
 
 ### 게시글 작성 기능 구현 중 Props Drilling과 Redux
-## Why
+#### Why
 
 - 게시글을 작성할 때, 입력되는 모든 것은 contents라는 객체에 저장됩니다. contents는 ContentBarData의 객체의 Array 형식입니다.
 
@@ -309,7 +308,7 @@ const getBarByType = (type: string) => {
   };
 ```
 
-## How
+#### How
 
 Redux의 공식 문서에서는 Redux Toolkit을 사용하는 것을 권장하고 있습니다. 그렇기에 권장사항을 따라서 RTK의 기본 설정을 했습니다.
 
@@ -408,19 +407,19 @@ export const NO_IMAGE = "No Image";
 ```
 
 ### Github, commit과 contribution
-## Why
+#### Why
 
 IDE에서 개발을 하고 commit을 하면 그에 맞게 github에서 contribution이 반영되고, 흔히 ‘잔디밭’이라고 불리는 contributions graph에 초록색으로 표시가 됩니다.
 
 하지만 commit을 꾸준히 하면서 정상적으로 초록색으로 표시되는지 확인을 하지 않았기 때문에 contributions graph에 반영이 안 됐었던 것을 파악하지 못했고, 이를 해결하기 위해 이유를 조사했습니다.
 
-![스크린샷 2023-06-14 23.33.49.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7bbbae83-14e7-4e0c-88d0-ac34a1d06003/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-14_23.33.49.png)
+![깃허브잔디](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/github+commit%EA%B3%BC+contribution/%E1%84%8C%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B5.png)
 
-## How
+#### How
 
 Github 공식문서에 나와있는 Missing Contributions에서 **Why are my contributions not showing up on my profile?에서 이유를 알 수 있었습니다.**
 
-![스크린샷 2023-06-14 23.45.26.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ab52c0fb-b9fd-4039-ad49-a29e8b1c468f/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-14_23.45.26.png)
+![깃허브 공식문서](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/github+commit%EA%B3%BC+contribution/%E1%84%80%E1%85%B5%E1%86%BA%E1%84%92%E1%85%A5%E1%84%87%E1%85%B3%E1%84%80%E1%85%A9%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8%E1%84%86%E1%85%AE%E1%86%AB%E1%84%89%E1%85%A5.png)
 
 > Commits must be made with an email address that is connected to your account on [GitHub.com](http://GitHub.com) … in order to appear on your contributions graph
 
@@ -559,4 +558,4 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
 
 ## 백엔드 API Docs (with Postman)
 
-[https://documenter.getpostman.com/view/21615276/2s93ecvpoQ](https://documenter.getpostman.com/view/21615276/2s93ecvpoQ)
+[백엔드 API Docs](https://documenter.getpostman.com/view/21615276/2s93ecvpoQ)
