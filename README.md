@@ -442,8 +442,8 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
     > 작성 중인 게시글의 내용한 대한 정보를 저장합니다.
     
     - 구조
-        - `contents` : [블록 단위](https://www.notion.so/Notion-like-3af66501d1ad437bb662208b5a179511?pvs=21)의 내용을 담고 있는 배열
-        - `images` : 현재 [게시글에 사용된 이미지](https://www.notion.so/04cf62e95dc649d09d5e4ad9203ff468?pvs=21)들의 ID를 담고 있는 배열
+        - `contents` : 블록 단위의 내용을 담고 있는 배열
+        - `images` : 현재 게시글에 사용된 이미지의 ID를 담고 있는 배열
 - `imageHandler`
     
     > 이미지 삭제를 위한 `ImageHandler` 컴포넌트에서 사용되는 상태 값들입니다.
@@ -467,12 +467,11 @@ Github에서 제시하는 다음과 같은 방법으로 올바른 이메일로 �
         - `index` : `PaginationBar`에서 선택된 index
 - `windowWidth`
     
-    > [이미지 크기를 조절](https://www.notion.so/4b6d18aedb5b4079b7eb31d177bcb00a?pvs=21)할 때 사용되는 브라우저의 넓이를 저장합니다.
+    > 이미지 크기를 조절할 때 사용되는 브라우저의 넓이를 저장합니다.
     
     - 구조
         - `width` : 브라우저의 넓이
 
----
 
 ## Components
 
