@@ -88,6 +88,9 @@
 ### 게시글 댓글
 ![댓글](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/%E1%84%83%E1%85%A2%E1%86%BA%E1%84%80%E1%85%B3%E1%86%AF.png)
 
+## 아키텍쳐
+![아키텍쳐](https://s3.ap-northeast-2.amazonaws.com/ikiningyou.portfolio.s3.bucket/Images/collaborationBoard/Collaboration+board+%E1%84%8B%E1%85%A1%E1%84%8F%E1%85%B5%E1%84%90%E1%85%A6%E1%86%A8%E1%84%8E%E1%85%A7.jpg)
+
 ## 개발 Story
 
 ### Next auth 인증 처리
