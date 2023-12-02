@@ -73,8 +73,7 @@
 		<td>AWS RDS</td>
 	</tr>
 </table>
-- AWS EC2
-- RDS
+
 
 ## Overview
 
